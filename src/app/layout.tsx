@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Lora } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const lora = Lora({
+const dmSans = DM_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -21,9 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${lora.className} ${lora.className} antialiased`}>
-        {children}
-      </body>
+      <body className={`${dmSans.className}  antialiased`}>{children}</body>
     </html>
   );
 }
