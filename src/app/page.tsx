@@ -8,10 +8,12 @@ import { delay } from "@/lib/utils";
 import { Suspense } from "react";
 import { getWixClient } from "@/lib/wix-client.base";
 import Product from "@/components/Product";
+import { Skeleton } from "@/components/ui/skeleton";
+import SectionTitle from "@/components/SectionTitle";
 
 export default async function Home() {
   return (
-    <main className="max-w-full mx-auto space-y-10 py-10 ">
+    <main className="max-w-full mx-auto space-y-10 pb-10 ">
       <div className="relative w-full h-[400px] md:h-[600px]">
         <Image
           className="object-cover"
@@ -26,7 +28,8 @@ export default async function Home() {
               Empowering Your Setup
             </h1>
           </AnimatedSection>
-          <AnimatedSection>
+
+          <AnimatedSection delay={0.5}>
             <h2 className="text-xl md:text-2xl tracking-wide text-white">
               Discover the Future of Computing
             </h2>
@@ -34,7 +37,7 @@ export default async function Home() {
               variant={"ghost"}
               asChild
               size={"lg"}
-              className="text-white border-white border w-[150px] rounded-2xl px-6 py-3 mt-4 hover:bg-gray-200 transition-colors"
+              className="text-white border-white border w-[150px] rounded-2xl px-6 py-3 mt-4 hover:bg-gray-200 transition-colors duration-300"
             >
               <Link href="/shop">Shop Now</Link>
             </Button>
@@ -42,7 +45,7 @@ export default async function Home() {
         </div>
       </div>
       <div className="w-[95%] mx-auto mt-18">
-        <Suspense fallback="Loading featured products...">
+        <Suspense fallback={<LoadingSkeleton />}>
           <FeaturedProducts />
         </Suspense>
       </div>
@@ -51,7 +54,6 @@ export default async function Home() {
 }
 
 async function FeaturedProducts() {
-  await delay(1000);
   const wixClient = getWixClient();
   const { collection } =
     await wixClient.collections.getCollectionBySlug("all-products");
@@ -64,6 +66,7 @@ async function FeaturedProducts() {
     .queryProducts()
     .hasSome("collectionIds", [collection._id])
     .descending("lastUpdated")
+    .limit(8)
     .find();
 
   if (featuredProducts.items.length === 0) {
@@ -72,9 +75,7 @@ async function FeaturedProducts() {
   return (
     <>
       <AnimatedSection>
-        <h1 className="text-black text-7xl mb-10 font-medium tracking-tight">
-          Our Products
-        </h1>
+        <SectionTitle href="/shop" title="Our Products" />
         <hr className="border-t-3 mb-10 border-black" />
         <div className="flex flex-col gap-5 sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {featuredProducts.items.map((item) => (
@@ -83,7 +84,18 @@ async function FeaturedProducts() {
             </AnimatedSection>
           ))}
         </div>
+        {/* <pre>{JSON.stringify(featuredProducts, null, 2)}</pre> */}
       </AnimatedSection>
     </>
+  );
+}
+
+function LoadingSkeleton() {
+  return (
+    <div className="flex flex-col gap-5 sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-12">
+      {Array.from({ length: 8 }).map((_, index) => (
+        <Skeleton key={index} className="h-[26rem] w-full" />
+      ))}
+    </div>
   );
 }
