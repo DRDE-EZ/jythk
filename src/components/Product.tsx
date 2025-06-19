@@ -1,6 +1,9 @@
+"use client";
+
 import { products } from "@wix/stores";
 import Link from "next/link";
 import WixImage from "./WixImage";
+import { useState } from "react";
 
 interface ProductProps {
   product: products.Product;
@@ -8,6 +11,8 @@ interface ProductProps {
 
 export default function Product({ product }: ProductProps) {
   const mainImage = product.media?.mainMedia?.image;
+  const description = product.additionalInfoSections?.[0]?.description;
+  const [quantity, setQuantity] = useState(0);
 
   return (
     <Link href={`/products/${product.slug}`}>
@@ -21,13 +26,13 @@ export default function Product({ product }: ProductProps) {
         />
 
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center bg-white/75 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-in-out">
-          {product.additionalInfoSections?.[0] && (
-            <p
+          {description && (
+            <div
               className="text-md font-normal tracking-tight p-6 line-clamp-3 text-ellipsis overflow-hidden"
               dangerouslySetInnerHTML={{
-                __html: product.additionalInfoSections?.[0]?.description ?? "",
+                __html: description,
               }}
-            ></p>
+            />
           )}
         </div>
       </div>

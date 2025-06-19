@@ -13,12 +13,12 @@ export default function Footer() {
               amet sint. Velit officia consequat duis enim velit mollit.
             </p>
 
-            <ul className="mt-9 flex items-center space-x-3">
+            <ul className="flex items-center space-x-4 mt-4">
               <li>
                 <a
                   href="#"
-                  title=""
-                  className="flex size-7 items-center justify-center rounded-full bg-foreground text-background transition-all duration-200 hover:bg-primary focus:bg-primary"
+                  title="Share on Twitter"
+                  className="flex w-9 h-9 items-center justify-center rounded-full bg-gray-800 text-white transition-all duration-200 hover:bg-blue-500 hover:scale-110 focus:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   <svg
                     className="h-4 w-4"
@@ -34,8 +34,8 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  title=""
-                  className="flex size-7 items-center justify-center rounded-full bg-foreground text-background transition-all duration-200 hover:bg-primary focus:bg-primary"
+                  title="Share on Facebook"
+                  className="flex w-9 h-9 items-center justify-center rounded-full bg-gray-800 text-white transition-all duration-200 hover:bg-blue-600 hover:scale-110 focus:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
                 >
                   <svg
                     className="h-4 w-4"
@@ -51,8 +51,8 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  title=""
-                  className="flex size-7 items-center justify-center rounded-full bg-foreground text-background transition-all duration-200 hover:bg-primary focus:bg-primary"
+                  title="Share on Instagram"
+                  className="flex w-9 h-9 items-center justify-center rounded-full bg-gray-800 text-white transition-all duration-200 hover:bg-pink-500 hover:scale-110 focus:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
                 >
                   <svg
                     className="h-4 w-4"
@@ -70,8 +70,8 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  title=""
-                  className="flex size-7 items-center justify-center rounded-full bg-foreground text-background transition-all duration-200 hover:bg-primary focus:bg-primary"
+                  title="Share on GitHub"
+                  className="flex w-9 h-9 items-center justify-center rounded-full bg-gray-800 text-white transition-all duration-200 hover:bg-gray-700 hover:scale-110 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2"
                 >
                   <svg
                     className="h-4 w-4"
@@ -209,14 +209,14 @@ export default function Footer() {
                   name="email"
                   id="email"
                   placeholder="Enter your email"
-                  className="block w-full"
+                  className="block w-full rounded-xs"
                 />
               </div>
 
               <Button
                 type="submit"
                 size="lg"
-                className="mt-3 inline-flex items-center justify-center rounded-md bg-primary px-6 py-4"
+                className="mt-3 inline-flex items-center justify-center rounded-xs bg-primary px-6 py-4"
               >
                 Subscribe
               </Button>

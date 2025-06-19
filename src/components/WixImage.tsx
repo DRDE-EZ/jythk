@@ -26,16 +26,24 @@ export default function WixImage({
   alt,
   ...props
 }: WixImageProps) {
-  const imageUrl = mediaIdentifier
-    ? props.scaleToFill || props.scaleToFill === undefined
-      ? wixMedia.getScaledToFillImageUrl(
-          mediaIdentifier,
-          props.width,
-          props.height,
-          {}
-        )
-      : wixMedia.getImageUrl(mediaIdentifier).url
-    : placeholder;
+  let imageUrl: string | undefined;
 
-  return <img src={imageUrl} alt={alt || ""} {...props} />;
+  if (mediaIdentifier) {
+    imageUrl =
+      props.scaleToFill || props.scaleToFill === undefined
+        ? wixMedia.getScaledToFillImageUrl(
+            mediaIdentifier,
+            props.width,
+            props.height,
+            {}
+          )
+        : wixMedia.getImageUrl(mediaIdentifier).url;
+  } else if (placeholder) {
+    imageUrl = placeholder;
+  }
+
+  // ✅ Final guard — don't render if imageUrl is still empty
+  if (!imageUrl) return null;
+
+  return <img src={imageUrl} alt={alt || "Media preview"} {...props} />;
 }

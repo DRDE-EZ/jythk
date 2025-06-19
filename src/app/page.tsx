@@ -1,19 +1,18 @@
 import Image from "next/image";
-import { products } from "@wix/stores";
 import banner from "@/assets/main-page-banner.jpg";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import Link from "next/link";
-import { delay } from "@/lib/utils";
 import { Suspense } from "react";
-import { getWixClient } from "@/lib/wix-client.base";
 import Product from "@/components/Product";
 import { Skeleton } from "@/components/ui/skeleton";
 import SectionTitle from "@/components/SectionTitle";
+import { getCollectionBySlug } from "@/wix-api/collections";
+import { queryProducts } from "@/wix-api/products";
 
 export default async function Home() {
   return (
-    <main className="max-w-full mx-auto space-y-10 pb-10 ">
+    <div className="max-w-full mx-auto space-y-10 pb-10">
       <div className="relative w-full h-[400px] md:h-[600px]">
         <Image
           className="object-cover"
@@ -31,13 +30,13 @@ export default async function Home() {
 
           <AnimatedSection delay={0.5}>
             <h2 className="text-xl md:text-2xl tracking-wide text-white">
-              Discover the Future of Computing
+              Discover Raw Computing Power
             </h2>
             <Button
               variant={"ghost"}
               asChild
               size={"lg"}
-              className="text-white border-white border w-[150px] rounded-2xl px-6 py-3 mt-4 hover:bg-gray-200 transition-colors duration-300"
+              className="text-white border-white border w-[150px] rounded-xs px-6 py-3 mt-4 hover:bg-gray-200 transition-colors duration-300"
             >
               <Link href="/shop">Shop Now</Link>
             </Button>
@@ -49,32 +48,27 @@ export default async function Home() {
           <FeaturedProducts />
         </Suspense>
       </div>
-    </main>
+    </div>
   );
 }
 
 async function FeaturedProducts() {
-  const wixClient = getWixClient();
-  const { collection } =
-    await wixClient.collections.getCollectionBySlug("all-products");
+  const collection = await getCollectionBySlug("all-products");
 
   if (!collection?._id) {
     return null;
   }
 
-  const featuredProducts = await wixClient.products
-    .queryProducts()
-    .hasSome("collectionIds", [collection._id])
-    .descending("lastUpdated")
-    .limit(8)
-    .find();
+  const featuredProducts = await queryProducts({
+    collectionIds: collection._id,
+  });
 
   if (featuredProducts.items.length === 0) {
     return null;
   }
   return (
     <>
-      <AnimatedSection>
+      <AnimatedSection delay={0.2}>
         <SectionTitle href="/shop" title="Our Products" />
         <hr className="border-t-3 mb-10 border-black" />
         <div className="flex flex-col gap-5 sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
