@@ -1,12 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import WixImage from "@/components/WixImage";
 import { products } from "@wix/stores";
 import ProductOptions from "./ProductOptions";
 import { useState } from "react";
 import { checkInStock, findVariant } from "@/lib/utils";
-import { FaCartArrowDown } from "react-icons/fa";
 import { FaDollarSign } from "react-icons/fa";
 import ProductMedia from "./ProductMedia";
 import { Label } from "@/components/ui/label";
@@ -18,6 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import AddToCartButton from "@/components/AddToCartButton";
 
 export default function ProductDetails({
   product,
@@ -40,7 +39,7 @@ export default function ProductDetails({
       ) || {}
   );
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const selectedVariant = findVariant(product, selectedOptions);
   const inStock = checkInStock(product, selectedOptions);
@@ -100,7 +99,7 @@ export default function ProductDetails({
             selectedOptions={selectedOptions}
             setSelectedOptions={setSelectedOptions}
           />
-          <div className="space-y-3 -mt-4">
+          <div className="space-y-3 -mt-5">
             <Label htmlFor="quantity">Quantity</Label>
             <div className="flex items-center gap-2.5">
               <Input
@@ -129,22 +128,19 @@ export default function ProductDetails({
             </div>
           )} */}
           {/* Add to Cart Button */}
-          <Button
-            variant="default"
+          <AddToCartButton
+            product={product}
+            selectedOptions={selectedOptions}
+            quantity={quantity}
             className="w-full sm:w-auto sm:min-w-[200px] px-8 text-lg font-medium rounded-none transition-all duration-200 hover:shadow-lg hover:cursor-pointer"
-          >
-            <span className="mr-1 ">
-              <FaCartArrowDown />
-            </span>
-            Add To Cart
-          </Button>
+          />
           {/* Buy Button */}
           <Button
             variant="default"
             className="w-full sm:w-auto sm:min-w-[200px] px-8 text-lg font-medium rounded-none transition-all duration-200 hover:shadow-lg hover:cursor-pointer"
           >
             <FaDollarSign />
-            Buy Now
+            Buy now
           </Button>
           {/* Social Media Links */}
           <div className="pt-4">
@@ -235,7 +231,7 @@ export default function ProductDetails({
           </span>
           <Accordion type="multiple" defaultValue={["description"]}>
             <AccordionItem value="description">
-              <AccordionTrigger className="text-md">
+              <AccordionTrigger className="text-md hover:cursor-pointer">
                 Description
               </AccordionTrigger>
               <AccordionContent>
@@ -250,7 +246,7 @@ export default function ProductDetails({
             {!!product.additionalInfoSections?.length &&
               product.additionalInfoSections.map((section) => (
                 <AccordionItem value={section.title || ""} key={section.title}>
-                  <AccordionTrigger className="text-md">
+                  <AccordionTrigger className="text-md hover:cursor-pointer">
                     {section.title}
                   </AccordionTrigger>
                   <AccordionContent>

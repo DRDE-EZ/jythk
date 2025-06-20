@@ -2,12 +2,11 @@ import Link from "next/link";
 import logo from "@/assets/mycropc-logo2-copy.png";
 import Image from "next/image";
 import { getCart } from "@/wix-api/cart";
+import { getWixServerClient } from "@/lib/wix-client-server";
+import ShoppingCartButton from "@/components/ShoppingCartButton";
 
 export default async function NavBar() {
-  const cart = await getCart();
-
-  const totalQuantity =
-    cart?.lineItems.reduce((acc, item) => acc + (item.quantity || 0), 0) || 0;
+  const cart = await getCart(await getWixServerClient());
 
   return (
     <header className="flex items-center justify-between sticky h-20 px-8 mx-auto bg-background shadow-sm top-0 z-50">
@@ -48,11 +47,7 @@ export default async function NavBar() {
 
       {/* Right: Cart */}
       <div className="flex items-center">
-        <Link href="/">
-          <span className="text-lg font-medium text-gray-800 hover:text-gray-600">
-            Cart
-          </span>
-        </Link>
+        <ShoppingCartButton initialData={cart} />
       </div>
     </header>
   );

@@ -4,6 +4,7 @@ import ProductDetails from "./ProductDetails";
 import { Metadata } from "next";
 import { stripHtml } from "@/lib/utils";
 import "react-medium-image-zoom/dist/styles.css";
+import { getWixServerClient } from "@/lib/wix-client-server";
 
 interface PageProps {
   params: { slug: string };
@@ -13,7 +14,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const slug = (await params).slug;
-  const product = await getProductBySlug(slug);
+  const product = await getProductBySlug(await getWixServerClient(), slug);
 
   if (!product?._id) notFound();
 
@@ -39,7 +40,7 @@ export async function generateMetadata({
 
 export default async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-  const product = await getProductBySlug(slug);
+  const product = await getProductBySlug(await getWixServerClient(), slug);
 
   if (!product?._id) notFound();
 
