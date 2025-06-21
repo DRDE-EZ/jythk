@@ -1,6 +1,13 @@
 import { wixBrowserClient } from "@/lib/wix-client.browser";
-import { addToCart, AddToCartValues, getCart } from "@/wix-api/cart";
 import {
+  addToCart,
+  AddToCartValues,
+  getCart,
+  updateCartItemQuantity,
+  UpdateCartItemQuantityValues,
+} from "@/wix-api/cart";
+import {
+  MutationKey,
   QueryKey,
   useMutation,
   useQuery,
@@ -42,6 +49,48 @@ export function useAddItemToCart() {
     onError(error) {
       console.log(error);
       toast.error("Failed to add item to cart.");
+    },
+  });
+}
+
+export function useUpdateCartItemQuantity() {
+  const queryClient = useQueryClient();
+  const mutationKey: MutationKey = ["useUpdateCartItemQuantity"];
+
+  return useMutation({
+    mutationKey,
+    mutationFn: (values: UpdateCartItemQuantityValues) => {
+      if (!wixBrowserClient) {
+        return Promise.reject(new Error("Wix client not initialized"));
+      }
+      return updateCartItemQuantity(wixBrowserClient, values);
+    },
+    onMutate: async ({ productId, newQuantity }) => {
+      await queryClient.cancelQueries({ queryKey });
+
+      const previousState =
+        queryClient.getQueryData<currentCart.Cart>(queryKey);
+
+      queryClient.setQueryData<currentCart.Cart>(queryKey, (oldData) => ({
+        ...oldData,
+        lineItems: oldData?.lineItems?.map((lineItem) =>
+          lineItem._id === productId
+            ? { ...lineItem, quantity: newQuantity }
+            : lineItem
+        ),
+      }));
+
+      return { previousState };
+    },
+    onError(error, variables, context) {
+      queryClient.setQueryData(queryKey, context?.previousState);
+      console.log(error);
+      toast.warning("Something went wrong. Please try again.");
+    },
+    onSettled() {
+      if (queryClient.isMutating({ mutationKey }) === 1) {
+        queryClient.invalidateQueries({ queryKey });
+      }
     },
   });
 }
