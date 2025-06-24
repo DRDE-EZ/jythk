@@ -1,5 +1,4 @@
 import Image from "next/image";
-import banner from "@/assets/main-page-banner.jpg";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import Link from "next/link";
@@ -14,15 +13,16 @@ import { getWixServerClient } from "@/lib/wix-client-server";
 export default async function Home() {
   return (
     <div className="max-w-full mx-auto space-y-10 pb-10">
-      <div className="relative w-full h-[400px] md:h-[600px]">
-        <Image
-          className="object-cover"
-          src={banner}
-          alt="PC Banner"
-          fill
-          priority
+      <div className="relative w-full h-[600px] md:h-[760px] overflow-hidden">
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover scale-[1]"
+          src="/banner_video.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
         />
-        <div className="absolute inset-0 bg-black/35 text-center flex flex-col items-center justify-center gap-3 px-4">
+        <div className="absolute inset-0 bg-black/35 flex flex-col items-center justify-center text-center gap-3 px-4">
           <AnimatedSection>
             <h1 className="text-4xl md:text-6xl font-medium tracking-wide text-white mb-6 md:mb-10">
               Empowering Your Setup
@@ -34,9 +34,9 @@ export default async function Home() {
               Discover Raw Computing Power
             </h2>
             <Button
-              variant={"ghost"}
+              variant="ghost"
               asChild
-              size={"lg"}
+              size="lg"
               className="text-white border-white border w-[150px] rounded-xs px-6 py-3 mt-4 hover:bg-gray-200 transition-colors duration-300"
             >
               <Link href="/shop">Shop Now</Link>
@@ -44,6 +44,7 @@ export default async function Home() {
           </AnimatedSection>
         </div>
       </div>
+
       <div className="w-[95%] mx-auto mt-18">
         <Suspense fallback={<LoadingSkeleton />}>
           <FeaturedProducts />
@@ -74,7 +75,7 @@ async function FeaturedProducts() {
       <AnimatedSection delay={0.2}>
         <SectionTitle href="/shop" title="Our Products" />
         <hr className="border-t-3 mb-10 border-black" />
-        <div className="flex flex-col gap-5 sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="flex flex-col w-[95%] sm:w-[100%] mx-auto gap-5 sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {featuredProducts.items.map((item) => (
             <AnimatedSection key={item._id}>
               <Product product={item} />

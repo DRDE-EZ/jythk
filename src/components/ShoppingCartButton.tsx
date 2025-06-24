@@ -1,10 +1,14 @@
 "use client";
 
-import { useCart, useUpdateCartItemQuantity } from "@/hooks/cart";
+import {
+  useCart,
+  useRemoveCartItem,
+  useUpdateCartItemQuantity,
+} from "@/hooks/cart";
 import { currentCart } from "@wix/ecom";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { Loader2, ShoppingCartIcon } from "lucide-react";
+import { Loader2, ShoppingCartIcon, X } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import Link from "next/link";
 import WixImage from "./WixImage";
@@ -49,10 +53,15 @@ export default function ShoppingCartButton({
               </span>
             </SheetTitle>
           </SheetHeader>
-          <div className="flex grow flex-col space-y-6 overflow-y-auto">
+          <hr />
+          <div className="flex grow flex-col space-y-6 overflow-y-auto pt-2">
             <ul className="space-y-8 px-5 -mt-1">
               {cartQuery.data?.lineItems?.map((item) => (
-                <ShoppingCartItem key={item._id} item={item} />
+                <ShoppingCartItem
+                  key={item._id}
+                  item={item}
+                  onProductLinkClicked={() => setShowSheet(false)}
+                />
               ))}
             </ul>
             {cartQuery.isPending && (
@@ -75,11 +84,12 @@ export default function ShoppingCartButton({
                 </div>
               </div>
             )}
-            <pre>{JSON.stringify(cartQuery.data, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(cartQuery.data, null, 2)}</pre> */}
           </div>
+          <hr />
           <div className="flex items-center justify-between gap-5 px-5 pb-5">
             <div className="space-y-0.5">
-              <p className="text-sm">Subtotal amount</p>
+              <p className="text-sm">Subtotal amount:</p>
               <p className="font-bold">
                 {/* @ts-expect-error */}
                 {cartQuery.data?.subtotal?.formattedConvertedAmount}
@@ -104,10 +114,15 @@ export default function ShoppingCartButton({
 
 interface ShoppingCartItemProps {
   item: currentCart.LineItem;
+  onProductLinkClicked: () => void;
 }
 
-function ShoppingCartItem({ item }: ShoppingCartItemProps) {
+function ShoppingCartItem({
+  item,
+  onProductLinkClicked,
+}: ShoppingCartItemProps) {
   const updateQuantityMutation = useUpdateCartItemQuantity();
+  const removeItemMutation = useRemoveCartItem();
   const productId = item._id;
 
   if (!productId) return null;
@@ -121,19 +136,28 @@ function ShoppingCartItem({ item }: ShoppingCartItemProps) {
 
   return (
     <li className="flex items-center gap-4">
-      <Link href={`/products/${slug}`}>
-        <div className="w-[110px] h-[110px] flex-none bg-white overflow-hidden">
-          <WixImage
-            mediaIdentifier={item.image}
-            width={110}
-            height={110}
-            alt={item.productName?.translated || "Product image"}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </Link>
+      <div className="relative size-fit flex-none">
+        <Link href={`/products/${slug}`} onClick={onProductLinkClicked}>
+          <div className="w-[110px] h-[110px] flex-none bg-white overflow-hidden">
+            <WixImage
+              mediaIdentifier={item.image}
+              width={110}
+              height={110}
+              alt={item.productName?.translated || "Product image"}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </Link>
+        <button
+          className="absolute -right-1 -top-1 border bg-background rounded-xs p-0.5 hover:cursor-pointer"
+          onClick={() => removeItemMutation.mutate(productId)}
+        >
+          <X className="size-3" />
+        </button>
+      </div>
+
       <div className="space-y-1.5 text-sm">
-        <Link href={`/products/${slug}`}>
+        <Link href={`/products/${slug}`} onClick={onProductLinkClicked}>
           <p className="font-bold">{item.productName?.translated || "Item"}</p>
         </Link>
         {!!item.descriptionLines?.length && (

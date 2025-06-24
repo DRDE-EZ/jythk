@@ -3,6 +3,7 @@ import {
   addToCart,
   AddToCartValues,
   getCart,
+  removeCartItem,
   updateCartItemQuantity,
   UpdateCartItemQuantityValues,
 } from "@/wix-api/cart";
@@ -14,6 +15,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { currentCart } from "@wix/ecom";
+import { products } from "@wix/stores";
 import { toast } from "sonner";
 
 const queryKey: QueryKey = ["cart"];
@@ -91,6 +93,41 @@ export function useUpdateCartItemQuantity() {
       if (queryClient.isMutating({ mutationKey }) === 1) {
         queryClient.invalidateQueries({ queryKey });
       }
+    },
+  });
+}
+
+export function useRemoveCartItem() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (productId: string) => {
+      if (!wixBrowserClient) {
+        return Promise.reject(new Error("Wix client not initialized"));
+      }
+      return removeCartItem(wixBrowserClient, productId);
+    },
+    onMutate: async (productId) => {
+      await queryClient.cancelQueries({ queryKey });
+
+      const previousState =
+        queryClient.getQueryData<currentCart.Cart>(queryKey);
+
+      queryClient.setQueryData<currentCart.Cart>(queryKey, (oldData) => ({
+        ...oldData,
+        lineItems: oldData?.lineItems?.filter(
+          (lineItem) => lineItem._id !== productId
+        ),
+      }));
+      return { previousState };
+    },
+    onError(error, variables, context) {
+      queryClient.setQueryData(queryKey, context?.previousState);
+      console.log(error);
+      toast.warning("Something went wrong. Please try again.");
+    },
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey });
     },
   });
 }

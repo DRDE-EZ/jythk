@@ -41,19 +41,19 @@ export default function ProductOptions({
           </SelectTrigger>
           <SelectContent>
             {option.choices?.map((choice) => {
-              const isInStock = checkInStock(product, {
-                ...selectedOptions,
-                [option.name || ""]: choice.value || "",
-              });
+              // const isInStock = checkInStock(product, {
+              //   ...selectedOptions,
+              //   [option.name || ""]: choice.value || "",
+              // });
               return (
                 <SelectItem
                   key={choice.value}
                   value={choice.value || ""}
-                  className={cn(
-                    "",
-                    !isInStock && "line-through text-muted-foreground"
-                  )}
-                  disabled={!isInStock}
+                  // className={cn(
+                  //   "",
+                  //   !isInStock && "line-through text-muted-foreground"
+                  // )}
+                  // disabled={!isInStock}
                 >
                   {choice.value}
                 </SelectItem>

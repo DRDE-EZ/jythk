@@ -17,6 +17,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import AddToCartButton from "@/components/AddToCartButton";
+import BackInStockNotificationButton from "@/components/BackInStockNotificationButton";
 
 export default function ProductDetails({
   product,
@@ -44,7 +45,7 @@ export default function ProductDetails({
   const selectedVariant = findVariant(product, selectedOptions);
   const inStock = checkInStock(product, selectedOptions);
 
-  const option = selectedOptions.Builds.split("/");
+  const option = selectedOptions?.Builds?.split("/") || "";
 
   const selectedOptionsMedia = product.productOptions?.flatMap((option) => {
     const selectedChoice = option.choices?.find(
@@ -127,21 +128,32 @@ export default function ProductDetails({
               </div>
             </div>
           )} */}
+
           {/* Add to Cart Button */}
-          <AddToCartButton
-            product={product}
-            selectedOptions={selectedOptions}
-            quantity={quantity}
-            className="w-full sm:w-auto sm:min-w-[200px] px-8 text-lg font-medium rounded-none transition-all duration-200 hover:shadow-lg hover:cursor-pointer"
-          />
-          {/* Buy Button */}
-          <Button
-            variant="default"
-            className="w-full sm:w-auto sm:min-w-[200px] px-8 text-lg font-medium rounded-none transition-all duration-200 hover:shadow-lg hover:cursor-pointer"
-          >
-            <FaDollarSign />
-            Buy now
-          </Button>
+          {inStock ? (
+            <>
+              <AddToCartButton
+                product={product}
+                selectedOptions={selectedOptions}
+                quantity={quantity}
+                className="w-full sm:w-auto sm:min-w-[200px] px-8 text-lg font-medium rounded-none transition-all duration-200 hover:shadow-lg hover:cursor-pointer"
+              />
+              {/* Buy Button */}
+              <Button
+                variant="default"
+                className="w-full sm:w-auto sm:min-w-[200px] px-8 text-lg font-medium rounded-none transition-all duration-200 hover:shadow-lg hover:cursor-pointer"
+              >
+                <FaDollarSign />
+                Buy now
+              </Button>
+            </>
+          ) : (
+            <BackInStockNotificationButton
+              product={product}
+              selectedOptions={selectedOptions}
+            />
+          )}
+
           {/* Social Media Links */}
           <div className="pt-4">
             <p className="text-sm font-medium text-gray-700 mb-3">Share:</p>
