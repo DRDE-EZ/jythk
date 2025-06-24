@@ -3,8 +3,6 @@
 import { products } from "@wix/stores";
 import Link from "next/link";
 import WixImage from "./WixImage";
-import { useState } from "react";
-
 interface ProductProps {
   product: products.Product;
 }
@@ -12,8 +10,6 @@ interface ProductProps {
 export default function Product({ product }: ProductProps) {
   const mainImage = product.media?.mainMedia?.image;
   const description = product.additionalInfoSections?.[0]?.description;
-  const [quantity, setQuantity] = useState(0);
-
   return (
     <Link href={`/products/${product.slug}`}>
       <div className="overflow-hidden relative group rounded-xs shadow-sm">

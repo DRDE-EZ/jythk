@@ -15,7 +15,7 @@ export default async function Home() {
     <div className="max-w-full mx-auto space-y-10 pb-10">
       <div className="relative w-full h-[600px] md:h-[760px] overflow-hidden">
         <video
-          className="absolute top-0 left-0 w-full h-full object-cover scale-[1]"
+          className="absolute top-0 left-0 w-full h-full object-cover"
           src="/banner_video.webm"
           autoPlay
           loop

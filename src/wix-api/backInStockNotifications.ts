@@ -1,7 +1,15 @@
 import { WIX_STORES_APP_ID } from "@/lib/constants";
-import { findVariant } from "@/lib/utils";
+import { delay, findVariant } from "@/lib/utils";
 import { WixClient } from "@/lib/wix-client.base";
 import { products } from "@wix/stores";
+
+import { backInStockSettings } from "@wix/ecom";
+
+async function startCollectingRequests(appId: string) {
+  const response = await backInStockSettings.startCollectingRequests(appId);
+
+  return response;
+}
 
 export interface BackInStockNotificationRequestValues {
   email: string;
@@ -19,7 +27,13 @@ export async function createBackInStockNotificationRequest(
     selectedOptions,
   }: BackInStockNotificationRequestValues
 ) {
+  const catalogInfo = await wixClient.products.queryProducts().limit(1).find();
+  console.log("Product data:", catalogInfo.items[0]);
   const selectedVariant = findVariant(product, selectedOptions);
+  const response = await startCollectingRequests(WIX_STORES_APP_ID);
+  console.log("niggaaaa" + response);
+
+  delay(2000);
 
   await wixClient.backInStockNotifications.createBackInStockNotificationRequest(
     {

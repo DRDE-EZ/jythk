@@ -13,6 +13,17 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Input } from "./ui/input";
+import LoadingButton from "./LoadingButton";
+import { env } from "@/env";
 
 const formSchema = z.object({
   email: requiredString.email(),
@@ -39,6 +50,15 @@ export default function BackInStockNotificationButton({
 
   const mutation = useCreateBackInStockNotificationRequest();
 
+  async function onSubmit({ email }: FormValues) {
+    mutation.mutate({
+      email,
+      product,
+      itemUrl: env.NEXT_PUBLIC_BASE_URL + "/products/" + product.slug,
+      selectedOptions,
+    });
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -46,7 +66,7 @@ export default function BackInStockNotificationButton({
           Notify when available
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="rounded-xs">
         <DialogHeader>
           <DialogTitle>Notify when available</DialogTitle>
           <DialogDescription>
@@ -54,6 +74,39 @@ export default function BackInStockNotificationButton({
             in stock.
           </DialogDescription>
         </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Email"
+                      className="rounded-xs"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <LoadingButton
+              type="submit"
+              loading={mutation.isPending}
+              className="rounded-xs hover:cursor-pointer"
+            >
+              Notify me
+            </LoadingButton>
+          </form>
+        </Form>
+        {mutation.isSuccess && (
+          <div className="py-2.5 text-green-500">
+            Thank you! We will notify you when this product is available!
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );

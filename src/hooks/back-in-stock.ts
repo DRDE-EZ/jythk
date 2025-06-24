@@ -12,6 +12,7 @@ export function useCreateBackInStockNotificationRequest() {
       if (!wixBrowserClient) {
         return Promise.reject(new Error("Wix client not initialized"));
       }
+
       return createBackInStockNotificationRequest(wixBrowserClient, values);
     },
     onError(error) {
