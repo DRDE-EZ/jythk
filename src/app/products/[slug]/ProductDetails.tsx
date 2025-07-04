@@ -70,7 +70,7 @@ export default function ProductDetails({
         {/* Product Info Section */}
         <div className="flex mt-3 lg:mt-0 flex-col justify-start space-y-6">
           <div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-900 leading-tight">
               {product.name}
             </h1>
           </div>
@@ -78,7 +78,7 @@ export default function ProductDetails({
           <div className="flex items-center space-x-3">
             {selectedVariant?.variant?.priceData?.formatted?.price ===
             selectedVariant?.variant?.priceData?.formatted?.discountedPrice ? (
-              <p className="text-xl sm:text-2xl font-semibold text-gray-800">
+              <p className="text-xl sm:text-2xl font-semibold text-primary">
                 {selectedVariant?.variant?.priceData?.formatted?.price}
               </p>
             ) : (
@@ -156,7 +156,7 @@ export default function ProductDetails({
 
           {/* Social Media Links */}
           <div className="pt-4">
-            <p className="text-sm font-medium text-gray-700 mb-3">Share:</p>
+            <p className="text-sm font-medium text-primary-700 mb-3">Share:</p>
             <ul className="flex items-center space-x-4">
               <li>
                 <a

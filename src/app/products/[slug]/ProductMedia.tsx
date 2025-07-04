@@ -23,7 +23,7 @@ export default function ProductMedia({ media }: ProductMediaProps) {
 
   return (
     <div className="flex flex-col items-center lg:items-start">
-      <div className="aspect-square bg-white w-full max-w-md lg:max-w-xl">
+      <div className="aspect-square bg-secondary w-full max-w-md lg:max-w-xl">
         {selectedImage?.url ? (
           <Zoom>
             <WixImage
@@ -81,7 +81,7 @@ function MediaPreview({ mediaItem, isSelected, onSelect }: MediaPreviewProps) {
   return (
     <div
       className={cn(
-        "relative cursor-pointer bg-white",
+        "relative cursor-pointer bg-secondary",
         isSelected && "outline-2"
       )}
     >

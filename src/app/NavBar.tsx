@@ -49,7 +49,10 @@ export default async function NavBar() {
 
       {/* Right: Cart */}
       <div className="flex items-center justify-center gap-3">
-        <UserButton loggedInMember={loggedInMember} className="pt-[4px]" />
+        <UserButton
+          loggedInMember={loggedInMember}
+          className="pt-[4px] hover:cursor-pointer "
+        />
         <ShoppingCartButton initialData={cart} />
       </div>
     </header>

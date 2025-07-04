@@ -45,7 +45,7 @@ export default async function Page({ params }: PageProps) {
   if (!product?._id) notFound();
 
   return (
-    <main className="max-w-full mx-auto space-y-10 pb-10 lg:pt-3">
+    <main className="max-w-full mx-auto mt-10 space-y-10 pb-10 lg:pt-3">
       <ProductDetails product={product} />
     </main>
   );

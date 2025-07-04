@@ -35,7 +35,7 @@ export default function ShoppingCartButton({
           variant={"ghost"}
           size="icon"
           onClick={() => setShowSheet(true)}
-          className="pt-5 pb-4 pl-4 pr-5"
+          className="pt-5 pb-4 pl-4 pr-5 hover:cursor-pointer"
         >
           <ShoppingCartIcon />
           <span className="absolute top-0 right-0 translate-y-1 -translate-x-1 size-4 bg-primary text-xs text-primary-foreground flex items-center justify-center rounded-full">
