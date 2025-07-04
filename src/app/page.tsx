@@ -74,7 +74,7 @@ async function FeaturedProducts() {
     <>
       <AnimatedSection delay={0.2}>
         <SectionTitle href="/shop" title="Our Products" />
-        <hr className="border-t-3 mb-10 border-black" />
+        <hr className="border-t-3 mb-10 border-primary" />
         <div className="flex flex-col w-[95%] sm:w-[100%] mx-auto gap-5 sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {featuredProducts.items.map((item) => (
             <AnimatedSection key={item._id}>

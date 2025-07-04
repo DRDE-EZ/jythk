@@ -1,21 +1,23 @@
 import Link from "next/link";
-import logo from "@/assets/mycropc-logo2-copy.png";
-import Image from "next/image";
 import { getCart } from "@/wix-api/cart";
 import { getWixServerClient } from "@/lib/wix-client-server";
 import ShoppingCartButton from "@/components/ShoppingCartButton";
+import UserButton from "@/components/UserButton";
+import { getLoggedInMember } from "@/wix-api/members";
+import LogoImage from "@/components/LogoImage";
 
 export default async function NavBar() {
-  const cart = await getCart(await getWixServerClient());
+  const wixClient = await getWixServerClient();
+
+  const [cart, loggedInMember] = await Promise.all([
+    getCart(wixClient),
+    getLoggedInMember(wixClient),
+  ]);
 
   return (
     <header className="flex items-center justify-between sticky h-20 px-8 mx-auto bg-background shadow-sm top-0 z-50">
       {/* Left: Logo */}
-      <div className="flex items-center">
-        <Link href="/" className="inline-block">
-          <Image src={logo} alt="MycroPC logo" width={190} height={70} />
-        </Link>
-      </div>
+      <LogoImage />
 
       {/* Center: Navigation Links */}
       <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-14">
@@ -23,7 +25,7 @@ export default async function NavBar() {
           href="/shop"
           className="hover:-translate-y-1 transition-transform duration-200"
         >
-          <span className="text-lg font-medium text-gray-800 hover:text-gray-600">
+          <span className="text-lg font-medium text-primary hover:text-gray-400">
             Shop
           </span>
         </Link>
@@ -31,7 +33,7 @@ export default async function NavBar() {
           href="/"
           className="hover:-translate-y-1 transition-transform duration-200"
         >
-          <span className="text-lg font-medium text-gray-800 hover:text-gray-600">
+          <span className="text-lg font-medium text-primary hover:text-gray-400">
             Portfolio
           </span>
         </Link>
@@ -39,14 +41,15 @@ export default async function NavBar() {
           href="/"
           className="hover:-translate-y-1 transition-transform duration-200"
         >
-          <span className="text-lg font-medium text-gray-800 hover:text-gray-600">
+          <span className="text-lg font-medium text-primary hover:text-gray-400">
             About
           </span>
         </Link>
       </nav>
 
       {/* Right: Cart */}
-      <div className="flex items-center">
+      <div className="flex items-center justify-center gap-3">
+        <UserButton loggedInMember={loggedInMember} className="pt-[4px]" />
         <ShoppingCartButton initialData={cart} />
       </div>
     </header>

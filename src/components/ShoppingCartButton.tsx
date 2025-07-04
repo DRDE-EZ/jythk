@@ -138,7 +138,7 @@ function ShoppingCartItem({
     <li className="flex items-center gap-4">
       <div className="relative size-fit flex-none">
         <Link href={`/products/${slug}`} onClick={onProductLinkClicked}>
-          <div className="w-[110px] h-[110px] flex-none bg-white overflow-hidden">
+          <div className="w-[110px] h-[110px] flex-none overflow-hidden">
             <WixImage
               mediaIdentifier={item.image}
               width={110}

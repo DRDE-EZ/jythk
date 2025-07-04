@@ -7,6 +7,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 import StickyScrollReveal from "@/components/StickyScrollReveal";
 import ReactQueryProvider from "./ReactQueryProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "next-themes";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -29,20 +30,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.className} antialiased`}>
-        <ReactQueryProvider>
-          <StickyScrollReveal>
-            <NavBar />
-          </StickyScrollReveal>
+        <ThemeProvider
+          attribute={"class"}
+          defaultTheme="system"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <ReactQueryProvider>
+            <StickyScrollReveal>
+              <NavBar />
+            </StickyScrollReveal>
 
-          <div className="flex min-h-screen flex-col pt-20">
-            <main className="flex-1 w-full">{children}</main>
+            <div className="flex min-h-screen flex-col pt-20">
+              <main className="flex-1 w-full">{children}</main>
 
-            <AnimatedSection duration={1.2}>
-              <Footer />
-            </AnimatedSection>
-          </div>
-        </ReactQueryProvider>
-        <Toaster />
+              <AnimatedSection duration={1.2}>
+                <Footer />
+              </AnimatedSection>
+            </div>
+          </ReactQueryProvider>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
