@@ -6,11 +6,13 @@ export type ProductsSort = "last_updated" | "price_asc" | "price_desc";
 interface QueryProductsFilter {
   collectionIds?: string[] | string;
   sort?: ProductsSort;
+  itemLimit?: number;
+  skip?: number;
 }
 
 export async function queryProducts(
   wixClient: WixClient,
-  { collectionIds, sort = "last_updated" }: QueryProductsFilter
+  { collectionIds, sort = "last_updated", itemLimit, skip }: QueryProductsFilter
 ) {
   let query = wixClient.products.queryProducts();
   const collectionIdsArray = collectionIds
@@ -35,7 +37,10 @@ export async function queryProducts(
       break;
   }
 
-  return query.limit(8).find();
+  if (itemLimit) query = query.limit(itemLimit);
+  if (skip) query = query.skip(skip);
+
+  return query.find();
 }
 
 export const getProductBySlug = cache(

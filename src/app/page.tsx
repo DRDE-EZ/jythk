@@ -65,6 +65,7 @@ async function FeaturedProducts() {
 
   const featuredProducts = await queryProducts(wixClient, {
     collectionIds: collection._id,
+    itemLimit: 8,
   });
 
   if (featuredProducts.items.length === 0) {

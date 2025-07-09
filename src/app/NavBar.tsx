@@ -1,17 +1,19 @@
-import Link from "next/link";
 import { getCart } from "@/wix-api/cart";
 import { getWixServerClient } from "@/lib/wix-client-server";
 import ShoppingCartButton from "@/components/ShoppingCartButton";
 import UserButton from "@/components/UserButton";
 import { getLoggedInMember } from "@/wix-api/members";
 import LogoImage from "@/components/LogoImage";
+import MainNavigation from "./MainNavigation";
+import { getCollections } from "@/wix-api/collections";
 
 export default async function NavBar() {
   const wixClient = await getWixServerClient();
 
-  const [cart, loggedInMember] = await Promise.all([
+  const [cart, loggedInMember, collections] = await Promise.all([
     getCart(wixClient),
     getLoggedInMember(wixClient),
+    getCollections(wixClient),
   ]);
 
   return (
@@ -20,32 +22,11 @@ export default async function NavBar() {
       <LogoImage />
 
       {/* Center: Navigation Links */}
-      <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-14">
-        <Link
-          href="/shop"
-          className="hover:-translate-y-1 transition-transform duration-200"
-        >
-          <span className="text-lg font-medium text-primary hover:text-gray-400">
-            Shop
-          </span>
-        </Link>
-        <Link
-          href="/"
-          className="hover:-translate-y-1 transition-transform duration-200"
-        >
-          <span className="text-lg font-medium text-primary hover:text-gray-400">
-            Portfolio
-          </span>
-        </Link>
-        <Link
-          href="/"
-          className="hover:-translate-y-1 transition-transform duration-200"
-        >
-          <span className="text-lg font-medium text-primary hover:text-gray-400">
-            About
-          </span>
-        </Link>
-      </nav>
+
+      <MainNavigation
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex"
+        collections={collections}
+      />
 
       {/* Right: Cart */}
       <div className="flex items-center justify-center gap-3">
