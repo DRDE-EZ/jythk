@@ -23,7 +23,7 @@ export default function ProductMedia({ media }: ProductMediaProps) {
 
   return (
     <div className="flex flex-col items-center lg:items-start">
-      <div className="aspect-square bg-secondary w-full max-w-md lg:max-w-xl">
+      <div className="aspect-square bg-none w-full max-w-md lg:max-w-xl">
         {selectedImage?.url ? (
           <Zoom>
             <WixImage
@@ -31,7 +31,7 @@ export default function ProductMedia({ media }: ProductMediaProps) {
               alt={selectedImage.altText}
               width={450}
               height={450}
-              className="w-full h-auto object-contain rounded-xs shadow-lg border"
+              className="w-full h-auto object-contain rounded-xs shadow-lg"
             />
           </Zoom>
         ) : selectedVideo?.url ? (
