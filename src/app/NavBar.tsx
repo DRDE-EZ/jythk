@@ -6,6 +6,7 @@ import { getLoggedInMember } from "@/wix-api/members";
 import LogoImage from "@/components/LogoImage";
 import MainNavigation from "./MainNavigation";
 import { getCollections } from "@/wix-api/collections";
+import SearchButton from "@/components/SearchButton";
 
 export default async function NavBar() {
   const wixClient = await getWixServerClient();
@@ -30,6 +31,7 @@ export default async function NavBar() {
 
       {/* Right: Cart */}
       <div className="flex items-center justify-center gap-3">
+        <SearchButton />
         <UserButton
           loggedInMember={loggedInMember}
           className="pt-[4px] hover:cursor-pointer "
