@@ -15,11 +15,11 @@ export default function SearchButton() {
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button size="icon" variant={"ghost"} className="pt-[3px]">
+          <Button size="icon" variant={"ghost"} className="pt-[3px] rounded-xs">
             <SearchIcon />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] rounded-xs">
           <DialogTitle>Search all items:</DialogTitle>
           <SearchField onSubmitSuccess={() => setOpen(false)} />
         </DialogContent>

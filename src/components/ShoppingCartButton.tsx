@@ -35,7 +35,7 @@ export default function ShoppingCartButton({
           variant={"ghost"}
           size="icon"
           onClick={() => setShowSheet(true)}
-          className="pt-5 pb-4 pl-4 pr-5 hover:cursor-pointer"
+          className="pt-5 pb-4 pl-4 pr-5 hover:cursor-pointer rounded-xs"
         >
           <ShoppingCartIcon />
           <span className="absolute top-0 right-0 translate-y-1 -translate-x-1 size-4 bg-primary text-xs text-primary-foreground flex items-center justify-center rounded-full">
@@ -101,7 +101,7 @@ export default function ShoppingCartButton({
             <Button
               disabled={!totalQuantity || cartQuery.isFetching}
               size="lg"
-              className="rounded-xs hover:cursor-pointer"
+              className="rounded-none hover:cursor-pointer"
             >
               Checkout
             </Button>

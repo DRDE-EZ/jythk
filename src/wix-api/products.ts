@@ -9,6 +9,8 @@ interface QueryProductsFilter {
   sort?: ProductsSort;
   itemLimit?: number;
   skip?: number;
+  price_min?: string;
+  price_max?: string;
 }
 
 export async function queryProducts(
@@ -19,6 +21,8 @@ export async function queryProducts(
     sort = "last_updated",
     itemLimit,
     skip,
+    price_min,
+    price_max,
   }: QueryProductsFilter
 ) {
   let query = wixClient.products.queryProducts();
@@ -37,6 +41,16 @@ export async function queryProducts(
     query = query.hasSome("collectionIds", collectionIdsArray);
   }
 
+  // ✅ Apply price filtering
+  if (price_min) {
+    query = query.ge("priceData.price", parseFloat(price_min));
+  }
+
+  if (price_max) {
+    query = query.le("priceData.price", parseFloat(price_max));
+  }
+
+  // ✅ Sorting
   switch (sort) {
     case "price_asc":
       query = query.ascending("price");

@@ -37,7 +37,7 @@ export default function MainNavigation({
           <NavigationMenuTrigger className="flex items-center gap-1 p-5 py-[22px] text-lg font-medium rounded-none text-primary hover:text-gray-400">
             <span>Collections</span>
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="!rounded-none border-none">
             <ul className="p-4 space-y-3">
               {collections.map((c) => (
                 <li key={c._id}>

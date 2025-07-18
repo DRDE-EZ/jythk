@@ -3,7 +3,7 @@ import Product from "@/components/Product";
 import { Skeleton } from "@/components/ui/skeleton";
 import { delay } from "@/lib/utils";
 import { getWixServerClient } from "@/lib/wix-client-server";
-import { queryProducts } from "@/wix-api/products";
+import { ProductsSort, queryProducts } from "@/wix-api/products";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -12,6 +12,10 @@ interface PageProps {
   searchParams: {
     q?: string;
     page?: string;
+    collection?: string[];
+    price_min?: string;
+    price_max?: string;
+    sort?: string;
   };
 }
 
@@ -26,35 +30,50 @@ export async function generateMetadata({
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  const { q, page = "1" } = await searchParams;
+  const {
+    q,
+    page = "1",
+    collection: collectionIds,
+    price_max,
+    price_min,
+    sort,
+  } = await searchParams;
   const title = q ? `Results for ${q}` : "Products";
 
   return (
-    <main className="flex flex-col justify-center items-center gap-10 px-5 py-10 lg:flex-row lg:items-start">
-      <div className="px-5">filter sidebar</div>
-      <div className="w-full space-y-5">
-        <div className="flex justify-center lg:justify-end px-5">
-          sort filter
-        </div>
-        <div className="space-y-8 max-w-[85%] mx-auto">
-          <h1 className="text-center text-3xl md:text-4xl font-bold">
-            {title}
-          </h1>
-          <Suspense fallback={ProductResultsSkeleton()} key={`${q}-${page}`}>
-            <ProductResults q={q} page={parseInt(page)} />
-          </Suspense>
-        </div>
-      </div>
-    </main>
+    <div className="space-y-8 max-w-[85%] mx-auto">
+      <h1 className="text-center text-3xl md:text-4xl font-bold">{title}</h1>
+      <Suspense fallback={ProductResultsSkeleton()} key={`${q}-${page}`}>
+        <ProductResults
+          q={q}
+          page={parseInt(page)}
+          collectionIds={collectionIds}
+          price_min={price_min}
+          price_max={price_max}
+          sort={sort as ProductsSort}
+        />
+      </Suspense>
+    </div>
   );
 }
 
 interface ProductResultsProps {
   q?: string;
   page: number;
+  collectionIds?: string[];
+  price_min?: string;
+  price_max?: string;
+  sort?: ProductsSort;
 }
 
-async function ProductResults({ q, page }: ProductResultsProps) {
+async function ProductResults({
+  q,
+  page,
+  collectionIds,
+  price_max,
+  price_min,
+  sort,
+}: ProductResultsProps) {
   await delay(2000);
 
   const pageSize = 8;
@@ -63,12 +82,16 @@ async function ProductResults({ q, page }: ProductResultsProps) {
     q,
     itemLimit: pageSize,
     skip: (page - 1) * pageSize,
+    collectionIds,
+    price_min,
+    price_max,
+    sort,
   });
 
   if (page > (products.totalPages || 1)) notFound();
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 group-has-[[data-pending]]:animate-pulse">
       <p className="text-center text-xl">
         {products.totalCount}{" "}
         {products.totalCount === 1 ? "product" : "products"} found

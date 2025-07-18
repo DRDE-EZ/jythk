@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 
 interface UserButtonProps {
   loggedInMember: members.Member | null;
@@ -42,11 +43,15 @@ export default function UserButton({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size={"icon"} variant={"ghost"} className={className}>
+        <Button
+          size={"icon"}
+          variant={"ghost"}
+          className={cn("rounded-xs", className)}
+        >
           <UserIcon className="size-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-44 max-w-64">
+      <DropdownMenuContent className="min-w-44 max-w-64 rounded-xs">
         {loggedInMember && (
           <>
             <DropdownMenuLabel>
