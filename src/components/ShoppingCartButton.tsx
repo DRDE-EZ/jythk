@@ -12,6 +12,7 @@ import { Loader2, ShoppingCartIcon, X } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import Link from "next/link";
 import WixImage from "./WixImage";
+import CheckoutButton from "./CheckoutButton";
 
 interface ShoppingCartButtonProps {
   initialData: currentCart.Cart | null;
@@ -98,13 +99,11 @@ export default function ShoppingCartButton({
                 Shipping and taxes calculated at checkout
               </p>
             </div>
-            <Button
+            <CheckoutButton
               disabled={!totalQuantity || cartQuery.isFetching}
               size="lg"
               className="rounded-none hover:cursor-pointer"
-            >
-              Checkout
-            </Button>
+            />
           </div>
         </SheetContent>
       </Sheet>

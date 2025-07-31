@@ -8,13 +8,17 @@ import { cn } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { useState } from "react";
 
-export default function SearchButton() {
+interface SearchButtonProps {
+  className?: string;
+}
+
+export default function SearchButton({ className }: SearchButtonProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+        <DialogTrigger asChild className={cn(className)}>
           <Button size="icon" variant={"ghost"} className="pt-[3px] rounded-xs">
             <SearchIcon />
           </Button>
