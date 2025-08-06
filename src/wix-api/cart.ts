@@ -3,15 +3,14 @@ import { findVariant } from "@/lib/utils";
 import { WixClient } from "@/lib/wix-client.base";
 import { products } from "@wix/stores";
 
-export async function getCart(wixClient: WixClient) {
-  type WixCartError = {
-    details?: {
-      applicationError?: {
-        code?: string;
-      };
+export type WixCartError = {
+  details?: {
+    applicationError?: {
+      code?: string;
     };
   };
-
+};
+export async function getCart(wixClient: WixClient) {
   try {
     return await wixClient.currentCart.getCurrentCart();
   } catch (error) {
@@ -75,4 +74,17 @@ export async function updateCartItemQuantity(
 
 export async function removeCartItem(wixClient: WixClient, productId: string) {
   return wixClient.currentCart.removeLineItemsFromCurrentCart([productId]);
+}
+
+export async function clearCart(wixClient: WixClient) {
+  try {
+    return await wixClient.currentCart.deleteCurrentCart();
+  } catch (error) {
+    const err = error as WixCartError;
+    if (err.details?.applicationError?.code === "OWNED_CART_NOT_FOUND") {
+      return;
+    } else {
+      throw error;
+    }
+  }
 }

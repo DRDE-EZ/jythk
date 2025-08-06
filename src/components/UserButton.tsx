@@ -74,17 +74,32 @@ export default function UserButton({
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
+              <DropdownMenuItem
+                onClick={() => {
+                  setTheme("system");
+                  localStorage.setItem("theme-set-manually", "true");
+                }}
+              >
                 <Monitor className="mr-2 size-4" />
                 System Default
                 {theme === "system" && <Check className="ms-2 size-4" />}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("light")}>
+              <DropdownMenuItem
+                onClick={() => {
+                  setTheme("light");
+                  localStorage.setItem("theme-set-manually", "true");
+                }}
+              >
                 <Sun className="mr-2 size-4" />
                 Light
                 {theme === "light" && <Check className="ms-2 size-4" />}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
+              <DropdownMenuItem
+                onClick={() => {
+                  setTheme("dark");
+                  localStorage.setItem("theme-set-manually", "true");
+                }}
+              >
                 <Moon className="mr-2 size-4" />
                 Dark
                 {theme === "dark" && <Check className="ms-2 size-4" />}

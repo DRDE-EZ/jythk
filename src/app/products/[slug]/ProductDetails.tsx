@@ -1,11 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { products } from "@wix/stores";
 import ProductOptions from "./ProductOptions";
 import { useState } from "react";
 import { checkInStock, findVariant } from "@/lib/utils";
-import { FaDollarSign } from "react-icons/fa";
 import ProductMedia from "./ProductMedia";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -18,6 +16,7 @@ import {
 } from "@/components/ui/accordion";
 import AddToCartButton from "@/components/AddToCartButton";
 import BackInStockNotificationButton from "@/components/BackInStockNotificationButton";
+import BuyNowButton from "@/components/BuyNowButton";
 
 export default function ProductDetails({
   product,
@@ -139,13 +138,12 @@ export default function ProductDetails({
                 className="w-full sm:w-auto sm:min-w-[200px] px-8 text-lg font-medium rounded-none transition-all duration-200 hover:shadow-lg hover:cursor-pointer"
               />
               {/* Buy Button */}
-              <Button
-                variant="default"
+              <BuyNowButton
+                product={product}
+                selectedOptions={selectedOptions}
+                quantity={quantity}
                 className="w-full sm:w-auto sm:min-w-[200px] px-8 text-lg font-medium rounded-none transition-all duration-200 hover:shadow-lg hover:cursor-pointer"
-              >
-                <FaDollarSign />
-                Buy now
-              </Button>
+              />
             </>
           ) : (
             <BackInStockNotificationButton

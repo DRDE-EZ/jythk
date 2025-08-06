@@ -2,6 +2,7 @@ import { wixBrowserClient } from "@/lib/wix-client.browser";
 import {
   addToCart,
   AddToCartValues,
+  clearCart,
   getCart,
   removeCartItem,
   updateCartItemQuantity,
@@ -15,7 +16,6 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { currentCart } from "@wix/ecom";
-import { products } from "@wix/stores";
 import { toast } from "sonner";
 
 const queryKey: QueryKey = ["cart"];
@@ -129,5 +129,23 @@ export function useRemoveCartItem() {
     onSettled() {
       queryClient.invalidateQueries({ queryKey });
     },
+  });
+}
+
+export function useClearCart() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => {
+      if (!wixBrowserClient) {
+        return Promise.reject(new Error("Wix client not initialized"));
+      }
+      return clearCart(wixBrowserClient);
+    },
+    onSuccess() {
+      queryClient.setQueryData(queryKey, null);
+      queryClient.invalidateQueries({ queryKey });
+    },
+    retry: 3,
   });
 }

@@ -15,7 +15,7 @@ export default function Product({ product }: ProductProps) {
   const { theme } = useTheme();
   return (
     <Link href={`/products/${product.slug}`}>
-      <div className="overflow-hidden relative group/product rounded-xs shadow-sm">
+      <div className="overflow-hidden relative group/product rounded-none shadow-sm">
         <WixImage
           height={600}
           width={600}
@@ -31,7 +31,7 @@ export default function Product({ product }: ProductProps) {
         >
           {description && (
             <div
-              className="text-md text-gray-800 font-normal tracking-tight p-6 line-clamp-3 text-ellipsis overflow-hidden"
+              className="text-md text-gray-800 font-normal tracking-tight p-6 line-clamp-4 text-ellipsis overflow-hidden"
               dangerouslySetInnerHTML={{
                 __html: description,
               }}

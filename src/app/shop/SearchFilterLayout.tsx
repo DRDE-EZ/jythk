@@ -59,7 +59,7 @@ export default function SearchFilterLayout({
   return (
     <main className="group flex flex-col justify-center items-center gap-10 px-5 py-10 lg:flex-row lg:items-start ">
       <aside
-        className="h-fit space-y-5 lg:sticky lg:top-10 lg:w-64"
+        className="h-fit space-y-5 lg:sticky lg:top-22 lg:w-64"
         data-pending={isPending ? "" : undefined}
       >
         <CollectionsFilter

@@ -8,6 +8,7 @@ import StickyScrollReveal from "@/components/StickyScrollReveal";
 import ReactQueryProvider from "./ReactQueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
+import ThemeManager from "@/components/ThemeManager";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -16,8 +17,8 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Shop",
-    default: "Shop",
+    template: "%s | Mycro PC",
+    default: "Mycro PC",
   },
   description: "PC Builds, Gaming PCs, and Custom Builds",
 };
@@ -32,10 +33,11 @@ export default function RootLayout({
       <body className={`${dmSans.className} antialiased`}>
         <ThemeProvider
           attribute={"class"}
-          defaultTheme="system"
-          enableSystem={true}
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
+          <ThemeManager />
           <ReactQueryProvider>
             <StickyScrollReveal>
               <NavBar />
