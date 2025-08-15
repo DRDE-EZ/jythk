@@ -17,6 +17,8 @@ export async function getLoginUrl(wixClient: WixClient, oAuthData: OauthData) {
     responseMode: "query",
   });
 
+  console.log("Generated auth URL:", authUrl);
+
   return authUrl;
 }
 
