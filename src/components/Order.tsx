@@ -18,6 +18,9 @@ export default function Order({ order }: OrderProps) {
     [orders.PaymentStatus.PARTIALLY_REFUNDED]: "Partially Refunded",
     [orders.PaymentStatus.PENDING]: "Pending",
     [orders.PaymentStatus.UNSPECIFIED]: "No information",
+    [orders.PaymentStatus.PENDING_MERCHANT]: "Pending Merchant",
+    [orders.PaymentStatus.CANCELED]: "Canceled",
+    [orders.PaymentStatus.DECLINED]: "Declined",
   };
 
   const fulfillmentStatusMap: Record<orders.FulfillmentStatus, string> = {

@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { orderId: string };
+  searchParams: Promise<{ orderId: string }>;
 }) {
-  const { orderId } = searchParams; // ✅ no await here
+  const { orderId } = await searchParams; // ✅ await the searchParams Promise
   const wixClient = await getWixServerClient();
 
   const [order, loggedInMeber] = await Promise.all([
