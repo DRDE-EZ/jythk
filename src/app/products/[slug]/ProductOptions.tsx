@@ -6,7 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { checkInStock, cn } from "@/lib/utils";
 import { products } from "@wix/stores";
 
 interface ProductOptionsProps {

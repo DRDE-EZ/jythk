@@ -30,6 +30,7 @@ export async function createBackInStockNotificationRequest(
   const catalogInfo = await wixClient.products.queryProducts().limit(1).find();
   console.log("Product data:", catalogInfo.items[0]);
   const selectedVariant = findVariant(product, selectedOptions);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const response = await startCollectingRequests(WIX_STORES_APP_ID);
 
   await wixClient.backInStockNotifications.createBackInStockNotificationRequest(

@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 
 interface PageProps {
   params: { id: string };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchParams: any;
 }
 

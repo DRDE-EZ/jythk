@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useTheme } from "next-themes";
 
 export default function ThemeManager() {
-  const { setTheme, resolvedTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   useEffect(() => {
     const hasManualPreference =

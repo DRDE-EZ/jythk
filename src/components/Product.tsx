@@ -4,7 +4,6 @@ import { products } from "@wix/stores";
 import Link from "next/link";
 import WixImage from "./WixImage";
 import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
 import { ArrowUpRight } from "lucide-react";
 
 interface ProductProps {
@@ -14,7 +13,6 @@ interface ProductProps {
 export default function Product({ product }: ProductProps) {
   const mainImage = product.media?.mainMedia?.image;
   const description = product.additionalInfoSections?.[0]?.description;
-  const { theme } = useTheme();
 
   const isDiscounted =
     product.priceData?.formatted?.price !==

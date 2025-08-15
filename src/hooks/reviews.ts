@@ -1,4 +1,3 @@
-import { WixClient } from "@/lib/wix-client.base";
 import { wixBrowserClient } from "@/lib/wix-client.browser";
 import {
   createProductReview,

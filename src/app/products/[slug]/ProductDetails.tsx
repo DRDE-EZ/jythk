@@ -44,6 +44,7 @@ export default function ProductDetails({
   const selectedVariant = findVariant(product, selectedOptions);
   const inStock = checkInStock(product, selectedOptions);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const option = selectedOptions?.Builds?.split("/") || "";
 
   const selectedOptionsMedia = product.productOptions?.flatMap((option) => {

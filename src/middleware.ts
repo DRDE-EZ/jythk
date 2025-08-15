@@ -21,6 +21,7 @@ export async function middleware(req: NextRequest) {
         sessionTokens.refreshToken
       );
     } catch (error) {
+      console.log(error);
       sessionTokens = await wixClient.auth.generateVisitorTokens();
     }
   }

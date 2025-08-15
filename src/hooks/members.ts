@@ -20,7 +20,7 @@ export function useUpdateMember() {
         router.refresh();
       }, 2000);
     },
-    onError(error, variables, context) {
+    onError(error) {
       console.error(error);
       toast.error("Failed to update profile, please try again.");
     },
