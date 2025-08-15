@@ -15,17 +15,24 @@ export default async function Home() {
       <div className="relative w-full h-[600px] md:h-[760px] overflow-hidden">
         <video
           style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            minWidth: "100%",
+            minHeight: "100%",
+            backgroundColor: "black", // hides any small gaps
           }}
-          className="absolute top-0 left-0"
-          src="/banner_video.webm"
+          playsInline
+          webkit-playsinline="true" // iOS hint
+          muted
           autoPlay
           loop
-          muted
-          playsInline
+          src="/banner_video.webm"
         />
+
         <div className="absolute inset-0 bg-black/35 flex flex-col items-center justify-center text-center gap-3 px-4">
           <AnimatedSection>
             <h1 className="text-4xl md:text-6xl font-medium tracking-wide text-white mb-6 md:mb-10">
