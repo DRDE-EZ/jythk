@@ -15,13 +15,11 @@ export default async function Home() {
       <div className="relative w-full h-[600px] md:h-[760px] overflow-hidden">
         <video
           style={{
+            width: "100%",
+            height: "100%",
             objectFit: "cover",
-            minWidth: "100%",
-            minHeight: "100%",
-            WebkitTransform: "translateZ(0)",
-            WebkitMaskImage: "-webkit-radial-gradient(white, black)",
           }}
-          className="absolute top-0 left-0 w-full h-full"
+          className="absolute top-0 left-0"
           src="/banner_video.webm"
           autoPlay
           loop
