@@ -7,8 +7,8 @@ export async function generateOAuthData(
   originPath?: string
 ) {
   return wixClient.auth.generateOAuthData(
-    env.NEXT_PUBLIC_BASE_URL + "/api/auth/callback/wix",
-    env.NEXT_PUBLIC_BASE_URL + "/" + (originPath || "")
+    "https://mycropc.com/api/auth/callback/wix", // Hardcode the correct domain
+    "https://mycropc.com/" + (originPath || "") // Hardcode the correct domain
   );
 }
 
