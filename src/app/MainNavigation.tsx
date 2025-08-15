@@ -52,6 +52,16 @@ export default function MainNavigation({
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link
+            href="/about"
+            className="hover:-translate-y-1 transition-transform duration-200"
+          >
+            <NavigationMenuLink className="text-lg font-medium text-primary rounded-none hover:text-gray-400">
+              About
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );

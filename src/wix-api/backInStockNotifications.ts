@@ -1,5 +1,5 @@
 import { WIX_STORES_APP_ID } from "@/lib/constants";
-import { delay, findVariant } from "@/lib/utils";
+import { findVariant } from "@/lib/utils";
 import { WixClient } from "@/lib/wix-client.base";
 import { products } from "@wix/stores";
 
@@ -31,9 +31,6 @@ export async function createBackInStockNotificationRequest(
   console.log("Product data:", catalogInfo.items[0]);
   const selectedVariant = findVariant(product, selectedOptions);
   const response = await startCollectingRequests(WIX_STORES_APP_ID);
-  console.log("niggaaaa" + response);
-
-  delay(2000);
 
   await wixClient.backInStockNotifications.createBackInStockNotificationRequest(
     {

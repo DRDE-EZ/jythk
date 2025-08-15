@@ -67,6 +67,11 @@ export default function MobileMenu({
                 </li>
               ))}
               <li>
+                <Link href="/about" className="font-semibold hover:underline">
+                  About
+                </Link>
+              </li>
+              <li>
                 <UserButton loggedInMember={loggedInMember} />
               </li>
             </ul>
