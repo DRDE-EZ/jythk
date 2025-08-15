@@ -12,7 +12,7 @@ import { getWixServerClient } from "@/lib/wix-client-server";
 export default async function Home() {
   return (
     <div className="max-w-full mx-auto space-y-10 pb-10">
-      <div className="relative w-full h-[600px] md:h-[760px] overflow-hidden">
+      <div className="relative w-full h-[400px] md:h-[760px] overflow-hidden">
         <video
           style={{
             position: "absolute",
