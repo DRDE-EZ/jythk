@@ -12,9 +12,14 @@ import { getWixServerClient } from "@/lib/wix-client-server";
 export default async function Home() {
   return (
     <div className="max-w-full mx-auto space-y-10 pb-10">
-      <div className="relative w-full overflow-hidden h-[600px] md:h-[600px]">
+      <div
+        className="relative w-full overflow-hidden grid place-items-center"
+        style={{
+          height: "min(600px, 100vh)",
+        }}
+      >
         <video
-          className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto transform -translate-x-1/2 -translate-y-1/2 object-cover"
+          className="w-full h-full object-cover col-start-1 row-start-1"
           src="/banner_video.webm"
           autoPlay
           loop
@@ -22,11 +27,9 @@ export default async function Home() {
           playsInline
           preload="metadata"
           style={{
-            // Fallback for browsers that don't support object-fit
-            minWidth: "100%",
+            aspectRatio: "16/9", // Adjust based on your video's aspect ratio
             minHeight: "100%",
-            width: "auto",
-            height: "auto",
+            minWidth: "100%",
           }}
         />
 
