@@ -109,34 +109,34 @@ export default function Footer() {
 
               <li>
                 <a
-                  href="#"
+                  href="/shop"
                   title=""
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
                   {" "}
-                  Features{" "}
+                  Shop{" "}
                 </a>
               </li>
 
               <li>
                 <a
-                  href="#"
+                  href="/socials"
                   title=""
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
                   {" "}
-                  Works{" "}
+                  Socials{" "}
                 </a>
               </li>
 
               <li>
                 <a
-                  href="#"
+                  href="contact-us"
                   title=""
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
                   {" "}
-                  Career{" "}
+                  Contact Us{" "}
                 </a>
               </li>
             </ul>
