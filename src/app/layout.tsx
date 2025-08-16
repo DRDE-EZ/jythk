@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
 import ThemeManager from "@/components/ThemeManager";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${dmSans.className} antialiased`}>
         <Analytics />
+        <SpeedInsights />
         <ThemeProvider
           attribute={"class"}
           defaultTheme="light"
