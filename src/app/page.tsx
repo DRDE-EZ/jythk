@@ -12,28 +12,22 @@ import { getWixServerClient } from "@/lib/wix-client-server";
 export default async function Home() {
   return (
     <div className="max-w-full mx-auto space-y-10 pb-10">
-      <div
-        className="relative w-full overflow-hidden"
-        style={{
-          height: "600px", // Or whatever fixed height you want
-          position: "relative",
-        }}
-      >
+      <div className="relative w-full overflow-hidden h-[600px] md:h-[600px]">
         <video
-          style={{
-            display: "block",
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center center",
-          }}
-          className="absolute top-0 left-0"
+          className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto transform -translate-x-1/2 -translate-y-1/2 object-cover"
           src="/banner_video.webm"
           autoPlay
           loop
           muted
           playsInline
-          webkit-playsinline="true"
+          preload="metadata"
+          style={{
+            // Fallback for browsers that don't support object-fit
+            minWidth: "100%",
+            minHeight: "100%",
+            width: "auto",
+            height: "auto",
+          }}
         />
 
         <div className="absolute inset-0 bg-black/35 flex flex-col items-center justify-center text-center gap-3 px-4">
