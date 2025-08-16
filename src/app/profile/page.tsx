@@ -6,8 +6,8 @@ import MemberInfoForm from "./MemberInfoForm";
 import Orders from "./Orders";
 
 export const metadata: Metadata = {
-  title: "Profile",
-  description: "Personal profile page",
+  title: "Profile - MycroPc",
+  description: "Manage your personal profile and view order history",
 };
 
 export default async function Page() {
@@ -16,12 +16,76 @@ export default async function Page() {
   if (!member) NotFound();
 
   return (
-    <main className="mx-auto max-w-7xl space-y-10 px-5 py-10">
-      <h1 className="text-center text-3xl font-bold md:text-4xl">
-        Your Profile
-      </h1>
-      <MemberInfoForm loggedInMember={member!} />
-      <Orders />
-    </main>
+    <div className="min-h-screen bg-background">
+      {/* Header Section */}
+      <div className="bg-gradient-to-br from-muted/30 via-muted/20 to-background py-16 sm:py-20 md:py-24 border-b border-border">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <div className="space-y-6">
+            {/* Avatar Section */}
+            <div className="relative mx-auto w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-20 h-20 sm:w-28 sm:h-28 bg-background rounded-full flex items-center justify-center">
+                <svg
+                  className="w-10 h-10 sm:w-14 sm:h-14 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* Welcome Text */}
+            <div className="space-y-4">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                Your Profile
+              </h1>
+              <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+                Manage your account details and view your order history
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Profile Information Card */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-8 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                Account Information
+              </h2>
+            </div>
+
+            <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm">
+              <MemberInfoForm loggedInMember={member!} />
+            </div>
+          </div>
+
+          {/* Orders Section */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-8 bg-gradient-to-b from-secondary to-accent rounded-full"></div>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                Order History
+              </h2>
+            </div>
+
+            <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm">
+              <Orders />
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 }
