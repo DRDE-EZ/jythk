@@ -29,12 +29,6 @@ export default async function Home() {
             minWidth: "100%",
             minHeight: "100%",
           }}
-          onLoadedMetadata={(e) => {
-            // Force video dimensions after load
-            const video = e.target as HTMLVideoElement;
-            video.style.width = "100%";
-            video.style.height = "100%";
-          }}
         />
 
         <div className="absolute inset-0 bg-black/35 flex flex-col items-center justify-center text-center gap-3 px-4">
