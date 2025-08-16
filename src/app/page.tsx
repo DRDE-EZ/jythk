@@ -14,23 +14,27 @@ export default async function Home() {
     <div className="max-w-full mx-auto space-y-10 pb-10">
       <div className="relative w-full h-[600px] md:h-[760px] overflow-hidden">
         <video
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            minWidth: "100%",
-            minHeight: "100%",
-            backgroundColor: "black", // hides any small gaps
-          }}
-          playsInline
-          webkit-playsinline="true" // iOS hint
-          muted
+          className="absolute top-0 left-0 w-full h-full"
+          src="/banner_video.webm"
           autoPlay
           loop
-          src="/banner_video.webm"
+          muted
+          playsInline
+          preload="metadata"
+          style={{
+            objectFit: "cover",
+            objectPosition: "center center",
+            width: "100%",
+            height: "100%",
+            minWidth: "100%",
+            minHeight: "100%",
+          }}
+          onLoadedMetadata={(e) => {
+            // Force video dimensions after load
+            const video = e.target as HTMLVideoElement;
+            video.style.width = "100%";
+            video.style.height = "100%";
+          }}
         />
 
         <div className="absolute inset-0 bg-black/35 flex flex-col items-center justify-center text-center gap-3 px-4">
