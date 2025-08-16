@@ -61,7 +61,7 @@ export default async function Home() {
               <Button
                 asChild
                 size="lg"
-                className="group relative rounded-sm overflow-hidden bg-primary hover:bg-primary text-primary-foreground px-10 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-primary/25 min-w-[160px]"
+                className="group relative overflow-hidden bg-primary hover:bg-primary text-primary-foreground px-10 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-primary/25 min-w-[160px]"
               >
                 <Link href="/shop">
                   <span className="relative z-10">Shop Now</span>
@@ -71,12 +71,10 @@ export default async function Home() {
               <Button
                 asChild
                 size="lg"
-                className="group relative rounded-sm overflow-hidden bg-transparent border-2 border-white  px-10 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 backdrop-blur-sm min-w-[160px]"
+                className="group relative overflow-hidden bg-transparent border-2 border-white text-white hover:text-primary-foreground px-10 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 backdrop-blur-sm min-w-[160px]"
               >
                 <Link href="/about">
-                  <span className="text-white group-hover:text-black relative z-10">
-                    Learn More
-                  </span>
+                  <span className="relative z-10">Learn More</span>
                   <div className="absolute inset-0 bg-white translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
                 </Link>
               </Button>
@@ -100,7 +98,7 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
               {[
-                { number: "50+", label: "Custom Builds" },
+                { number: "500+", label: "Custom Builds" },
                 { number: "24/7", label: "Support" },
                 { number: "98%", label: "Satisfaction" },
                 { number: "5★", label: "Reviews" },
@@ -152,7 +150,7 @@ export default async function Home() {
             ].map((feature) => (
               <div
                 key={feature.title}
-                className="group p-6 sm:p-8 md:p-10 rounded-sm bg-card border border-border hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 cursor-pointer"
+                className="group p-6 sm:p-8 md:p-10 rounded-3xl bg-card border border-border hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 cursor-pointer"
               >
                 <div className="text-5xl sm:text-6xl md:text-7xl mb-6 transition-all duration-300 select-none touch-manipulation">
                   {feature.icon}
@@ -207,14 +205,14 @@ export default async function Home() {
                   href: "/shop?category=workstation",
                 },
                 {
-                  title: "Custom Builds",
+                  title: "Custom",
                   description: "Tailored to your vision",
                   gradient: "from-green-500 to-teal-500",
                   href: "/shop?category=custom",
                 },
               ].map((category) => (
                 <Link key={category.title} href={category.href}>
-                  <div className="group relative overflow-hidden rounded-sm aspect-[4/3] cursor-pointer transform hover:scale-105 transition-all duration-500">
+                  <div className="group relative overflow-hidden rounded-3xl aspect-[4/3] cursor-pointer transform hover:scale-105 transition-all duration-500">
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-80 group-hover:opacity-90 transition-opacity duration-300`}
                     ></div>
@@ -265,7 +263,7 @@ export default async function Home() {
               <Button
                 asChild
                 size="lg"
-                className="px-10 py-4 text-xl rounded-sm font-semibold min-w-[200px]"
+                className="px-10 py-4 text-xl font-semibold min-w-[200px]"
               >
                 <Link href="/contact">Get Custom Quote</Link>
               </Button>
@@ -273,7 +271,7 @@ export default async function Home() {
                 variant="outline"
                 asChild
                 size="lg"
-                className="px-10 py-4 text-xl rounded-sm font-semibold min-w-[200px]"
+                className="px-10 py-4 text-xl font-semibold min-w-[200px]"
               >
                 <Link href="/shop">Browse Products</Link>
               </Button>

@@ -18,8 +18,8 @@ export default function Product({ product }: ProductProps) {
     product.priceData?.formatted?.discountedPrice;
 
   return (
-    <Link href={`/products/${product.slug}`}>
-      <div className="group/card relative overflow-hidden rounded-sm bg-gradient-to-b from-background to-muted/20 border border-border/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
+    <Link href={`/products/${product.slug}`} className="block">
+      <div className="group/card relative w-full h-[420px] flex flex-col overflow-hidden rounded-lg bg-card border border-border transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
         {/* Discount Badge */}
         {isDiscounted && (
           <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
@@ -34,14 +34,14 @@ export default function Product({ product }: ProductProps) {
           </div>
         </div>
 
-        {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden rounded-t-2xl">
+        {/* Image Container - Fixed height */}
+        <div className="relative h-[280px] overflow-hidden flex-shrink-0">
           <WixImage
             height={400}
             width={400}
             mediaIdentifier={mainImage?.url}
             alt={mainImage?.altText}
-            className="w-full h-full object-cover transition-all duration-700 group-hover/card:scale-110"
+            className="w-full h-full object-contain transition-all duration-700 group-hover/card:scale-110"
           />
 
           {/* Gradient Overlay */}
@@ -67,11 +67,11 @@ export default function Product({ product }: ProductProps) {
           </div>
         </div>
 
-        {/* Content Section */}
-        <div className="p-4 space-y-3">
-          {/* Product Name */}
-          <div className="space-y-1">
-            <h3 className="font-bold text-lg sm:text-xl leading-tight text-foreground group-hover/card:text-primary transition-colors duration-300 line-clamp-2">
+        {/* Content Section - Fixed height remainder */}
+        <div className="flex-1 flex flex-col justify-between p-4 min-h-[140px]">
+          {/* Product Name - Fixed height area */}
+          <div className="space-y-2 h-[60px] flex flex-col justify-start">
+            <h3 className="font-bold text-lg leading-tight line-clamp-2 text-foreground group-hover/card:text-primary transition-colors duration-300">
               {product.name}
             </h3>
 
@@ -79,48 +79,50 @@ export default function Product({ product }: ProductProps) {
             <div className="w-0 group-hover/card:w-12 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-500 ease-out" />
           </div>
 
-          {/* Pricing */}
-          <div className="flex items-center justify-between">
-            {isDiscounted ? (
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold text-emerald-600">
-                    {product.priceData?.formatted?.discountedPrice}
-                  </span>
-                  <span className="text-sm text-muted-foreground line-through">
+          {/* Pricing - Fixed height area */}
+          <div className="h-[60px] flex flex-col justify-end">
+            <div className="flex items-end justify-between">
+              {isDiscounted ? (
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg font-bold text-emerald-600">
+                      {product.priceData?.formatted?.discountedPrice}
+                    </span>
+                    <span className="text-sm text-muted-foreground line-through">
+                      {product.priceData?.formatted?.price}
+                    </span>
+                  </div>
+                  <div className="text-xs text-emerald-600 font-medium">
+                    Limited Time Offer
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-1">
+                  <span className="text-xl font-bold text-foreground">
                     {product.priceData?.formatted?.price}
                   </span>
+                  <div className="text-xs text-muted-foreground">
+                    Premium Build
+                  </div>
                 </div>
-                <div className="text-xs text-emerald-600 font-medium">
-                  Limited Time Offer
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-1">
-                <span className="text-xl font-bold text-foreground">
-                  {product.priceData?.formatted?.price}
-                </span>
-                <div className="text-xs text-muted-foreground">
-                  Premium Build
-                </div>
-              </div>
-            )}
+              )}
 
-            {/* Performance Badge */}
-            <div className="opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
-              <div className="bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border border-primary/30 px-2 py-1 rounded-md text-xs font-semibold">
-                HIGH-PERF
+              {/* Performance Badge */}
+              <div className="opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                <div className="bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border border-primary/30 px-2 py-1 rounded-md text-xs font-semibold">
+                  HIGH-PERF
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Bottom gradient line */}
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            {/* Bottom gradient line */}
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent mt-3" />
+          </div>
         </div>
 
         {/* Card glow effect */}
-        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-secondary/5 blur-xl" />
+        <div className="absolute inset-0 rounded-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none -z-10">
+          <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/5 to-secondary/5 blur-xl" />
         </div>
       </div>
     </Link>
