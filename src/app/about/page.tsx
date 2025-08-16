@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
-export default function TermsAndConditionsPage() {
+export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -52,7 +52,7 @@ export default function TermsAndConditionsPage() {
             className="mb-6 md:mb-8"
           >
             <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-foreground via-muted-foreground to-muted-foreground bg-clip-text text-transparent">
-              Terms & Conditions
+              About Us
             </h1>
             <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
           </motion.div>
@@ -63,7 +63,7 @@ export default function TermsAndConditionsPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed"
           >
-            Shipping, delivery, and important policies
+            Building the future of high-performance computing
           </motion.p>
         </div>
 
@@ -86,7 +86,7 @@ export default function TermsAndConditionsPage() {
 
       {/* Content Sections */}
       <div className="relative z-20 bg-background">
-        {/* Shipping & Processing Section */}
+        {/* Mission Section */}
         <Section delay={0.2}>
           <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center">
             <motion.div
@@ -96,26 +96,18 @@ export default function TermsAndConditionsPage() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Processing & Shipping
+                Our Mission
               </h2>
-              <div className="space-y-6 text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                <p>
-                  <strong className="text-foreground">Processing Time:</strong>{" "}
-                  Orders are typically built and dispatched within 6-10 business
-                  days. Prebuilt systems ship faster; custom configurations may
-                  require additional time depending on component availability.
-                  We believe in delivering the best product we possibly can.
-                </p>
-                <p>
-                  <strong className="text-foreground">
-                    Shipping Rates & Carriers:
-                  </strong>{" "}
-                  We ship domestically via Royal Mail / DPD / UPS / DHL / FedEx,
-                  depending on your location and product weight. Shipping fees
-                  are calculated at checkout based on your delivery address and
-                  chosen speed.
-                </p>
-              </div>
+              <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed mb-4 md:mb-6">
+                At MycroPc, we believe in more than just selling PCs — we build
+                high-performance machines that power your passions.
+              </p>
+              <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
+                Whether you&apos;re a gamer chasing ultra settings, a creator
+                handling 4K workflows, or a professional needing rock-solid
+                reliability, our custom-built PCs are tailored to your exact
+                needs.
+              </p>
             </motion.div>
 
             <motion.div
@@ -125,28 +117,22 @@ export default function TermsAndConditionsPage() {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="aspect-square bg-gradient-to-br from-primary/5 to-secondary/10 rounded-xl border border-border backdrop-blur-sm flex items-center justify-center">
+              <div className="aspect-square bg-gradient-to-br from-primary/5 to-secondary/10 rounded-3xl border border-border backdrop-blur-sm flex items-center justify-center">
                 <div className="text-center">
-                  <div className="w-16 md:w-24 h-16 md:h-24 mx-auto mb-4 md:mb-6 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
+                  <div className="w-16 md:w-24 h-16 md:h-24 mx-auto mb-4 md:mb-6 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center">
                     <svg
                       className="w-8 md:w-12 h-8 md:h-12 text-primary-foreground"
-                      fill="none"
-                      stroke="currentColor"
+                      fill="currentColor"
                       viewBox="0 0 24 24"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M12 11L4 7"
-                      />
+                      <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 10.5.5.08 1-.04 1.5-.04s1 .12 1.5.04C19.16 26.74 23 22.55 23 17V7L12 2z" />
                     </svg>
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold mb-2 text-foreground">
-                    Fast Delivery
+                    Performance
                   </h3>
                   <p className="text-sm md:text-base text-muted-foreground">
-                    10-12 business days
+                    Engineered for excellence
                   </p>
                 </div>
               </div>
@@ -154,8 +140,59 @@ export default function TermsAndConditionsPage() {
           </div>
         </Section>
 
-        {/* Tracking & Support Section */}
+        {/* Values Section */}
         <Section delay={0.4}>
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+              Our Values
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+            {[
+              {
+                title: "Performance",
+                icon: "⚡",
+                desc: "Uncompromising speed and power in every build",
+              },
+              {
+                title: "Reliability",
+                icon: "🛡️",
+                desc: "Rock-solid systems you can depend on",
+              },
+              {
+                title: "Support",
+                icon: "🤝",
+                desc: "Expert care that genuinely makes a difference",
+              },
+            ].map((value, index) => (
+              <motion.div
+                key={value.title}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group"
+              >
+                <div className="bg-card border border-border rounded-2xl p-6 md:p-8 text-center transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-2xl group-hover:shadow-primary/10">
+                  <div className="text-3xl md:text-4xl mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    {value.icon}
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-card-foreground group-hover:text-primary transition-colors">
+                    {value.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                    {value.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
+
+        {/* Story Section */}
+        <Section delay={0.6}>
           <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -164,12 +201,12 @@ export default function TermsAndConditionsPage() {
               viewport={{ once: true }}
               className="relative order-2 lg:order-1"
             >
-              <div className="aspect-video bg-gradient-to-br from-muted to-card rounded-xl border border-border overflow-hidden">
+              <div className="aspect-video bg-gradient-to-br from-muted to-card rounded-3xl border border-border overflow-hidden">
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-4xl md:text-6xl mb-2 md:mb-4">📦</div>
+                    <div className="text-4xl md:text-6xl mb-2 md:mb-4">🚀</div>
                     <p className="text-lg md:text-xl text-muted-foreground">
-                      Real-time tracking
+                      Since 2025
                     </p>
                   </div>
                 </div>
@@ -184,28 +221,22 @@ export default function TermsAndConditionsPage() {
               className="order-1 lg:order-2"
             >
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-                Tracking & Support
+                Our Journey
               </h2>
-              <div className="space-y-6 text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                <p>
-                  <strong className="text-foreground">Tracking:</strong> Once
-                  your order is shipped, you&apos;ll receive a confirmation
-                  email with tracking details so you can monitor your delivery
-                  in real time.
-                </p>
-                <p>
-                  <strong className="text-foreground">Delivery Issues:</strong>{" "}
-                  If your package is delayed, damaged, or lost in transit,
-                  please contact us within 48 hours of the expected delivery
-                  date. We&apos;ll assist in resolving the issue promptly.
-                </p>
-              </div>
+              <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed mb-4 md:mb-6">
+                Founded in 2025, we&apos;ve grown from a small local operation
+                into a trusted name in the PC community.
+              </p>
+              <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
+                Every system is rigorously tested, optimized, and backed by a
+                support team that genuinely cares.
+              </p>
             </motion.div>
           </div>
         </Section>
 
-        {/* International & Contact Section */}
-        <Section delay={0.6} className="border-b border-border">
+        {/* Team Section */}
+        <Section delay={0.8} className="border-b border-border">
           <div className="text-center">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -214,17 +245,12 @@ export default function TermsAndConditionsPage() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8 bg-gradient-to-r from-destructive to-primary bg-clip-text text-transparent">
-                International & Contact
+                Who We Are
               </h2>
-              <div className="max-w-4xl mx-auto space-y-6 text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed mb-8 md:mb-12">
-                <p>
-                  <strong className="text-foreground">
-                    International Orders:
-                  </strong>{" "}
-                  We currently do offer international shipping. For bulk or B2B
-                  inquiries, please contact us directly.
-                </p>
-              </div>
+              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto mb-8 md:mb-12 px-4">
+                We&apos;re not just box shippers — we&apos;re builders, gamers,
+                designers, and problem-solvers.
+              </p>
 
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -233,61 +259,45 @@ export default function TermsAndConditionsPage() {
                 viewport={{ once: true }}
                 className="inline-block"
               >
-                <div className="bg-gradient-to-r from-primary to-secondary p-1 rounded-xl">
-                  <div className="bg-background rounded-lg px-8 md:px-12 py-6 md:py-8">
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-foreground">
-                      Need Help?
-                    </h3>
-                    <p className="text-muted-foreground mb-4">
-                      Contact us for support or bulk inquiries
-                    </p>
-                    <a
-                      href="mailto:Mycropcuk@gmail.com"
-                      className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium text-lg"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 3.26a2 2 0 001.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                      Mycropcuk@gmail.com
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </Section>
+                <motion.a
+                  href="/shop"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group relative block cursor-pointer"
+                >
+                  <div className="bg-gradient-to-r from-primary to-secondary p-1 rounded-2xl transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-primary/25">
+                    <div className="relative bg-background rounded-xl px-8 md:px-12 py-6 md:py-8 overflow-hidden">
+                      {/* Fill animation background */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
 
-        {/* Additional Terms Section */}
-        <Section delay={0.8}>
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-foreground">
-                Important Notes
-              </h2>
-              <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm">
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  These terms are subject to change without notice. Please check
-                  this page regularly for updates. By placing an order with
-                  MycroPc, you agree to these terms and conditions. All orders
-                  are subject to availability and acceptance.
-                </p>
-              </div>
+                      {/* Content */}
+                      <div className="relative z-10">
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent group-hover:text-primary-foreground transition-all duration-300">
+                          Welcome to the next level of computing.
+                        </h3>
+                        <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-200">
+                          <span className="text-primary-foreground font-medium text-sm md:text-base">
+                            Shop Now
+                          </span>
+                          <svg
+                            className="w-4 md:w-5 h-4 md:h-5 text-primary-foreground transform group-hover:translate-x-1 transition-transform duration-300"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M17 8l4 4m0 0l-4 4m4-4H3"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.a>
+              </motion.div>
             </motion.div>
           </div>
         </Section>

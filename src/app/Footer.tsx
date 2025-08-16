@@ -98,7 +98,7 @@ export default function Footer() {
             <ul className="mt-6 space-y-4">
               <li>
                 <a
-                  href="#"
+                  href="/about"
                   title=""
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >

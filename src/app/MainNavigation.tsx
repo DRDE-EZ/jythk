@@ -22,7 +22,7 @@ export default function MainNavigation({
 }: MainNavigationProps) {
   return (
     <NavigationMenu className={className}>
-      <NavigationMenuList className="gap-2">
+      <NavigationMenuList className="gap-3">
         <NavigationMenuItem>
           <Link
             href="/shop"
@@ -51,6 +51,16 @@ export default function MainNavigation({
               ))}
             </ul>
           </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link
+            href="/terms"
+            className="hover:-translate-y-1 transition-transform duration-200"
+          >
+            <NavigationMenuLink className="text-lg font-medium text-primary rounded-none hover:text-gray-400">
+              Shipping
+            </NavigationMenuLink>
+          </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link

@@ -55,20 +55,54 @@ export default async function Page({ params }: PageProps) {
   if (!product?._id) notFound();
 
   return (
-    <main className="max-w-full mx-auto mt-10 space-y-10 pb-10 lg:pt-3">
-      <ProductDetails product={product} />
-      <hr />
-      <Suspense fallback={RelatedProductsLoadingSkeleton()}>
-        <RelatedProducts productId={product._id} />
-      </Suspense>
-      <hr />
-      <div className="space-y-5 px-9">
-        <h2 className="text-2xl font-bold">Buyer reviews</h2>
-        <Suspense fallback={<ProductReviewsLoadingSkeleton />}>
-          <ProductReviewsSection product={product} />
-        </Suspense>
-      </div>
-    </main>
+    <div className="min-h-screen bg-background">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12 space-y-12 md:space-y-16">
+        {/* Product Details Section - Clean, no background */}
+        <div className="py-4 md:py-6">
+          <ProductDetails product={product} />
+        </div>
+
+        {/* Separator */}
+        <div className="flex items-center justify-center">
+          <div className="flex-1 border-t border-border"></div>
+          <div className="px-4">
+            <div className="w-2 h-2 bg-primary rounded-full"></div>
+          </div>
+          <div className="flex-1 border-t border-border"></div>
+        </div>
+
+        {/* Related Products Section */}
+        <div className="space-y-6">
+          <Suspense fallback={<RelatedProductsLoadingSkeleton />}>
+            <RelatedProducts productId={product._id} />
+          </Suspense>
+        </div>
+
+        {/* Separator */}
+        <div className="flex items-center justify-center">
+          <div className="flex-1 border-t border-border"></div>
+          <div className="px-4">
+            <div className="w-2 h-2 bg-secondary rounded-full"></div>
+          </div>
+          <div className="flex-1 border-t border-border"></div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="bg-card border border-border rounded-lg p-6 md:p-8 shadow-sm">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-8 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
+              <h2 className="text-2xl md:text-3xl font-bold text-card-foreground">
+                Buyer Reviews
+              </h2>
+            </div>
+            <Suspense fallback={<ProductReviewsLoadingSkeleton />}>
+              <ProductReviewsSection product={product} />
+            </Suspense>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 }
 
@@ -85,11 +119,28 @@ async function RelatedProducts({ productId }: RelatedProductsProps) {
   if (!relatedProducts.length) return null;
 
   return (
-    <div className="space-y-5 px-8">
-      <h2 className="text-2xl font-bold">Related Products</h2>
-      <div className="flex flex-col gap-5 sm:grid grid-cols-2 lg:grid-cols-4">
-        {relatedProducts.map((product) => (
-          <Product key={product._id} product={product} />
+    <div className="space-y-6">
+      <div className="text-center space-y-4">
+        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          Related Products
+        </h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+        <p className="text-muted-foreground text-lg">
+          Discover more premium systems you might like
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        {relatedProducts.map((product, index) => (
+          <div
+            key={product._id}
+            className="group transform transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-xl hover:shadow-primary/10"
+            style={{
+              animationDelay: `${index * 100}ms`,
+            }}
+          >
+            <Product product={product} />
+          </div>
         ))}
       </div>
     </div>
@@ -98,11 +149,23 @@ async function RelatedProducts({ productId }: RelatedProductsProps) {
 
 function RelatedProductsLoadingSkeleton() {
   return (
-    <div className="space-y-5 px-8">
-      <Skeleton className="w-44 h-[2rem]" />
-      <div className="flex flex-col gap-5 sm:grid grid-cols-2 lg:grid-cols-4">
+    <div className="space-y-6">
+      {/* Header Skeleton */}
+      <div className="text-center space-y-4">
+        <Skeleton className="h-10 w-64 mx-auto" />
+        <Skeleton className="h-1 w-24 mx-auto" />
+        <Skeleton className="h-6 w-80 mx-auto" />
+      </div>
+
+      {/* Products Grid Skeleton */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-[26rem] w-full" />
+          <div key={i} className="space-y-4">
+            <Skeleton className="h-[280px] w-full rounded-lg" />
+            <Skeleton className="h-6 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-8 w-full" />
+          </div>
         ))}
       </div>
     </div>
@@ -130,13 +193,18 @@ async function ProductReviewsSection({ product }: ProductReviewsSectionProps) {
     : null;
 
   return (
-    <div className="space-y-5">
-      <CreateProductReviewButton
-        product={product}
-        loggedInMember={loggedInMember}
-        hasExistingReview={!!existingReview}
-      />
-      <ProductReviews product={product} />
+    <div className="space-y-6">
+      <div className="p-4 bg-muted/30 border border-border rounded-lg">
+        <CreateProductReviewButton
+          product={product}
+          loggedInMember={loggedInMember}
+          hasExistingReview={!!existingReview}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <ProductReviews product={product} />
+      </div>
     </div>
   );
 }
