@@ -71,7 +71,7 @@ export default async function Home() {
               <Button
                 asChild
                 size="lg"
-                className="group relative overflow-hidden bg-transparent border-2 border-white text-white hover:text-primary-foreground px-10 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 backdrop-blur-sm min-w-[160px]"
+                className="group relative overflow-hidden bg-transparent border-2 border-white text-white hover:text-black px-10 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 backdrop-blur-sm min-w-[160px]"
               >
                 <Link href="/about">
                   <span className="relative z-10">Learn More</span>

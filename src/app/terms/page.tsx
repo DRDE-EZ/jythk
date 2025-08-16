@@ -258,7 +258,7 @@ export default function TermsAndConditionsPage() {
                           d="M3 8l7.89 3.26a2 2 0 001.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                         />
                       </svg>
-                      Mycropcuk@gmail.com
+                      mycropcuk@gmail.com
                     </a>
                   </div>
                 </div>
@@ -284,7 +284,7 @@ export default function TermsAndConditionsPage() {
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                   These terms are subject to change without notice. Please check
                   this page regularly for updates. By placing an order with
-                  MycroPc, you agree to these terms and conditions. All orders
+                  MycroPC, you agree to these terms and conditions. All orders
                   are subject to availability and acceptance.
                 </p>
               </div>
