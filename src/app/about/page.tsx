@@ -206,7 +206,7 @@ export default function AboutPage() {
                   <div className="text-center">
                     <div className="text-4xl md:text-6xl mb-2 md:mb-4">🚀</div>
                     <p className="text-lg md:text-xl text-muted-foreground">
-                      Since 2025
+                      Building Excellence Since 2025
                     </p>
                   </div>
                 </div>
