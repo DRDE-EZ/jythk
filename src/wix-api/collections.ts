@@ -16,6 +16,7 @@ export const getCollections = cache(
     const collections = await wixClient.collections
       .queryCollections()
       .ne("_id", "edc168bd-f829-d9f8-932b-afe927c9bb56")
+      .ne("_id", "00000000-000000-000000-000000000001")
       .find();
 
     return collections.items;
