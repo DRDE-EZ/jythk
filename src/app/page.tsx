@@ -14,9 +14,10 @@ export default async function Home() {
     <div className="max-w-full mx-auto space-y-0 pb-10">
       {/* Enhanced Hero Section */}
       <div className="relative w-full h-[600px] md:h-[760px] overflow-hidden">
+        {/* Desktop/Large screens video */}
         <video
-          className="absolute top-0 left-0 w-full h-full"
-          src="/banner_video.webm"
+          className="absolute top-0 left-0 w-full h-full hidden sm:block"
+          src="/banner_video_desktop.webm"
           autoPlay
           loop
           muted
@@ -32,6 +33,24 @@ export default async function Home() {
           }}
         />
 
+        {/* Mobile/Small screens video */}
+        <video
+          className="absolute top-0 left-0 w-full h-full block sm:hidden"
+          src="https://video.wixstatic.com/video/f98757_4c37475fcc924c359a50f7f852ece727/1080p/mp4/file.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          style={{
+            objectFit: "cover",
+            objectPosition: "center center",
+            width: "100%",
+            height: "100%",
+            minWidth: "100%",
+            minHeight: "100%",
+          }}
+        />
         {/* Enhanced overlay with gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60 flex flex-col items-center justify-center text-center gap-3 px-4">
           {/* Floating particles effect */}
