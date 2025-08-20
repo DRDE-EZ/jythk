@@ -16,8 +16,8 @@ export default async function Home() {
       <div className="relative w-full h-[600px] md:h-[760px] overflow-hidden">
         {/* Desktop/Large screens video */}
         <video
-          className="absolute top-0 left-0 w-full h-full hidden sm:block"
-          src="/banner_video_desktop.webm"
+          className="absolute top-0 left-0 w-full h-full"
+          src="/banner_video.webm"
           autoPlay
           loop
           muted
