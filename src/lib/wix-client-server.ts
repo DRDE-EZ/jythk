@@ -8,43 +8,34 @@ import { files } from "@wix/media";
 import { env } from "@/env";
 
 export const getWixServerClient = cache(async () => {
-  let tokens: Tokens | undefined;
+  // FORCE API KEY AUTHENTICATION - Bypass OAuth tokens completely
+  const directSiteId = process.env.NEXT_PUBLIC_WIX_SITE_ID;
+  const directApiKey = process.env.WIX_API_KEY;
+  
+  console.log("🔧 FORCING API KEY AUTH - Direct Site ID:", directSiteId);
+  console.log("🔧 API Key exists:", !!directApiKey);
+  
+  const wixClient = createClient({
+    modules: {
+      products: require("@wix/stores").products,
+      collections: require("@wix/stores").collections,
+      currentCart: require("@wix/ecom").currentCart,
+      checkout: require("@wix/ecom").checkout,
+      redirects: require("@wix/redirects").redirects,
+      orders: require("@wix/ecom").orders,
+      recommendations: require("@wix/ecom").recommendations,
+      backInStockNotifications: require("@wix/ecom").backInStockNotifications,
+      reviews: require("@wix/reviews").reviews,
+      members: require("@wix/members").members,
+      files: require("@wix/media").files,
+    },
+    auth: ApiKeyStrategy({
+      apiKey: directApiKey!,
+      siteId: directSiteId!,
+    }),
+  });
 
-  const rawCookie = (await cookies()).get(WIX_SESSION_COOKIE)?.value;
-
-  if (rawCookie) {
-    try {
-      tokens = JSON.parse(rawCookie);
-    } catch (error) {
-      console.error("Failed to parse tokens JSON from cookie:", error);
-      tokens = undefined;
-    }
-  }
-
-  if (tokens && tokens.accessToken?.value) {
-    let tokenStr = tokens.accessToken.value;
-
-    // Strip "OauthNG.JWS." prefix if present
-    if (tokenStr.startsWith("OauthNG.JWS.")) {
-      tokenStr = tokenStr.substring("OauthNG.JWS.".length);
-    }
-
-    if (tokenStr.split(".").length === 3) {
-      try {
-        const decodedTokenStr = decodeURIComponent(tokenStr);
-        const decoded = jwtDecode(decodedTokenStr);
-        console.log("Token payload:", decoded);
-      } catch (err) {
-        console.error("Error decoding JWT token:", err);
-      }
-    } else {
-      console.error("Invalid JWT token format:", tokenStr);
-    }
-  } else {
-    console.log("No valid tokens found");
-  }
-
-  return getWixClient(tokens);
+  return wixClient;
 });
 
 export const getWixAdminClient = cache(() => {

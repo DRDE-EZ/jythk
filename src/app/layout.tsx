@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { Roboto, Poppins } from "next/font/google";
 import "./globals.css";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
@@ -7,22 +7,18 @@ import AnimatedSection from "@/components/AnimatedSection";
 import StickyScrollReveal from "@/components/StickyScrollReveal";
 import ReactQueryProvider from "./ReactQueryProvider";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "next-themes";
-import ThemeManager from "@/components/ThemeManager";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
+const roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
+const poppins = Poppins({ subsets: ["latin"], weight: ["500", "600", "700"] });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Mycro PC",
-    default: "Mycro PC",
+    template: "%s | Formex Construction & Wholesale",
+    default: "Formex Construction & Wholesale",
   },
-  description: "PC Builds, Gaming PCs, and Custom Builds",
+  description: "Trusted imports. On-time supply for tomorrow’s builds.",
 };
 
 export default function RootLayout({
@@ -32,31 +28,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.className} antialiased`}>
+      <body className={`${roboto.className} ${poppins.className} antialiased`}>
         <Analytics />
         <SpeedInsights />
-        <ThemeProvider
-          attribute={"class"}
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <ThemeManager />
-          <ReactQueryProvider>
-            <StickyScrollReveal>
-              <NavBar />
-            </StickyScrollReveal>
+        <ReactQueryProvider>
+          <StickyScrollReveal>
+            <NavBar />
+          </StickyScrollReveal>
 
-            <div className="flex min-h-screen flex-col pt-20">
-              <main className="flex-1 w-full">{children}</main>
+          <div className="flex min-h-screen flex-col pt-20">
+            <main className="flex-1 w-full">{children}</main>
 
-              <AnimatedSection duration={1.2}>
-                <Footer />
-              </AnimatedSection>
-            </div>
-          </ReactQueryProvider>
-          <Toaster />
-        </ThemeProvider>
+            <AnimatedSection duration={1.2}>
+              <Footer />
+            </AnimatedSection>
+          </div>
+        </ReactQueryProvider>
+        <Toaster />
       </body>
     </html>
   );

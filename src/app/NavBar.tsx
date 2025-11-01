@@ -20,7 +20,7 @@ export default async function NavBar() {
   ]);
 
   return (
-    <header className="flex items-center justify-between sticky h-20 px-8 mx-auto bg-background shadow-sm top-0 z-50">
+    <header className="flex items-center justify-between sticky h-20 px-8 shadow-md top-0 z-[60] w-full" style={{ backgroundColor: '#1a4ba8' }}>
       <Suspense>
         <MobileMenu collections={collections} loggedInMember={loggedInMember} />
       </Suspense>
@@ -28,7 +28,6 @@ export default async function NavBar() {
       <LogoImage />
 
       {/* Center: Navigation Links */}
-
       <MainNavigation
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:flex"
         collections={collections}

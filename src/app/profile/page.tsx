@@ -16,16 +16,17 @@ export default async function Page() {
   if (!member) NotFound();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       {/* Header Section */}
-      <div className="bg-gradient-to-br from-muted/30 via-muted/20 to-background py-16 sm:py-20 md:py-24 border-b border-border">
+      <div style={{ background: 'linear-gradient(to bottom right, #f3f4f6, #e5e7eb, #ffffff)' }} className="py-16 sm:py-20 md:py-24 border-b-2 border-black">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <div className="space-y-6">
             {/* Avatar Section */}
-            <div className="relative mx-auto w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
-              <div className="w-20 h-20 sm:w-28 sm:h-28 bg-background rounded-full flex items-center justify-center">
+            <div className="relative mx-auto w-24 h-24 sm:w-32 sm:h-32 rounded-full flex items-center justify-center shadow-lg" style={{ background: 'linear-gradient(to bottom right, #1a4ba8, #1565c0)' }}>
+              <div className="w-20 h-20 sm:w-28 sm:h-28 bg-white rounded-full flex items-center justify-center">
                 <svg
-                  className="w-10 h-10 sm:w-14 sm:h-14 text-primary"
+                  className="w-10 h-10 sm:w-14 sm:h-14"
+                  style={{ color: '#1a4ba8' }}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -42,11 +43,11 @@ export default async function Page() {
 
             {/* Welcome Text */}
             <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black">
                 Your Profile
               </h1>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+              <div className="w-24 h-1 mx-auto rounded-full" style={{ background: 'linear-gradient(to right, #1a4ba8, #1565c0)' }}></div>
+              <p className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto">
                 Manage your account details and view your order history
               </p>
             </div>
@@ -60,13 +61,13 @@ export default async function Page() {
           {/* Profile Information Card */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-1 h-8 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              <div className="w-1 h-8 rounded-full" style={{ background: 'linear-gradient(to bottom, #1a4ba8, #1565c0)' }}></div>
+              <h2 className="text-2xl md:text-3xl font-bold text-black">
                 Account Information
               </h2>
             </div>
 
-            <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm">
+            <div className="bg-white border-2 border-black rounded-xl p-6 md:p-8 shadow-sm">
               <MemberInfoForm loggedInMember={member!} />
             </div>
           </div>
@@ -74,13 +75,13 @@ export default async function Page() {
           {/* Orders Section */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-1 h-8 bg-gradient-to-b from-secondary to-accent rounded-full"></div>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              <div className="w-1 h-8 rounded-full" style={{ background: 'linear-gradient(to bottom, #1565c0, #1a4ba8)' }}></div>
+              <h2 className="text-2xl md:text-3xl font-bold text-black">
                 Order History
               </h2>
             </div>
 
-            <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm">
+            <div className="bg-white border-2 border-black rounded-xl p-6 md:p-8 shadow-sm">
               <Orders />
             </div>
           </div>

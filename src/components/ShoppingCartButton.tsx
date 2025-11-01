@@ -36,26 +36,26 @@ export default function ShoppingCartButton({
           variant={"ghost"}
           size="icon"
           onClick={() => setShowSheet(true)}
-          className="pt-5 pb-4 pl-4 pr-5 hover:cursor-pointer rounded-xs"
+          className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-[#1a4ba8] hover:bg-white/90 hover:scale-105 transition-all shadow-sm"
         >
           <ShoppingCartIcon />
-          <span className="absolute top-0 right-0 translate-y-1 -translate-x-1 size-4 bg-primary text-xs text-primary-foreground flex items-center justify-center rounded-full">
+          <span className="absolute top-0 right-0 translate-y-1 -translate-x-1 w-5 h-5 bg-[#1a4ba8] text-white text-[10px] flex items-center justify-center rounded-full font-bold border border-white">
             {totalQuantity < 10 ? totalQuantity : "9+"}
           </span>
         </Button>
       </div>
       <Sheet open={showSheet} onOpenChange={setShowSheet}>
-        <SheetContent className="flex flex-col sm:max-w-lg">
-          <SheetHeader>
-            <SheetTitle className="px-5 pt-2">
+        <SheetContent className="flex flex-col sm:max-w-lg bg-white">
+          <SheetHeader className="bg-white">
+            <SheetTitle className="px-5 pt-2 text-black">
               Your cart{" "}
-              <span className="text-base">
+              <span className="text-base text-gray-700">
                 ({totalQuantity} {totalQuantity === 1 ? "item" : "items"})
               </span>
             </SheetTitle>
           </SheetHeader>
-          <hr />
-          <div className="flex grow flex-col space-y-6 overflow-y-auto pt-2">
+          <hr className="border-gray-200" />
+          <div className="flex grow flex-col space-y-6 overflow-y-auto pt-2 bg-white">
             <ul className="space-y-8 px-5 -mt-1">
               {cartQuery.data?.lineItems?.map((item) => (
                 <ShoppingCartItem
@@ -66,18 +66,19 @@ export default function ShoppingCartButton({
               ))}
             </ul>
             {cartQuery.isPending && (
-              <Loader2 className="mx-auto mt-5 animate-spin" />
+              <Loader2 className="mx-auto mt-5 animate-spin text-[#1a4ba8]" />
             )}
             {cartQuery.error && (
-              <p className="text-destructive">{cartQuery.error.message}</p>
+              <p className="text-red-600">{cartQuery.error.message}</p>
             )}
             {!cartQuery.isPending && !cartQuery.data?.lineItems?.length && (
-              <div className="flex grow items-center justify-center text-center">
+              <div className="flex grow items-center justify-center text-center bg-white">
                 <div className="space-y-1.5">
-                  <p className="text-lg font-semibold">Your cart is empty</p>
+                  <p className="text-lg font-semibold text-black">Your cart is empty</p>
                   <Link
                     href="/shop"
-                    className="text-primary hover:underline"
+                    className="hover:underline"
+                    style={{ color: '#1a4ba8' }}
                     onClick={() => setShowSheet(false)}
                   >
                     Start shopping now
@@ -87,15 +88,15 @@ export default function ShoppingCartButton({
             )}
             {/* <pre>{JSON.stringify(cartQuery.data, null, 2)}</pre> */}
           </div>
-          <hr />
-          <div className="flex items-center justify-between gap-5 px-5 pb-5">
+          <hr className="border-gray-200" />
+          <div className="flex items-center justify-between gap-5 px-5 pb-5 bg-white">
             <div className="space-y-0.5">
-              <p className="text-sm">Subtotal amount:</p>
-              <p className="font-bold">
+              <p className="text-sm text-black">Subtotal amount:</p>
+              <p className="font-bold text-black">
                 {/* @ts-expect-error: subtotal may not be typed correctly in the API response */}
                 {cartQuery.data?.subtotal?.formattedConvertedAmount}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-gray-600">
                 Shipping and taxes calculated at checkout
               </p>
             </div>

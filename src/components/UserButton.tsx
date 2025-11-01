@@ -46,7 +46,7 @@ export default function UserButton({
         <Button
           size={"icon"}
           variant={"ghost"}
-          className={cn("rounded-xs", className)}
+          className={cn("rounded-md hover:bg-white transition-all text-white hover:text-[#1a4ba8]", className)}
         >
           <UserIcon className="size-5" />
         </Button>

@@ -4,13 +4,20 @@ import { cache } from "react";
 
 export const getLoggedInMember = cache(
   async (wixClient: WixClient): Promise<members.Member | null> => {
-    if (!wixClient.auth.loggedIn()) return null;
+    try {
+      // Check if auth.loggedIn method exists (OAuth) or skip check (API Key)
+      if (wixClient.auth.loggedIn && !wixClient.auth.loggedIn()) return null;
 
-    const memberData = await wixClient.members.getCurrentMember({
-      fieldsets: [members.Set.FULL],
-    });
+      const memberData = await wixClient.members.getCurrentMember({
+        fieldsets: [members.Set.FULL],
+      });
 
-    return memberData.member || null;
+      return memberData.member || null;
+    } catch (error) {
+      // If API key auth doesn't support member authentication, return null
+      console.log("Member authentication not available with API key");
+      return null;
+    }
   }
 );
 

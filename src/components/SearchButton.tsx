@@ -19,12 +19,16 @@ export default function SearchButton({ className }: SearchButtonProps) {
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild className={cn(className)}>
-          <Button size="icon" variant={"ghost"} className="pt-[3px] rounded-xs">
-            <SearchIcon />
+          <Button
+            size="icon"
+            variant={"ghost"}
+            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-[#1a4ba8] hover:bg-white/90 hover:scale-105 transition-all shadow-sm"
+          >
+            <SearchIcon className="w-5 h-5" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] rounded-xs">
-          <DialogTitle>Search all items:</DialogTitle>
+        <DialogContent className="sm:max-w-[425px] rounded-xs bg-white border-2 border-black">
+          <DialogTitle className="text-black font-bold text-lg">Search all items:</DialogTitle>
           <SearchField onSubmitSuccess={() => setOpen(false)} />
         </DialogContent>
       </Dialog>
@@ -57,8 +61,8 @@ export function SearchField({ className, onSubmitSuccess }: SearchFieldProps) {
       className={cn("grow", className)}
     >
       <div className="relative m-5">
-        <Input type="text" name="q" placeholder="Search" className="pe-10" />
-        <SearchIcon className="absolute right-3 top-1/2 size-5 -translate-y-1/2" />
+        <Input type="text" name="q" placeholder="Search products..." className="pe-10 bg-white border-2 border-gray-300 text-black placeholder:text-gray-500 focus:border-[#1a4ba8] focus:ring-[#1a4ba8]" />
+        <SearchIcon className="absolute right-3 top-1/2 size-5 -translate-y-1/2 text-gray-400" />
       </div>
     </form>
   );

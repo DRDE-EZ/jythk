@@ -34,9 +34,9 @@ export default async function Page({
     : null;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       {/* Success Hero Section */}
-      <div className="bg-gradient-to-br from-green-50 via-green-50/50 to-background dark:from-green-950/20 dark:via-green-950/10 dark:to-background py-16 sm:py-20 md:py-24 border-b border-border">
+      <div className="bg-gradient-to-br from-green-50 via-green-50/50 to-white py-16 sm:py-20 md:py-24 border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <div className="space-y-6">
             {/* Success Icon */}
@@ -61,11 +61,11 @@ export default async function Page({
 
             {/* Success Message */}
             <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-green-600">
                 Order Confirmed!
               </h1>
               <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-green-600 mx-auto rounded-full"></div>
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
                 Thank you for your purchase! A confirmation email with order
                 details has been sent to your email address.
               </p>
@@ -73,7 +73,7 @@ export default async function Page({
 
             {/* Order Number Badge */}
             {order.number && (
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-950/30 text-green-700 dark:text-green-300 rounded-full border border-green-200 dark:border-green-800">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-full border border-green-200">
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -100,17 +100,17 @@ export default async function Page({
           {/* Order Details Section */}
           <div className="space-y-6">
             <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              <h2 className="text-3xl md:text-4xl font-bold text-black">
                 Order Details
               </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
-              <p className="text-muted-foreground">
+              <div className="w-16 h-1 mx-auto rounded-full" style={{ background: '#1a4ba8' }}></div>
+              <p className="text-gray-700">
                 Review your purchase details below
               </p>
             </div>
 
             {/* Enhanced Order Component */}
-            <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+            <div className="bg-white border-2 border-black rounded-xl shadow-sm overflow-hidden">
               <Order order={order} />
             </div>
           </div>
@@ -120,7 +120,10 @@ export default async function Page({
             {loggedInMember && (
               <Link
                 href="/profile"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 text-white rounded-lg font-medium transition-colors"
+                style={{ background: '#1a4ba8' }}
+                onMouseEnter={(e) => e.currentTarget.style.background = '#14396b'}
+                onMouseLeave={(e) => e.currentTarget.style.background = '#1a4ba8'}
               >
                 <svg
                   className="w-4 h-4"
@@ -141,7 +144,7 @@ export default async function Page({
 
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-muted hover:bg-muted/80 text-muted-foreground rounded-lg font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-lg font-medium transition-colors"
             >
               <svg
                 className="w-4 h-4"
@@ -161,15 +164,15 @@ export default async function Page({
           </div>
 
           {/* What's Next Section */}
-          <div className="bg-muted/30 border border-border rounded-xl p-6 md:p-8">
-            <h3 className="text-xl md:text-2xl font-bold mb-6 text-center">
+          <div className="bg-gray-50 border-2 border-black rounded-xl p-6 md:p-8">
+            <h3 className="text-xl md:text-2xl font-bold mb-6 text-center text-black">
               What happens next?
             </h3>
             <div className="grid sm:grid-cols-3 gap-6">
               <div className="text-center space-y-3">
-                <div className="w-12 h-12 mx-auto bg-blue-100 dark:bg-blue-950/30 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-blue-600 dark:text-blue-400"
+                    className="w-6 h-6 text-blue-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -182,16 +185,16 @@ export default async function Page({
                     />
                   </svg>
                 </div>
-                <h4 className="font-semibold">Order Processing</h4>
-                <p className="text-sm text-muted-foreground">
+                <h4 className="font-semibold text-black">Order Processing</h4>
+                <p className="text-sm text-gray-700">
                   We&apos;ll start building your custom PC within 24 hours
                 </p>
               </div>
 
               <div className="text-center space-y-3">
-                <div className="w-12 h-12 mx-auto bg-orange-100 dark:bg-orange-950/30 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 mx-auto bg-orange-100 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-orange-600 dark:text-orange-400"
+                    className="w-6 h-6 text-orange-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -204,16 +207,16 @@ export default async function Page({
                     />
                   </svg>
                 </div>
-                <h4 className="font-semibold">Quality Testing</h4>
-                <p className="text-sm text-muted-foreground">
+                <h4 className="font-semibold text-black">Quality Testing</h4>
+                <p className="text-sm text-gray-700">
                   Rigorous testing to ensure peak performance
                 </p>
               </div>
 
               <div className="text-center space-y-3">
-                <div className="w-12 h-12 mx-auto bg-green-100 dark:bg-green-950/30 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 mx-auto bg-green-100 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-green-600 dark:text-green-400"
+                    className="w-6 h-6 text-green-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -226,8 +229,8 @@ export default async function Page({
                     />
                   </svg>
                 </div>
-                <h4 className="font-semibold">Secure Shipping</h4>
-                <p className="text-sm text-muted-foreground">
+                <h4 className="font-semibold text-black">Secure Shipping</h4>
+                <p className="text-sm text-gray-700">
                   Carefully packaged and shipped with tracking
                 </p>
               </div>

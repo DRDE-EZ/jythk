@@ -13,12 +13,12 @@ export const getCollectionBySlug = cache(
 
 export const getCollections = cache(
   async (wixClient: WixClient): Promise<collections.Collection[]> => {
-    const collections = await wixClient.collections
+    const result = await wixClient.collections
       .queryCollections()
       .ne("_id", "edc168bd-f829-d9f8-932b-afe927c9bb56")
       .ne("_id", "00000000-000000-000000-000000000001")
       .find();
 
-    return collections.items;
+    return result.items;
   }
 );

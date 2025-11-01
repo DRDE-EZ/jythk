@@ -19,7 +19,7 @@ export default function Product({ product }: ProductProps) {
 
   return (
     <Link href={`/products/${product.slug}`} className="block">
-      <div className="group/card relative w-full h-[420px] flex flex-col overflow-hidden rounded-lg bg-card border border-border transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
+      <div className="group/card relative w-full h-[420px] flex flex-col overflow-hidden rounded-lg bg-white border border-gray-200 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
         {/* Discount Badge */}
         {isDiscounted && (
           <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
@@ -71,7 +71,7 @@ export default function Product({ product }: ProductProps) {
         <div className="flex-1 flex flex-col justify-between p-4 min-h-[140px]">
           {/* Product Name - Fixed height area */}
           <div className="space-y-2 h-[60px] flex flex-col justify-start">
-            <h3 className="font-bold text-lg leading-tight line-clamp-2 text-foreground group-hover/card:text-primary transition-colors duration-300">
+            <h3 className="font-bold text-lg leading-tight line-clamp-2 text-gray-900 group-hover/card:text-primary transition-colors duration-300">
               {product.name}
             </h3>
 
@@ -98,10 +98,10 @@ export default function Product({ product }: ProductProps) {
                 </div>
               ) : (
                 <div className="space-y-1">
-                  <span className="text-xl font-bold text-foreground">
+                  <span className="text-xl font-bold text-gray-900">
                     {product.priceData?.formatted?.price}
                   </span>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-gray-600">
                     Premium Build
                   </div>
                 </div>

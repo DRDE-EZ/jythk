@@ -15,7 +15,13 @@ export async function getCart(wixClient: WixClient) {
     return await wixClient.currentCart.getCurrentCart();
   } catch (error) {
     const err = error as WixCartError;
-    if (err.details?.applicationError?.code === "OWNED_CART_NOT_FOUND") {
+    // Handle both OWNED_CART_NOT_FOUND and CART_NOT_FOUND errors
+    // CART_NOT_FOUND occurs when using API key authentication
+    if (
+      err.details?.applicationError?.code === "OWNED_CART_NOT_FOUND" ||
+      err.details?.applicationError?.code === "CART_NOT_FOUND"
+    ) {
+      console.log("Cart not accessible with current authentication method");
       return null;
     } else {
       throw error;

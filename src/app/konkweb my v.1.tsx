@@ -15,41 +15,6 @@ interface MainNavigationProps {
   className?: string;
 }
 
-// Fallback descriptions for collections that don't have descriptions
-function getCollectionDescription(collection: collections.Collection): string {
-  if (collection.description) {
-    return collection.description;
-  }
-
-  // Provide fallback descriptions based on collection name/slug
-  const name = collection.name?.toLowerCase() || collection.slug?.toLowerCase() || '';
-  
-  if (name.includes('concrete')) {
-    return 'High-quality concrete mixes and sealants for all construction projects';
-  }
-  if (name.includes('construction') && name.includes('tools')) {
-    return 'Professional construction tools and equipment for every job';
-  }
-  if (name.includes('forklift')) {
-    return 'Industrial forklifts and replacement parts for material handling';
-  }
-  if (name.includes('industrial') && name.includes('equipment')) {
-    return 'Heavy-duty industrial machinery and components';
-  }
-  if (name.includes('sustainable') || name.includes('materials')) {
-    return 'Eco-friendly building materials and sustainable construction solutions';
-  }
-  if (name.includes('wall') && name.includes('panel')) {
-    return 'Durable wall panels for interior and exterior applications';
-  }
-  if (name.includes('all') && name.includes('product')) {
-    return 'Browse our complete range of construction materials and equipment';
-  }
-  
-  // Generic fallback
-  return `Explore our ${collection.name} collection with quality products`;
-}
-
 export default function MainNavigation({
   collections,
   className,
@@ -85,9 +50,11 @@ export default function MainNavigation({
                       <span className="text-base font-semibold text-gray-900 group-hover:text-[#1a4ba8] transition-colors block mb-1">
                         {c.name}
                       </span>
-                      <span className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
-                        {getCollectionDescription(c)}
-                      </span>
+                      {c.description && (
+                        <span className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                          {c.description}
+                        </span>
+                      )}
                     </div>
                     <svg 
                       className="w-5 h-5 text-gray-400 group-hover:text-[#1a4ba8] transition-colors ml-2 mt-0.5 flex-shrink-0" 
