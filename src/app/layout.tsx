@@ -9,6 +9,7 @@ import ReactQueryProvider from "./ReactQueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 const poppins = Poppins({ subsets: ["latin"], weight: ["500", "600", "700"] });
@@ -31,19 +32,21 @@ export default function RootLayout({
       <body className={`${roboto.className} ${poppins.className} antialiased`}>
         <Analytics />
         <SpeedInsights />
-        <ReactQueryProvider>
-          <StickyScrollReveal>
-            <NavBar />
-          </StickyScrollReveal>
+        <ErrorBoundary>
+          <ReactQueryProvider>
+            <StickyScrollReveal>
+              <NavBar />
+            </StickyScrollReveal>
 
-          <div className="flex min-h-screen flex-col pt-20">
-            <main className="flex-1 w-full">{children}</main>
+            <div className="flex min-h-screen flex-col pt-20">
+              <main className="flex-1 w-full">{children}</main>
 
-            <AnimatedSection duration={1.2}>
-              <Footer />
-            </AnimatedSection>
-          </div>
-        </ReactQueryProvider>
+              <AnimatedSection duration={1.2}>
+                <Footer />
+              </AnimatedSection>
+            </div>
+          </ReactQueryProvider>
+        </ErrorBoundary>
         <Toaster />
       </body>
     </html>

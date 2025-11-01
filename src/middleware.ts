@@ -8,34 +8,42 @@ const wixClient = createClient({
 });
 
 export async function middleware(req: NextRequest) {
-  const cookies = req.cookies;
-  const sessionCookie = cookies.get(WIX_SESSION_COOKIE);
+  try {
+    const cookies = req.cookies;
+    const sessionCookie = cookies.get(WIX_SESSION_COOKIE);
 
-  let sessionTokens = sessionCookie
-    ? (JSON.parse(sessionCookie.value) as Tokens)
-    : await wixClient.auth.generateVisitorTokens();
+    let sessionTokens = sessionCookie
+      ? (JSON.parse(sessionCookie.value) as Tokens)
+      : await wixClient.auth.generateVisitorTokens();
 
-  if (sessionTokens.accessToken.expiresAt < Math.floor(Date.now() / 1000)) {
-    try {
-      sessionTokens = await wixClient.auth.renewToken(
-        sessionTokens.refreshToken
-      );
-    } catch (error) {
-      console.log(error);
-      sessionTokens = await wixClient.auth.generateVisitorTokens();
+    if (sessionTokens.accessToken.expiresAt < Math.floor(Date.now() / 1000)) {
+      try {
+        sessionTokens = await wixClient.auth.renewToken(
+          sessionTokens.refreshToken
+        );
+      } catch (error) {
+        console.log("Token renewal failed:", error);
+        sessionTokens = await wixClient.auth.generateVisitorTokens();
+      }
     }
+
+    req.cookies.set(WIX_SESSION_COOKIE, JSON.stringify(sessionTokens));
+
+    const res = NextResponse.next({ request: req });
+
+    res.cookies.set(WIX_SESSION_COOKIE, JSON.stringify(sessionTokens), {
+      maxAge: 60 * 60 * 24 * 7,
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: false,
+      sameSite: "lax",
+    });
+
+    return res;
+  } catch (error) {
+    console.error("Middleware error:", error);
+    // Return response without authentication on error
+    return NextResponse.next({ request: req });
   }
-
-  req.cookies.set(WIX_SESSION_COOKIE, JSON.stringify(sessionTokens));
-
-  const res = NextResponse.next({ request: req });
-
-  res.cookies.set(WIX_SESSION_COOKIE, JSON.stringify(sessionTokens), {
-    maxAge: 60 * 60 * 24 * 7,
-    secure: process.env.NODE_ENV === "production",
-  });
-
-  return res;
 }
 
 export const config = {

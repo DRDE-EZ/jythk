@@ -9,45 +9,66 @@ import { env } from "@/env";
 
 export const getWixServerClient = cache(async () => {
   // FORCE API KEY AUTHENTICATION - Bypass OAuth tokens completely
-  const directSiteId = process.env.NEXT_PUBLIC_WIX_SITE_ID;
+  const directSiteId = process.env.NEXT_PUBLIC_WIX_SITE_ID || env.NEXT_PUBLIC_WIX_SITE_ID;
   const directApiKey = process.env.WIX_API_KEY;
   
   console.log("🔧 FORCING API KEY AUTH - Direct Site ID:", directSiteId);
   console.log("🔧 API Key exists:", !!directApiKey);
   
-  const wixClient = createClient({
-    modules: {
-      products: require("@wix/stores").products,
-      collections: require("@wix/stores").collections,
-      currentCart: require("@wix/ecom").currentCart,
-      checkout: require("@wix/ecom").checkout,
-      redirects: require("@wix/redirects").redirects,
-      orders: require("@wix/ecom").orders,
-      recommendations: require("@wix/ecom").recommendations,
-      backInStockNotifications: require("@wix/ecom").backInStockNotifications,
-      reviews: require("@wix/reviews").reviews,
-      members: require("@wix/members").members,
-      files: require("@wix/media").files,
-    },
-    auth: ApiKeyStrategy({
-      apiKey: directApiKey!,
-      siteId: directSiteId!,
-    }),
-  });
+  if (!directSiteId || !directApiKey) {
+    throw new Error("Missing required Wix configuration. Please check your environment variables.");
+  }
 
-  return wixClient;
+  try {
+    const wixClient = createClient({
+      modules: {
+        products: require("@wix/stores").products,
+        collections: require("@wix/stores").collections,
+        currentCart: require("@wix/ecom").currentCart,
+        checkout: require("@wix/ecom").checkout,
+        redirects: require("@wix/redirects").redirects,
+        orders: require("@wix/ecom").orders,
+        recommendations: require("@wix/ecom").recommendations,
+        backInStockNotifications: require("@wix/ecom").backInStockNotifications,
+        reviews: require("@wix/reviews").reviews,
+        members: require("@wix/members").members,
+        files: require("@wix/media").files,
+      },
+      auth: ApiKeyStrategy({
+        apiKey: directApiKey,
+        siteId: directSiteId,
+      }),
+    });
+
+    return wixClient;
+  } catch (error) {
+    console.error("Failed to initialize Wix client:", error);
+    throw error;
+  }
 });
 
 export const getWixAdminClient = cache(() => {
-  const wixClient = createClient({
-    modules: {
-      files,
-    },
-    auth: ApiKeyStrategy({
-      apiKey: env.WIX_API_KEY,
-      siteId: env.NEXT_PUBLIC_WIX_SITE_ID,
-    }),
-  });
+  try {
+    const apiKey = process.env.WIX_API_KEY || env.WIX_API_KEY;
+    const siteId = process.env.NEXT_PUBLIC_WIX_SITE_ID || env.NEXT_PUBLIC_WIX_SITE_ID;
+    
+    if (!apiKey || !siteId) {
+      throw new Error("Missing Wix API configuration for admin client");
+    }
 
-  return wixClient;
+    const wixClient = createClient({
+      modules: {
+        files,
+      },
+      auth: ApiKeyStrategy({
+        apiKey: apiKey,
+        siteId: siteId,
+      }),
+    });
+
+    return wixClient;
+  } catch (error) {
+    console.error("Failed to initialize Wix admin client:", error);
+    throw error;
+  }
 });
