@@ -1,12 +1,18 @@
 {
-  "name": "pc-template",
-  "version": "0.1.0",
+  "name": "eronii-formex",
+  "version": "1.0.0",
+  "description": "Formex Construction & Wholesale e-commerce website built with Next.js and Wix integration",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "setup": "node scripts/setup.js",
+    "clean": "rm -rf .next node_modules package-lock.json",
+    "reinstall": "npm run clean && npm install",
+    "env:check": "node -e \"console.log('Environment check:'); require('dotenv').config({ path: '.env.local' }); console.log('✅ WIX_API_KEY:', process.env.WIX_API_KEY ? 'Present' : '❌ Missing'); console.log('✅ SITE_ID:', process.env.NEXT_PUBLIC_WIX_SITE_ID ? 'Present' : '❌ Missing');\""
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
@@ -33,6 +39,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "dotenv": "^16.6.1",
     "framer-motion": "^12.17.3",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
