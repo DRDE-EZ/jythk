@@ -1,22 +1,9 @@
+import { UnifiedWixClient } from "@/lib/wix-client.base";
 import { collections } from "@wix/stores";
 import { cache } from "react";
 
-// Generic client type to work with both OAuth and API key authentication
-type GenericWixClient = {
-  collections: {
-    getCollectionBySlug: (slug: string) => Promise<{ collection?: collections.Collection }>;
-    queryCollections: () => {
-      ne: (field: string, value: string) => {
-        ne: (field: string, value: string) => {
-          find: () => Promise<{ items: collections.Collection[] }>;
-        };
-      };
-    };
-  };
-};
-
 export const getCollectionBySlug = cache(
-  async (wixClient: GenericWixClient, slug: string) => {
+  async (wixClient: UnifiedWixClient, slug: string) => {
     try {
       const { collection } = await wixClient.collections.getCollectionBySlug(slug);
       return collection || null;
@@ -28,7 +15,7 @@ export const getCollectionBySlug = cache(
 );
 
 export const getCollections = cache(
-  async (wixClient: GenericWixClient): Promise<collections.Collection[]> => {
+  async (wixClient: UnifiedWixClient): Promise<collections.Collection[]> => {
     try {
       const result = await wixClient.collections
         .queryCollections()

@@ -1,12 +1,12 @@
-import { WixClient } from "@/lib/wix-client.base";
+import { UnifiedWixClient } from "@/lib/wix-client.base";
 import { members } from "@wix/members";
 import { cache } from "react";
 
 export const getLoggedInMember = cache(
-  async (wixClient: WixClient): Promise<members.Member | null> => {
+  async (wixClient: UnifiedWixClient): Promise<members.Member | null> => {
     try {
       // Check if auth.loggedIn method exists (OAuth) or skip check (API Key)
-      if (wixClient.auth.loggedIn && !wixClient.auth.loggedIn()) return null;
+      if ('loggedIn' in wixClient.auth && !wixClient.auth.loggedIn()) return null;
 
       const memberData = await wixClient.members.getCurrentMember({
         fieldsets: [members.Set.FULL],
@@ -27,7 +27,7 @@ export interface updateMemberInfoValues {
 }
 
 export async function updateMemberInfo(
-  wixClient: WixClient,
+  wixClient: UnifiedWixClient,
   { firstName, lastName }: updateMemberInfoValues
 ) {
   const loggedInMember = await getLoggedInMember(wixClient);

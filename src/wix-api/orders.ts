@@ -1,6 +1,6 @@
-import { WixClient } from "@/lib/wix-client.base";
+import { UnifiedWixClient } from "@/lib/wix-client.base";
 
-export async function getOrder(wixClient: WixClient, orderId: string) {
+export async function getOrder(wixClient: UnifiedWixClient, orderId: string) {
   try {
     return await wixClient.orders.getOrder(orderId);
   } catch (error: unknown) {
@@ -26,7 +26,7 @@ export interface GetUserOrdersFilters {
 }
 
 export async function getUserOrders(
-  wixClient: WixClient,
+  wixClient: UnifiedWixClient,
   { limit, cursor }: GetUserOrdersFilters
 ) {
   return wixClient.orders.searchOrders({

@@ -1,5 +1,5 @@
 import { WIX_STORES_APP_ID } from "@/lib/constants";
-import { WixClient } from "@/lib/wix-client.base";
+import { UnifiedWixClient } from "@/lib/wix-client.base";
 import { cache } from "react";
 
 export type ProductsSort = "last_updated" | "price_asc" | "price_desc";
@@ -15,7 +15,7 @@ interface QueryProductsFilter {
 }
 
 export async function queryProducts(
-  wixClient: WixClient,
+  wixClient: UnifiedWixClient,
   {
     q,
     collectionIds,
@@ -71,7 +71,7 @@ export async function queryProducts(
 }
 
 export const getProductBySlug = cache(
-  async (wixClient: WixClient, slug: string) => {
+  async (wixClient: UnifiedWixClient, slug: string) => {
     const { items } = await wixClient.products
       .queryProducts()
       .eq("slug", slug)
@@ -88,13 +88,13 @@ export const getProductBySlug = cache(
   }
 );
 
-export async function getProductById(wixClient: WixClient, productId: string) {
+export async function getProductById(wixClient: UnifiedWixClient, productId: string) {
   const result = await wixClient.products.getProduct(productId);
   return result.product;
 }
 
 export async function getRelatedProducts(
-  wixClient: WixClient,
+  wixClient: UnifiedWixClient,
   productId: string
 ) {
   const result = await wixClient.recommendations.getRecommendation(

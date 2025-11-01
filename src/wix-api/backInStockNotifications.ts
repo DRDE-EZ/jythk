@@ -1,6 +1,6 @@
 import { WIX_STORES_APP_ID } from "@/lib/constants";
 import { findVariant } from "@/lib/utils";
-import { WixClient } from "@/lib/wix-client.base";
+import { UnifiedWixClient } from "@/lib/wix-client.base";
 import { products } from "@wix/stores";
 
 import { backInStockSettings } from "@wix/ecom";
@@ -19,7 +19,7 @@ export interface BackInStockNotificationRequestValues {
 }
 
 export async function createBackInStockNotificationRequest(
-  wixClient: WixClient,
+  wixClient: UnifiedWixClient,
   {
     email,
     itemUrl,

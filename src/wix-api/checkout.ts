@@ -1,11 +1,11 @@
 import { env } from "@/env";
 import { WIX_STORES_APP_ID } from "@/lib/constants";
 import { findVariant } from "@/lib/utils";
-import { WixClient } from "@/lib/wix-client.base";
+import { UnifiedWixClient } from "@/lib/wix-client.base";
 import { checkout } from "@wix/ecom";
 import { products } from "@wix/stores";
 
-export async function getCheckoutUrlForCurrentCart(wixClient: WixClient) {
+export async function getCheckoutUrlForCurrentCart(wixClient: UnifiedWixClient) {
   const { checkoutId } =
     await wixClient.currentCart.createCheckoutFromCurrentCart({
       channelType: checkout.ChannelType.WEB,
@@ -33,7 +33,7 @@ export interface GetCheckoutUrlForProductValues {
 }
 
 export async function getCheckoutUrlForProduct(
-  wixClient: WixClient,
+  wixClient: UnifiedWixClient,
   { product, quantity, selectedOptions }: GetCheckoutUrlForProductValues
 ) {
   const selectedVariant = findVariant(product, selectedOptions!);

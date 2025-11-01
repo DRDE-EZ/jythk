@@ -1,4 +1,4 @@
-import { WixClient } from "@/lib/wix-client.base";
+import { UnifiedWixClient } from "@/lib/wix-client.base";
 import { getLoggedInMember } from "./members";
 
 export interface CreateProductReviewValues {
@@ -10,7 +10,7 @@ export interface CreateProductReviewValues {
 }
 
 export async function createProductReview(
-  wixClient: WixClient,
+  wixClient: UnifiedWixClient,
   { productId, title, body, rating, media }: CreateProductReviewValues
 ) {
   const member = await getLoggedInMember(wixClient);
@@ -53,7 +53,7 @@ interface GetProductReviewsFilters {
 }
 
 export async function getProductReviews(
-  wixClient: WixClient,
+  wixClient: UnifiedWixClient,
   { productId, contactId, limit, cursor }: GetProductReviewsFilters
 ) {
   let query = wixClient.reviews.queryReviews().eq("entityId", productId);
