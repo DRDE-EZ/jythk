@@ -93,8 +93,9 @@ export default function ShoppingCartButton({
             <div className="space-y-0.5">
               <p className="text-sm text-black">Subtotal amount:</p>
               <p className="font-bold text-black">
-                {/* @ts-expect-error: subtotal may not be typed correctly in the API response */}
-                {cartQuery.data?.subtotal?.formattedConvertedAmount}
+                {cartQuery.data?.subtotal?.formattedConvertedAmount || 
+                 cartQuery.data?.subtotal?.formattedAmount || 
+                 "$0.00"}
               </p>
               <p className="text-xs text-gray-600">
                 Shipping and taxes calculated at checkout
@@ -105,6 +106,11 @@ export default function ShoppingCartButton({
               size="lg"
               className="rounded-none hover:cursor-pointer"
             />
+            {!totalQuantity && (
+              <p className="text-xs text-gray-500 text-center mt-1">
+                Add items to enable checkout
+              </p>
+            )}
           </div>
         </SheetContent>
       </Sheet>

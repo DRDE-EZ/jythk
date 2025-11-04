@@ -1,6 +1,5 @@
 import { getProductBySlug, getRelatedProducts } from "@/wix-api/products";
 import { notFound } from "next/navigation";
-import ProductDetails from "./ProductDetails";
 import { Metadata } from "next";
 import { stripHtml } from "@/lib/utils";
 import "react-medium-image-zoom/dist/styles.css";
@@ -11,10 +10,59 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { products } from "@wix/stores";
 import { getLoggedInMember } from "@/wix-api/members";
 import CreateProductReviewButton from "@/components/reviews/CreateProductReviewButton";
-import ProductReviews, {
-  ProductReviewsLoadingSkeleton,
-} from "./ProductReviews";
 import { getProductReviews } from "@/wix-api/reviews";
+import dynamic from "next/dynamic";
+
+// Dynamic imports for better performance
+const ProductDetails = dynamic(() => import("./ProductDetails"), {
+  loading: () => <ProductDetailsLoadingSkeleton />,
+});
+
+const ProductReviews = dynamic(() => import("./ProductReviews"), {
+  loading: () => <ProductReviewsLoadingSkeleton />,
+});
+
+// Loading skeleton for ProductDetails
+function ProductDetailsLoadingSkeleton() {
+  return (
+    <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+      <div className="space-y-4">
+        <Skeleton className="aspect-square w-full rounded-lg" />
+        <div className="grid grid-cols-4 gap-2">
+          {[...Array(4)].map((_, i) => (
+            <Skeleton key={i} className="aspect-square rounded-md" />
+          ))}
+        </div>
+      </div>
+      <div className="space-y-6">
+        <Skeleton className="h-8 w-3/4" />
+        <Skeleton className="h-6 w-1/2" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-2/3" />
+        </div>
+        <Skeleton className="h-12 w-full" />
+      </div>
+    </div>
+  );
+}
+
+// Loading skeleton for ProductReviews
+function ProductReviewsLoadingSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-6 w-1/3" />
+      {[...Array(3)].map((_, i) => (
+        <div key={i} className="p-4 border rounded-lg space-y-2">
+          <Skeleton className="h-4 w-1/4" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-3/4" />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -131,7 +179,7 @@ async function RelatedProducts({ productId }: RelatedProductsProps) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-        {relatedProducts.map((product, index) => (
+        {relatedProducts.map((product: products.Product, index: number) => (
           <div
             key={product._id}
             className="group transform transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-xl hover:shadow-primary/10"

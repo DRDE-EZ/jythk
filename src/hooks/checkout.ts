@@ -14,15 +14,32 @@ export function useCartCheckout() {
     setPending(true);
     try {
       const wixClient = wixBrowserClient;
-      if (!wixClient) return null;
+      if (!wixClient) {
+        // User is not authenticated, prompt them to login
+        toast.error("Please log in to continue to checkout", {
+          duration: 4000,
+        });
+        setPending(false);
+        return null;
+      }
 
       const checkoutUrl = await getCheckoutUrlForCurrentCart(wixClient);
       if (checkoutUrl === undefined) return null;
       window.location.href = checkoutUrl;
-    } catch (error) {
+    } catch (error: any) {
       setPending(false);
       console.error(error);
-      toast.error("Failed to load checkout. Please try again.");
+      
+      // Check for authentication-related errors
+      if (error.message?.includes("No Public URL Found") || 
+          error.message?.includes("verify that site is published") ||
+          error.message?.includes("CART_NOT_FOUND")) {
+        toast.error("Please log in to continue to checkout", {
+          duration: 4000,
+        });
+      } else {
+        toast.error("Failed to load checkout. Please try again.");
+      }
     }
   }
 
@@ -36,15 +53,32 @@ export function useBuyNow() {
     setPending(true);
     try {
       const wixClient = wixBrowserClient;
-      if (!wixClient) return null;
+      if (!wixClient) {
+        // User is not authenticated, prompt them to login
+        toast.error("Please log in to continue to checkout", {
+          duration: 4000,
+        });
+        setPending(false);
+        return null;
+      }
 
       const checkoutUrl = await getCheckoutUrlForProduct(wixClient, values);
       if (checkoutUrl === undefined) return null;
       window.location.href = checkoutUrl;
-    } catch (error) {
+    } catch (error: any) {
       setPending(false);
       console.error(error);
-      toast.error("Failed to load checkout. Please try again.");
+      
+      // Check for authentication-related errors
+      if (error.message?.includes("No Public URL Found") || 
+          error.message?.includes("verify that site is published") ||
+          error.message?.includes("CART_NOT_FOUND")) {
+        toast.error("Please log in to continue to checkout", {
+          duration: 4000,
+        });
+      } else {
+        toast.error("Failed to load checkout. Please try again.");
+      }
     }
   }
 

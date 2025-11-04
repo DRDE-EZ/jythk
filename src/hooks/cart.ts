@@ -9,6 +9,14 @@ import {
   UpdateCartItemQuantityValues,
 } from "@/wix-api/cart";
 import {
+  addToLocalCart,
+  clearLocalCart,
+  convertLocalCartToWixFormat,
+  getLocalCart,
+  removeFromLocalCart,
+  updateLocalCartItemQuantity,
+} from "@/lib/local-cart";
+import {
   MutationKey,
   QueryKey,
   useMutation,
@@ -23,11 +31,22 @@ const queryKey: QueryKey = ["cart"];
 export function useCart(initialData: currentCart.Cart | null) {
   return useQuery({
     queryKey,
-    queryFn: () => {
-      if (!wixBrowserClient) {
-        return Promise.resolve(null);
+    queryFn: async () => {
+      // Try Wix cart first (if user is authenticated)
+      if (wixBrowserClient) {
+        try {
+          const wixCart = await getCart(wixBrowserClient);
+          if (wixCart) {
+            return wixCart;
+          }
+        } catch (error) {
+          console.log("Wix cart not available, using local cart");
+        }
       }
-      return getCart(wixBrowserClient);
+      
+      // Fallback to local cart
+      const localCart = getLocalCart();
+      return convertLocalCartToWixFormat(localCart);
     },
     initialData,
   });
@@ -37,11 +56,26 @@ export function useAddItemToCart() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (values: AddToCartValues) => {
-      if (!wixBrowserClient) {
-        return Promise.reject(new Error("Wix client not initialized"));
+    mutationFn: async (values: AddToCartValues) => {
+      // Try Wix cart first (if user is authenticated)
+      if (wixBrowserClient) {
+        try {
+          return await addToCart(wixBrowserClient, values);
+        } catch (error) {
+          console.log("Wix cart not available, using local cart");
+        }
       }
-      return addToCart(wixBrowserClient, values);
+      
+      // Fallback to local cart
+      const localCart = addToLocalCart(
+        values.product,
+        values.selectedOptions,
+        values.quantity
+      );
+      
+      return {
+        cart: convertLocalCartToWixFormat(localCart)
+      };
     },
     onSuccess(data) {
       toast.success("Item added to cart");
@@ -61,11 +95,33 @@ export function useUpdateCartItemQuantity() {
 
   return useMutation({
     mutationKey,
-    mutationFn: (values: UpdateCartItemQuantityValues) => {
-      if (!wixBrowserClient) {
-        return Promise.reject(new Error("Wix client not initialized"));
+    mutationFn: async (values: UpdateCartItemQuantityValues) => {
+      // Try Wix cart first (if user is authenticated)
+      if (wixBrowserClient) {
+        try {
+          return await updateCartItemQuantity(wixBrowserClient, values);
+        } catch (error) {
+          console.log("Wix cart not available, using local cart");
+        }
       }
-      return updateCartItemQuantity(wixBrowserClient, values);
+      
+      // Fallback to local cart - we need to extract product info from the current cart
+      const currentCartData = queryClient.getQueryData<any>(queryKey);
+      const lineItem = currentCartData?.lineItems?.find((item: any) => item._id === values.productId);
+      
+      if (lineItem) {
+        const localCart = updateLocalCartItemQuantity(
+          lineItem.productId || values.productId,
+          lineItem.selectedOptions || {},
+          values.newQuantity
+        );
+        
+        return {
+          cart: convertLocalCartToWixFormat(localCart)
+        };
+      }
+      
+      throw new Error("Item not found in cart");
     },
     onMutate: async ({ productId, newQuantity }) => {
       await queryClient.cancelQueries({ queryKey });
@@ -101,11 +157,32 @@ export function useRemoveCartItem() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (productId: string) => {
-      if (!wixBrowserClient) {
-        return Promise.reject(new Error("Wix client not initialized"));
+    mutationFn: async (productId: string) => {
+      // Try Wix cart first (if user is authenticated)
+      if (wixBrowserClient) {
+        try {
+          return await removeCartItem(wixBrowserClient, productId);
+        } catch (error) {
+          console.log("Wix cart not available, using local cart");
+        }
       }
-      return removeCartItem(wixBrowserClient, productId);
+      
+      // Fallback to local cart - we need to extract product info from the current cart
+      const currentCartData = queryClient.getQueryData<any>(queryKey);
+      const lineItem = currentCartData?.lineItems?.find((item: any) => item._id === productId);
+      
+      if (lineItem) {
+        const localCart = removeFromLocalCart(
+          lineItem.productId || productId,
+          lineItem.selectedOptions || {}
+        );
+        
+        return {
+          cart: convertLocalCartToWixFormat(localCart)
+        };
+      }
+      
+      throw new Error("Item not found in cart");
     },
     onMutate: async (productId) => {
       await queryClient.cancelQueries({ queryKey });
@@ -136,11 +213,19 @@ export function useClearCart() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => {
-      if (!wixBrowserClient) {
-        return Promise.reject(new Error("Wix client not initialized"));
+    mutationFn: async () => {
+      // Try Wix cart first (if user is authenticated)
+      if (wixBrowserClient) {
+        try {
+          return await clearCart(wixBrowserClient);
+        } catch (error) {
+          console.log("Wix cart not available, using local cart");
+        }
       }
-      return clearCart(wixBrowserClient);
+      
+      // Fallback to local cart
+      const localCart = clearLocalCart();
+      return convertLocalCartToWixFormat(localCart);
     },
     onSuccess() {
       queryClient.setQueryData(queryKey, null);

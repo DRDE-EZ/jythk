@@ -3,7 +3,10 @@
 import { products } from "@wix/stores";
 import Link from "next/link";
 import WixImage from "./WixImage";
-import { ArrowUpRight, Zap } from "lucide-react";
+import { ArrowUpRight, Zap, ShoppingCart } from "lucide-react";
+import { useState } from "react";
+import { useAddItemToCart } from "@/hooks/cart";
+import { toast } from "sonner";
 
 interface ProductProps {
   product: products.Product;
@@ -12,14 +15,38 @@ interface ProductProps {
 export default function Product({ product }: ProductProps) {
   const mainImage = product.media?.mainMedia?.image;
   const description = product.additionalInfoSections?.[0]?.description;
+  const [isHovered, setIsHovered] = useState(false);
+  const addToCartMutation = useAddItemToCart();
 
   const isDiscounted =
     product.priceData?.formatted?.price !==
     product.priceData?.formatted?.discountedPrice;
 
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation
+    e.stopPropagation(); // Stop event bubbling
+    
+    // Get default options for the product
+    const defaultOptions: Record<string, string> = {};
+    if (product.productOptions) {
+      product.productOptions.forEach((option) => {
+        if (option.choices && option.choices.length > 0) {
+          defaultOptions[option.name!] = option.choices[0].value!;
+        }
+      });
+    }
+
+    addToCartMutation.mutate({
+      product,
+      selectedOptions: defaultOptions,
+      quantity: 1,
+    });
+  };
+
   return (
-    <Link href={`/products/${product.slug}`} className="block">
-      <div className="group/card relative w-full h-[420px] flex flex-col overflow-hidden rounded-lg bg-white border border-gray-200 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
+    <div className="block relative">
+      <Link href={`/products/${product.slug}`} className="block">
+        <div className="group/card relative w-full h-[420px] flex flex-col overflow-hidden rounded-lg bg-white border border-gray-200 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
         {/* Discount Badge */}
         {isDiscounted && (
           <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
@@ -29,9 +56,13 @@ export default function Product({ product }: ProductProps) {
 
         {/* Performance Indicator */}
         <div className="absolute top-3 right-3 z-20 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
-          <div className="bg-primary/90 backdrop-blur-sm rounded-full p-2 shadow-lg">
-            <Zap className="w-4 h-4 text-white" />
-          </div>
+          <button
+            onClick={handleAddToCart}
+            disabled={addToCartMutation.isPending}
+            className="bg-primary/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-primary transition-colors duration-200 disabled:opacity-50"
+          >
+            <ShoppingCart className="w-4 h-4 text-white" />
+          </button>
         </div>
 
         {/* Image Container - Fixed height */}
@@ -42,6 +73,8 @@ export default function Product({ product }: ProductProps) {
             mediaIdentifier={mainImage?.url}
             alt={mainImage?.altText}
             className="w-full h-full object-contain transition-all duration-700 group-hover/card:scale-110"
+            priority={false}
+            loading="lazy"
           />
 
           {/* Gradient Overlay */}
@@ -59,9 +92,19 @@ export default function Product({ product }: ProductProps) {
             </div>
           )}
 
-          {/* Hover Action Button */}
-          <div className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 translate-y-4 group-hover/card:translate-y-0 transition-all duration-300">
-            <div className="bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-full p-3 shadow-xl group-hover/card:bg-primary group-hover/card:text-white transition-colors duration-300">
+          {/* Hover Action Button - Cart button when hovered, arrow when not */}
+          <div className="absolute bottom-4 right-4">
+            {/* Shopping cart button - visible on hover */}
+            <button
+              onClick={handleAddToCart}
+              disabled={addToCartMutation.isPending}
+              className="opacity-0 group-hover/card:opacity-100 translate-y-4 group-hover/card:translate-y-0 transition-all duration-300 bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-full p-3 shadow-xl hover:bg-primary hover:text-white disabled:opacity-50"
+            >
+              <ShoppingCart className="w-5 h-5" />
+            </button>
+            
+            {/* Arrow button - visible when not hovered */}
+            <div className="opacity-100 group-hover/card:opacity-0 translate-y-0 group-hover/card:translate-y-4 transition-all duration-300 bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-full p-3 shadow-xl group-hover/card:bg-primary group-hover/card:text-white absolute inset-0">
               <ArrowUpRight className="w-5 h-5" />
             </div>
           </div>
@@ -126,5 +169,6 @@ export default function Product({ product }: ProductProps) {
         </div>
       </div>
     </Link>
+    </div>
   );
 }
