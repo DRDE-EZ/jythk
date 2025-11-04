@@ -76,10 +76,10 @@ export default function UserButton({
               {loggedInMember.contact?.firstName || "Customer"}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <Link href="/customer-dashboard">
+            <Link href="/customer-dashboard-protected">
               <DropdownMenuItem className="cursor-pointer">
                 <Package className="mr-2 size-4" />
-                My Orders & Transactions
+                📊 My Dashboard
               </DropdownMenuItem>
             </Link>
             <DropdownMenuSeparator />
