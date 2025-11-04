@@ -1,8 +1,12 @@
 import { products } from '@wix/stores';
 import { members } from '@wix/members';
 import { createClient, OAuthStrategy } from '@wix/sdk';
-import { WIX_OAUTH_DATA_COOKIE, WIX_SESSION_COOKIE } from '@/lib/constants';
 import Cookies from 'js-cookie';
+
+// Use hardcoded client ID to avoid environment variable conflicts
+const CLIENT_ID = '8ddda745-5ec1-49f1-ab74-5cc13da5c94f';
+const WIX_SESSION_COOKIE = `wix_session_${CLIENT_ID}`;
+const WIX_OAUTH_DATA_COOKIE = `wix_oauth_data_${CLIENT_ID}`;
 
 // Enhanced Wix client with Google OAuth support
 export function createEnhancedWixClient() {
@@ -12,7 +16,7 @@ export function createEnhancedWixClient() {
       members
     },
     auth: OAuthStrategy({ 
-      clientId: '8ddda745-5ec1-49f1-ab74-5cc13da5c94f' 
+      clientId: CLIENT_ID
     }),
   });
 }
@@ -23,6 +27,24 @@ export class EnhancedAuth {
 
   constructor() {
     this.wixClient = createEnhancedWixClient();
+    this.loadSession();
+  }
+
+  // Load existing session from cookies
+  private loadSession() {
+    if (typeof window !== 'undefined') {
+      const sessionCookie = Cookies.get(WIX_SESSION_COOKIE);
+      if (sessionCookie) {
+        try {
+          const tokens = JSON.parse(sessionCookie);
+          this.wixClient.auth.setTokens(tokens);
+          console.log('✅ Session loaded from cookies');
+        } catch (error) {
+          console.error('Failed to load session:', error);
+          Cookies.remove(WIX_SESSION_COOKIE);
+        }
+      }
+    }
   }
 
   // Generate OAuth data for authentication
@@ -118,13 +140,29 @@ export class EnhancedAuth {
     }
   }
 
-  // Get current member
+  // Get current member with better error handling
   async getCurrentMember() {
     try {
+      // First check if we have valid session tokens
+      const sessionToken = Cookies.get(WIX_SESSION_COOKIE);
+      if (!sessionToken) {
+        console.log('No session token found');
+        return null;
+      }
+
       const member = await this.wixClient.members.getCurrentMember();
+      console.log('✅ Current member retrieved:', member.member?.contact?.firstName || 'Unknown');
       return member;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to get current member:', error);
+      
+      // If it's a permission denied error, clear invalid session
+      if (error?.details?.applicationError?.code === 'PERMISSION_DENIED') {
+        console.log('🚫 Permission denied - clearing invalid session');
+        Cookies.remove(WIX_SESSION_COOKIE);
+        Cookies.remove(WIX_OAUTH_DATA_COOKIE);
+      }
+      
       return null;
     }
   }

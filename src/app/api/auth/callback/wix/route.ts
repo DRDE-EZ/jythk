@@ -1,8 +1,12 @@
-import { WIX_OAUTH_DATA_COOKIE, WIX_SESSION_COOKIE } from "@/lib/constants";
 import { createClient, OAuthStrategy, OauthData } from "@wix/sdk";
 import { members } from "@wix/members";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
+
+// Use hardcoded client ID to avoid environment variable conflicts
+const CLIENT_ID = '8ddda745-5ec1-49f1-ab74-5cc13da5c94f';
+const WIX_SESSION_COOKIE = `wix_session_${CLIENT_ID}`;
+const WIX_OAUTH_DATA_COOKIE = `wix_oauth_data_${CLIENT_ID}`;
 
 export async function GET(req: NextRequest) {
   console.log("=== CALLBACK DEBUG START ===");
@@ -61,11 +65,11 @@ export async function GET(req: NextRequest) {
   console.log("About to call getMemberTokens...");
 
   try {
-    // Create OAuth client for token exchange using new client ID
+    // Create OAuth client for token exchange using consistent client ID
     const wixClient = createClient({
       modules: { members },
       auth: OAuthStrategy({
-        clientId: '8ddda745-5ec1-49f1-ab74-5cc13da5c94f'
+        clientId: CLIENT_ID
       })
     });
 

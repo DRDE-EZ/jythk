@@ -35,9 +35,9 @@ export default function ProtectedCustomerDashboard() {
       
       if (currentMember && currentMember.member) {
         // User is authenticated with Wix
-        setMember(currentMember.member);
+        setMember(currentMember.member as any); // Type assertion to handle version conflicts
         setIsAuthenticated(true);
-        await loadCustomerData(currentMember.member.id || 'customer_1');
+        await loadCustomerData(currentMember.member._id || 'customer_1');
       } else {
         // User is not authenticated
         setIsAuthenticated(false);
