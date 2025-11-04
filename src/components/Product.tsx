@@ -73,8 +73,6 @@ export default function Product({ product }: ProductProps) {
             mediaIdentifier={mainImage?.url}
             alt={mainImage?.altText}
             className="w-full h-full object-contain transition-all duration-700 group-hover/card:scale-110"
-            priority={false}
-            loading="lazy"
           />
 
           {/* Gradient Overlay */}

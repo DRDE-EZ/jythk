@@ -25,7 +25,7 @@ export default function ShoppingCartButton({
   const cartQuery = useCart(initialData);
   const totalQuantity =
     cartQuery.data?.lineItems?.reduce(
-      (acc, item) => acc + (item.quantity || 0),
+      (acc: number, item: any) => acc + (item.quantity || 0),
       0
     ) || 0;
 
@@ -57,7 +57,7 @@ export default function ShoppingCartButton({
           <hr className="border-gray-200" />
           <div className="flex grow flex-col space-y-6 overflow-y-auto pt-2 bg-white">
             <ul className="space-y-8 px-5 -mt-1">
-              {cartQuery.data?.lineItems?.map((item) => (
+              {cartQuery.data?.lineItems?.map((item: any) => (
                 <ShoppingCartItem
                   key={item._id}
                   item={item}

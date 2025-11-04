@@ -134,7 +134,7 @@ async function ProductResults({
       {products.items.length > 0 ? (
         <div className="space-y-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-            {products.items.map((product, index) => (
+            {products.items.map((product: any, index: number) => (
               <div
                 key={product._id}
                 className="group transform transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-primary/10"

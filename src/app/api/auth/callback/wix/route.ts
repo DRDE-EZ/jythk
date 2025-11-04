@@ -1,6 +1,6 @@
 import { WIX_OAUTH_DATA_COOKIE, WIX_SESSION_COOKIE } from "@/lib/constants";
-import { getWixServerClient } from "@/lib/wix-client-server";
-import { OauthData } from "@wix/sdk";
+import { createClient, OAuthStrategy, OauthData } from "@wix/sdk";
+import { members } from "@wix/members";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
@@ -61,10 +61,15 @@ export async function GET(req: NextRequest) {
   console.log("About to call getMemberTokens...");
 
   try {
-    const wixClient = getWixServerClient();
-    const client = await wixClient;
+    // Create OAuth client for token exchange using new client ID
+    const wixClient = createClient({
+      modules: { members },
+      auth: OAuthStrategy({
+        clientId: '8ddda745-5ec1-49f1-ab74-5cc13da5c94f'
+      })
+    });
 
-    const memberTokens = await client.auth.getMemberTokens(
+    const memberTokens = await wixClient.auth.getMemberTokens(
       code,
       state,
       oAuthData
@@ -77,13 +82,13 @@ export async function GET(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
     });
 
-    console.log("Redirecting to:", oAuthData.originalUri || "/");
+    console.log("Redirecting to:", oAuthData.originalUri || "/profile");
     console.log("=== CALLBACK DEBUG END ===");
 
     return new Response(null, {
       status: 302,
       headers: {
-        Location: oAuthData.originalUri || "/",
+        Location: oAuthData.originalUri || "/profile",
       },
     });
   } catch (error) {

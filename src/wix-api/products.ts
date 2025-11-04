@@ -120,8 +120,8 @@ export async function getRelatedProducts(
   );
 
   const productIds = result.recommendation
-    ?.items!.map((item) => item.catalogItemId)
-    .filter((id) => id !== undefined);
+    ?.items!.map((item: any) => item.catalogItemId)
+    .filter((id: string | undefined) => id !== undefined);
 
   if (!productIds || !productIds.length) return [];
 

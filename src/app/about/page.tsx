@@ -334,7 +334,7 @@ export default function AboutPage() {
 
                     {/* Content */}
                     <div className="relative z-10">
-                      <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 transition-all duration-300" style={{ fontFamily: 'Arial, sans-serif', color: '#000000 !important' }}>
+                      <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-black transition-all duration-300" style={{ fontFamily: 'Arial, sans-serif' }}>
                         Ready to Start Your Dream Project?
                       </h3>
                       <div className="flex items-center justify-center gap-2 transition-all duration-300">

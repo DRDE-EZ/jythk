@@ -48,38 +48,25 @@ export default function MobileMenu({
           <SheetHeader>
             <SheetTitle>Mycro</SheetTitle>
           </SheetHeader>
-          <div className="flex flex-col items-center space-y-10 py-8">
-            <SearchButton />
-            <ul className="space-y-5 text-center text-lg">
-              <li>
-                <Link href="/shop" className="font-semibold hover:underline">
-                  Shop
+          <div className="flex flex-col items-center space-y-6 py-8">
+            {loggedInMember ? (
+              // Show dashboard option for logged-in users
+              <div className="text-center">
+                <h3 className="text-lg font-semibold mb-4 text-gray-800">Welcome back!</h3>
+                <Link 
+                  href="/customer-dashboard-protected"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  📊 My Dashboard
                 </Link>
-              </li>
-              {collections.map((collection) => (
-                <li key={collection._id}>
-                  <Link
-                    href={`/collections/${collection.slug}`}
-                    className="font-semibold hover:underline"
-                  >
-                    {collection.name}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/terms" className="font-semibold hover:underline">
-                  Shipping
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="font-semibold hover:underline">
-                  About
-                </Link>
-              </li>
-              <li>
+              </div>
+            ) : (
+              // Show login option for non-logged-in users
+              <div className="text-center">
+                <h3 className="text-lg font-semibold mb-4 text-gray-800">Get Started</h3>
                 <UserButton loggedInMember={loggedInMember} />
-              </li>
-            </ul>
+              </div>
+            )}
           </div>
         </SheetContent>
       </Sheet>

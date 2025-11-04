@@ -35,7 +35,7 @@ export default async function Home() {
               Trusted imports. On-time supply for tomorrow’s builds.
             </h2>
           </AnimatedSection>
-          <AnimatedSection delay={0.6}>
+          <AnimatedSection delay={0.4}>
             <div className="flex flex-col sm:flex-row gap-4 items-center">
               <Button
                 asChild
@@ -57,14 +57,6 @@ export default async function Home() {
                   <div className="absolute inset-0 bg-white translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
                 </Link>
               </Button>
-            </div>
-          </AnimatedSection>
-          {/* Scroll indicator */}
-          <AnimatedSection delay={1.2}>
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block">
-              <div className="w-6 h-10 border-2 border-white/40 rounded-full flex justify-center animate-pulse">
-                <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-bounce"></div>
-              </div>
             </div>
           </AnimatedSection>
         </div>
@@ -172,11 +164,113 @@ export default async function Home() {
         </div>
       </AnimatedSection>
 
+      {/* Customer Dashboard Section */}
+      <AnimatedSection delay={0.7}>
+        <div className="bg-gradient-to-br from-blue-50 to-green-50 py-12 sm:py-16 md:py-20">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent leading-tight">
+                Manage Your Orders & Account
+              </h2>
+              <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                Track orders, view purchase history, and manage your account all in one place.
+              </p>
+            </div>
+
+            <div className="grid gap-6 sm:gap-8 md:grid-cols-3 mb-12">
+              {[
+                {
+                  icon: "📦",
+                  title: "Order Tracking",
+                  description: "Real-time updates on your order status and delivery timeline."
+                },
+                {
+                  icon: "📊",
+                  title: "Purchase History",
+                  description: "Complete history of all your transactions and orders."
+                },
+                {
+                  icon: "🔔",
+                  title: "Smart Notifications",
+                  description: "Get notified about order updates, delivery status, and special offers."
+                }
+              ].map((feature) => (
+                <div
+                  key={feature.title}
+                  className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+                >
+                  <div className="text-4xl sm:text-5xl mb-4 text-center">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-center text-gray-800">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 text-center leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center bg-white rounded-2xl p-8 sm:p-10 shadow-lg">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">
+                Get Started Today
+              </h3>
+              <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                Choose how you'd like to access your customer dashboard
+              </p>
+              
+              <div className="flex flex-col gap-4 justify-center items-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="group relative overflow-hidden bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 min-w-[200px]"
+                >
+                  <Link href="/customer-dashboard-demo">
+                    <span className="relative z-10">🎯 Try Demo</span>
+                    <div className="absolute inset-0 bg-white/20 translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
+                  </Link>
+                </Button>
+                
+                <div className="flex flex-col gap-3 items-center">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="group relative overflow-hidden bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 min-w-[200px]"
+                  >
+                    <Link href="/customer-dashboard-protected">
+                      <span className="relative z-10">🔐 Sign In / Register</span>
+                      <div className="absolute inset-0 bg-white/20 translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
+                    </Link>
+                  </Button>
+                  
+                  <Button
+                    asChild
+                    size="lg"
+                    className="group relative overflow-hidden bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 min-w-[200px]"
+                  >
+                    <Link href="/customer-dashboard-protected">
+                      <span className="relative z-10">📊 My Dashboard</span>
+                      <div className="absolute inset-0 bg-white/20 translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="mt-6 text-sm text-gray-500">
+                <p>Demo: Explore features with sample data</p>
+                <p>Sign In: Access your real account with Google or email</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
       {/* Call to Action Section */}
       <AnimatedSection delay={0.8}>
         <div className="max-w-6xl mx-auto px-6 py-12 sm:py-16 md:py-20">
           <div className="text-center bg-gradient-to-br from-primary/5 to-secondary/10 rounded-3xl p-8 sm:p-10 md:p-12 border border-border">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-black leading-tight">
               Ready to Start Your Dream Project?
             </h2>
             <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -198,6 +292,13 @@ export default async function Home() {
                 className="px-10 py-4 text-xl font-semibold min-w-[200px]"
               >
                 <Link href="/shop">Browse Products</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                className="bg-green-600 hover:bg-green-700 px-10 py-4 text-xl font-semibold min-w-[200px]"
+              >
+                <Link href="/customer-dashboard-demo">My Dashboard</Link>
               </Button>
             </div>
           </div>
@@ -236,7 +337,7 @@ async function FeaturedProducts() {
         </div>
         <hr className="border-t-2 mb-10 border-primary/20 max-w-32 mx-auto" />
         <div className="flex flex-col w-[95%] sm:w-[100%] mx-auto gap-5 sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {featuredProducts.items.map((item, index) => (
+          {featuredProducts.items.map((item: any, index: number) => (
             <AnimatedSection key={item._id} delay={0.1 * index}>
               <Product product={item} />
             </AnimatedSection>
