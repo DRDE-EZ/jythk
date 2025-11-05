@@ -5,18 +5,7 @@ import { ProductsSort, queryProducts } from "@/wix-api/products";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import dynamic from "next/dynamic";
-
-// Dynamic import for Product component for better performance
-const Product = dynamic(() => import("@/components/Product"), {
-  loading: () => (
-    <div className="w-full h-[420px] animate-pulse">
-      <Skeleton className="w-full h-[280px] rounded-lg mb-4" />
-      <Skeleton className="h-4 w-3/4 mb-2" />
-      <Skeleton className="h-4 w-1/2" />
-    </div>
-  ),
-});
+import ProductClient from "@/components/ProductClient";
 
 interface PageProps {
   searchParams: Promise<{
@@ -142,7 +131,7 @@ async function ProductResults({
                   animationDelay: `${index * 100}ms`,
                 }}
               >
-                <Product product={product} />
+                <ProductClient product={product} />
               </div>
             ))}
           </div>

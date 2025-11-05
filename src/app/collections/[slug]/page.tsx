@@ -1,6 +1,6 @@
 import AnimatedSection from "@/components/AnimatedSection";
 import PaginationBar from "@/components/PaginationBar";
-import Product from "@/components/Product";
+import ProductClient from "@/components/ProductClient";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getWixServerClient } from "@/lib/wix-client-server";
 import { getCollectionBySlug } from "@/wix-api/collections";
@@ -178,13 +178,13 @@ async function Products({ collectionId, page }: ProductsProps) {
       <div className="space-y-12">
         {/* Products Grid with Enhanced Animations */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-          {collectionProducts.items.map((product, index) => (
+          {collectionProducts.items.map((product: any, index: number) => (
             <AnimatedSection
               key={product._id}
               delay={0.1 * (index % 4)} // Stagger animation by row
             >
               <div className="group transform hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10">
-                <Product product={product} />
+                <ProductClient product={product} />
               </div>
             </AnimatedSection>
           ))}

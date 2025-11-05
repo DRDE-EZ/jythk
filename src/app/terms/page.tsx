@@ -1,7 +1,173 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView, useScroll, useTransform, useAnimation } from "framer-motion";
+import { Truck, Package, Shield, Clock, Zap, Award } from "lucide-react";
+
+// Interactive shipping animation background
+const ShippingAnimation = () => {
+  const [trucks, setTrucks] = useState<Array<{
+    id: number;
+    x: number;
+    y: number;
+    speed: number;
+    size: number;
+  }>>([]);
+
+  useEffect(() => {
+    const createTrucks = () => {
+      const newTrucks = Array.from({ length: 8 }, (_, i) => ({
+        id: i,
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        speed: Math.random() * 0.5 + 0.2,
+        size: Math.random() * 0.5 + 0.5,
+      }));
+      setTrucks(newTrucks);
+    };
+
+    createTrucks();
+    window.addEventListener('resize', createTrucks);
+    return () => window.removeEventListener('resize', createTrucks);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTrucks(prev => prev.map(truck => ({
+        ...truck,
+        x: (truck.x + truck.speed + window.innerWidth) % window.innerWidth,
+      })));
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5">
+      {trucks.map(truck => (
+        <motion.div
+          key={truck.id}
+          className="absolute text-blue-500"
+          style={{
+            left: truck.x,
+            top: truck.y,
+            fontSize: `${truck.size * 2}rem`,
+          }}
+          animate={{
+            rotate: [0, 5, 0],
+            scale: [truck.size, truck.size * 1.2, truck.size],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          🚚
+        </motion.div>
+      ))}
+      
+      {/* Floating packages */}
+      {Array.from({ length: 12 }).map((_, i) => (
+        <motion.div
+          key={`package-${i}`}
+          className="absolute text-orange-500 text-lg sm:text-xl md:text-2xl"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, -20, 0],
+            rotate: [0, 10, 0],
+            opacity: [0.3, 0.7, 0.3],
+          }}
+          transition={{
+            duration: 3 + Math.random() * 2,
+            repeat: Infinity,
+            delay: Math.random() * 2,
+            ease: "easeInOut",
+          }}
+        >
+          📦
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+// Enhanced particle system for shipping theme
+const ShippingParticles = () => {
+  const [particles, setParticles] = useState<Array<{
+    id: number;
+    x: number;
+    y: number;
+    size: number;
+    speedX: number;
+    speedY: number;
+    opacity: number;
+    color: string;
+  }>>([]);
+
+  useEffect(() => {
+    const colors = ['#3B82F6', '#F59E0B', '#10B981', '#8B5CF6', '#EF4444'];
+    const createParticles = () => {
+      const newParticles = Array.from({ length: 30 }, (_, i) => ({
+        id: i,
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: Math.random() * 3 + 1,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.6 + 0.1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      }));
+      setParticles(newParticles);
+    };
+
+    createParticles();
+    window.addEventListener('resize', createParticles);
+    return () => window.removeEventListener('resize', createParticles);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setParticles(prev => prev.map(particle => ({
+        ...particle,
+        x: (particle.x + particle.speedX + window.innerWidth) % window.innerWidth,
+        y: (particle.y + particle.speedY + window.innerHeight) % window.innerHeight,
+      })));
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map(particle => (
+        <motion.div
+          key={particle.id}
+          className="absolute w-1 h-1 rounded-full"
+          style={{
+            left: particle.x,
+            top: particle.y,
+            backgroundColor: particle.color,
+            opacity: particle.opacity,
+            transform: `scale(${particle.size})`,
+          }}
+          animate={{
+            scale: [particle.size, particle.size * 1.5, particle.size],
+            opacity: [particle.opacity, particle.opacity * 0.3, particle.opacity],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default function TermsAndConditionsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,64 +189,128 @@ export default function TermsAndConditionsPage() {
       <motion.section
         ref={heroRef}
         style={{ opacity, scale }}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-gray-50 to-orange-50"
       >
-        {/* Animated Background Grid */}
-        <div className="absolute inset-0 opacity-30 dark:opacity-20">
-          <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--border))_1px,transparent_1px),linear-gradient(90deg,hsl(var(--border))_1px,transparent_1px)] bg-[size:100px_100px] animate-pulse"></div>
+        {/* Shipping Particles Background */}
+        <ShippingParticles />
+        
+        {/* Shipping Animation Background */}
+        <ShippingAnimation />
+        
+        {/* Enhanced Animated Background Grid */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--border))_1px,transparent_1px),linear-gradient(90deg,hsl(var(--border))_1px,transparent_1px)] bg-[size:40px_40px] sm:bg-[size:60px_60px] md:bg-[size:100px_100px] animate-pulse"></div>
         </div>
 
-        {/* Floating Orbs */}
+        {/* Enhanced Floating Orbs */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
-            className="absolute top-1/4 left-1/4 w-64 md:w-96 h-64 md:h-96 bg-primary/10 rounded-full blur-3xl"
-            animate={{ x: [0, 100, 0], y: [0, -50, 0] }}
+            className="absolute top-1/4 left-1/4 w-32 sm:w-48 md:w-64 lg:w-96 h-32 sm:h-48 md:h-64 lg:h-96 bg-blue-500/10 rounded-full blur-3xl"
+            animate={{ 
+              x: [0, 100, 0], 
+              y: [0, -50, 0],
+              scale: [1, 1.2, 1]
+            }}
             transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bottom-1/4 right-1/4 w-56 md:w-80 h-56 md:h-80 bg-secondary/20 rounded-full blur-3xl"
-            animate={{ x: [0, -80, 0], y: [0, 60, 0] }}
+            className="absolute bottom-1/4 right-1/4 w-24 sm:w-40 md:w-56 lg:w-80 h-24 sm:h-40 md:h-56 lg:h-80 bg-orange-500/20 rounded-full blur-3xl"
+            animate={{ 
+              x: [0, -80, 0], 
+              y: [0, 60, 0],
+              scale: [1, 0.8, 1]
+            }}
             transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-1/2 left-1/2 w-20 sm:w-32 md:w-48 h-20 sm:h-32 md:h-48 bg-green-500/15 rounded-full blur-2xl"
+            animate={{ 
+              rotate: [0, 360],
+              scale: [1, 1.4, 1]
+            }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           />
         </div>
 
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6 md:mb-8"
           >
-            <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-foreground via-muted-foreground to-muted-foreground bg-clip-text text-transparent">
-              Terms & Conditions
+            {/* Shipping icon animation */}
+            <motion.div
+              className="mb-6 md:mb-8"
+              animate={{ rotate: [0, 10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Truck className="w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 mx-auto text-blue-600" />
+            </motion.div>
+            
+            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-orange-600 bg-clip-text text-transparent leading-tight">
+              Shipping & Terms
             </h1>
-            <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+            <motion.div 
+              className="w-16 sm:w-20 md:w-24 h-1 bg-gradient-to-r from-blue-500 to-orange-500 mx-auto rounded-full"
+              animate={{ width: [64, 120, 64] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
           </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 leading-relaxed max-w-4xl mx-auto"
           >
-            Shipping, delivery, and important policies
+            Fast, reliable shipping and transparent policies for your construction needs
           </motion.p>
+          
+          {/* Enhanced shipping stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1 }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-8 md:mt-12 max-w-4xl mx-auto"
+          >
+            {[
+              { icon: Clock, label: "6-10 Days", desc: "Processing" },
+              { icon: Truck, label: "24/7", desc: "Tracking" },
+              { icon: Shield, label: "Secure", desc: "Delivery" },
+              { icon: Award, label: "Premium", desc: "Service" }
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-3 sm:p-4 border border-white/20"
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
+                transition={{ duration: 0.3 }}
+              >
+                <stat.icon className="w-6 sm:w-8 h-6 sm:h-8 mx-auto mb-2 text-blue-600" />
+                <div className="text-lg sm:text-xl font-bold text-gray-800">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-gray-600">{stat.desc}</div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* Scroll Indicator */}
+        {/* Enhanced Scroll Indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block"
+          className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
         >
-          <div className="w-6 h-10 border-2 border-border rounded-full flex justify-center">
+          <motion.div
+            className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center cursor-pointer"
+            whileHover={{ scale: 1.1, borderColor: "#3B82F6" }}
+          >
             <motion.div
-              className="w-1 h-3 bg-primary rounded-full mt-2"
-              animate={{ y: [0, 12, 0] }}
+              className="w-1 h-3 bg-blue-600 rounded-full mt-2"
+              animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             />
-          </div>
+          </motion.div>
         </motion.div>
       </motion.section>
 

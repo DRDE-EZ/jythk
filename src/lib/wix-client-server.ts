@@ -1,5 +1,4 @@
 import { ApiKeyStrategy, createClient, Tokens } from "@wix/sdk";
-import { cookies } from "next/headers";
 import { WIX_SESSION_COOKIE } from "./constants";
 import { getWixClient } from "./wix-client.base";
 import { cache } from "react";

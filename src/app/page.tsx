@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import Link from "next/link";
 import { Suspense } from "react";
-import Product from "@/components/Product";
 import { Skeleton } from "@/components/ui/skeleton";
 import SectionTitle from "@/components/SectionTitle";
 import { getCollectionBySlug } from "@/wix-api/collections";
 import { queryProducts } from "@/wix-api/products";
 import { getWixServerClient } from "@/lib/wix-client-server";
+import ProductClient from "@/components/ProductClient";
 
 export default async function Home() {
   return (
@@ -68,7 +68,7 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
               {[
-                { number: "500+", label: "Custom Builds" },
+                { number: "500+", label: "Dream Projects" },
                 { number: "24/7", label: "Support" },
                 { number: "98%", label: "Satisfaction" },
                 { number: "5★", label: "Reviews" },
@@ -107,7 +107,7 @@ export default async function Home() {
               },
               {
                 icon: "🛠️",
-                title: "Custom Built",
+                title: "Dream Project",
                 description:
                   "Tailored to your exact needs, from gaming rigs to workstations.",
               },
@@ -283,7 +283,7 @@ export default async function Home() {
                 size="lg"
                 className="px-10 py-4 text-xl font-semibold min-w-[200px]"
               >
-                <Link href="/contact">Get Custom Quote</Link>
+                <Link href="/contact">Start Dream Project</Link>
               </Button>
               <Button
                 variant="outline"
@@ -339,7 +339,7 @@ async function FeaturedProducts() {
         <div className="flex flex-col w-[95%] sm:w-[100%] mx-auto gap-5 sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {featuredProducts.items.map((item: any, index: number) => (
             <AnimatedSection key={item._id} delay={0.1 * index}>
-              <Product product={item} />
+              <ProductClient product={item} />
             </AnimatedSection>
           ))}
         </div>

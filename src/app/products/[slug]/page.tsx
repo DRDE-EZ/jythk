@@ -5,13 +5,13 @@ import { stripHtml } from "@/lib/utils";
 import "react-medium-image-zoom/dist/styles.css";
 import { getWixServerClient } from "@/lib/wix-client-server";
 import { Suspense } from "react";
-import Product from "@/components/Product";
 import { Skeleton } from "@/components/ui/skeleton";
 import { products } from "@wix/stores";
 import { getLoggedInMember } from "@/wix-api/members";
 import CreateProductReviewButton from "@/components/reviews/CreateProductReviewButton";
 import { getProductReviews } from "@/wix-api/reviews";
 import dynamic from "next/dynamic";
+import ProductClient from "@/components/ProductClient";
 
 // Dynamic imports for better performance
 const ProductDetails = dynamic(() => import("./ProductDetails"), {
@@ -187,7 +187,7 @@ async function RelatedProducts({ productId }: RelatedProductsProps) {
               animationDelay: `${index * 100}ms`,
             }}
           >
-            <Product product={product} />
+            <ProductClient product={product} />
           </div>
         ))}
       </div>
