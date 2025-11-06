@@ -46,7 +46,7 @@ export default function OAuthDebugPage() {
       
       if (errorMessage.includes("Invalid redirect URI")) {
         toast.error("❌ Redirect URI not configured in Wix dashboard");
-        setDebugInfo(prev => ({
+        setDebugInfo((prev: any) => ({
           ...prev,
           redirectUriError: true,
           fixInstructions: {

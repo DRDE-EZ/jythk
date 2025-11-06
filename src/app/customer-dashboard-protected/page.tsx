@@ -5,9 +5,65 @@ import { enhancedAuth } from '@/lib/enhanced-auth';
 import { wixBrowserClient } from '@/lib/wix-client.browser';
 import { getUserOrders } from '@/wix-api/orders';
 import { Button } from '@/components/ui/button';
-import { Package, Search, Filter, Eye, Calendar, DollarSign, Truck, CheckCircle, Clock, AlertCircle, LogIn, Mail, Home, User, Settings, ShoppingBag, Bell, ChevronRight, Plus, LogOut } from 'lucide-react';
+import { Package, Search, Filter, Eye, Calendar, DollarSign, Truck, CheckCircle, Clock, AlertCircle, LogIn, Mail, Home, User, Settings, ShoppingBag, Bell, ChevronRight, Plus, LogOut, Loader2, AlertTriangle, RefreshCw } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
+import { isAdmin } from '@/lib/admin-config';
+
+interface Member {
+  _id?: string;
+  loginEmail?: string;
+  _createdDate?: string;
+  contact?: {
+    firstName?: string;
+    lastName?: string;
+    emails?: string[];
+  };
+}
+
+// Error Boundary Component
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
+}
+
+function ErrorBoundary({ children, fallback }: ErrorBoundaryProps) {
+  try {
+    return <>{children}</>;
+  } catch (error) {
+    console.error('Customer Dashboard Error:', error);
+    return (
+      <div className="flex items-center justify-center min-h-[400px] bg-red-50 rounded-lg border border-red-200">
+        <div className="text-center p-8">
+          <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-red-800 mb-2">Something went wrong</h3>
+          <p className="text-red-600 mb-4">
+            There was an error loading this section of your dashboard.
+          </p>
+          <Button 
+            onClick={() => window.location.reload()} 
+            variant="outline"
+            className="text-red-600 border-red-300 hover:bg-red-50"
+          >
+            Reload Page
+          </Button>
+        </div>
+      </div>
+    );
+  }
+}
+
+// Loading Component
+function LoadingSpinner({ message = "Loading..." }: { message?: string }) {
+  return (
+    <div className="flex items-center justify-center min-h-[200px]">
+      <div className="text-center">
+        <Loader2 className="h-8 w-8 animate-spin text-blue-600 mx-auto mb-2" />
+        <p className="text-slate-600">{message}</p>
+      </div>
+    </div>
+  );
+}
 
 interface Member {
   _id?: string;
@@ -25,20 +81,31 @@ export default function ProtectedCustomerDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   // Computed values for dashboard
   const authLoading = isLoading;
 
-  // Use React Query to fetch real Wix orders
+  // Use React Query to fetch real Wix orders with enhanced error handling
   const { data: ordersData, isLoading: ordersLoading, error: ordersError, refetch } = useQuery({
     queryKey: ['customer-orders', member?._id],
     queryFn: async () => {
-      if (!wixBrowserClient || !member?._id) return null;
-      return getUserOrders(wixBrowserClient, { limit: 20 });
+      if (!wixBrowserClient || !member?._id) {
+        throw new Error('Authentication required to fetch orders');
+      }
+      try {
+        return await getUserOrders(wixBrowserClient, { limit: 20 });
+      } catch (error) {
+        console.error('Failed to fetch orders:', error);
+        throw new Error('Unable to load orders. Please try again.');
+      }
     },
     enabled: !!wixBrowserClient && !!member?._id && isAuthenticated,
     refetchOnWindowFocus: true,
     staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 
   const orders = ordersData?.orders || [];
@@ -50,13 +117,24 @@ export default function ProtectedCustomerDashboard() {
 
   const checkAuthentication = async () => {
     try {
+      setIsLoading(true);
+      setAuthError(null);
+      
       // Try to get current member from Wix
       const currentMember = await enhancedAuth.getCurrentMember();
       
       if (currentMember && currentMember.member) {
         // User is authenticated with Wix - extract real Gmail
         const memberData = currentMember.member as any;
-        const userEmail = memberData.loginEmail || memberData.contact?.emails?.[0] || 'user@gmail.com';
+        const userEmail = memberData.loginEmail || memberData.contact?.emails?.[0] || '';
+        
+        // Check if user is an admin
+        if (isAdmin(userEmail)) {
+          // Redirect admin users to admin dashboard
+          console.log('🔑 Admin user detected, redirecting to admin dashboard');
+          window.location.href = '/admin-dashboard';
+          return;
+        }
         
         setMember({
           _id: memberData._id,
@@ -70,24 +148,52 @@ export default function ProtectedCustomerDashboard() {
       } else {
         // User is not authenticated
         setIsAuthenticated(false);
+        setAuthError('Please sign in to access your customer dashboard.');
       }
     } catch (error) {
       console.error('Authentication check failed:', error);
-      // User is not authenticated, show login option
       setIsAuthenticated(false);
+      setAuthError('Authentication failed. Please try signing in again.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Enhanced loading component
-  const LoadingSpinner = () => (
-    <div className="flex items-center justify-center space-x-2">
-      <div className="w-4 h-4 rounded-full animate-pulse bg-blue-600"></div>
-      <div className="w-4 h-4 rounded-full animate-pulse bg-blue-600" style={{ animationDelay: '0.2s' }}></div>
-      <div className="w-4 h-4 rounded-full animate-pulse bg-blue-600" style={{ animationDelay: '0.4s' }}></div>
-    </div>
-  );
+  // Enhanced refresh functionality
+  const handleRefreshOrders = async () => {
+    setRefreshing(true);
+    try {
+      await refetch();
+      console.log('✅ Orders refreshed successfully');
+    } catch (error) {
+      console.error('Failed to refresh orders:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const handleSignIn = async () => {
+    try {
+      const result = await enhancedAuth.loginWithGoogle();
+      if (result.success) {
+        await checkAuthentication();
+      }
+    } catch (error) {
+      console.error('Sign-in error:', error);
+      setAuthError('Sign-in failed. Please try again.');
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await enhancedAuth.logout();
+      setMember(null);
+      setIsAuthenticated(false);
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
 
   // Breadcrumb navigation
   const Breadcrumb = () => (
@@ -112,20 +218,35 @@ export default function ProtectedCustomerDashboard() {
             Continue Shopping
           </Link>
         </Button>
-        <Button asChild className="w-full justify-start" variant="outline">
-          <Link href="/profile">
-            <User className="w-4 h-4 mr-2" />
-            Edit Profile
-          </Link>
+        <Button 
+          onClick={() => setActiveTab('profile')} 
+          className={`w-full justify-start transition-all duration-200 ${
+            activeTab === 'profile' 
+              ? 'bg-blue-100 text-blue-700 border-blue-300' 
+              : 'hover:bg-gray-50'
+          }`} 
+          variant="outline"
+        >
+          <User className="w-4 h-4 mr-2" />
+          Edit Profile
         </Button>
         <Button 
-          onClick={() => refetch()} 
-          className="w-full justify-start" 
+          onClick={handleRefreshOrders} 
+          className="w-full justify-start transition-all duration-200 hover:bg-gray-50 hover:scale-105 transform" 
           variant="outline"
-          disabled={ordersLoading}
+          disabled={refreshing || ordersLoading}
         >
-          {ordersLoading ? <LoadingSpinner /> : <Package className="w-4 h-4 mr-2" />}
-          Refresh Orders
+          {refreshing || ordersLoading ? (
+            <div className="flex items-center">
+              <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              Refreshing...
+            </div>
+          ) : (
+            <>
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Refresh Orders
+            </>
+          )}
         </Button>
         <Button asChild className="w-full justify-start" variant="outline">
           <Link href="/customer-dashboard-demo">
@@ -330,6 +451,15 @@ export default function ProtectedCustomerDashboard() {
     );
   }
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <LoadingSpinner message="Checking authentication..." />
+      </div>
+    );
+  }
+
   // Show login screen if not authenticated
   if (!isAuthenticated) {
     return (
@@ -345,25 +475,34 @@ export default function ProtectedCustomerDashboard() {
             </p>
           </div>
           
+          {/* Error display */}
+          {authError && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <div className="flex items-center">
+                <AlertTriangle className="h-5 w-5 text-red-500 mr-2" />
+                <p className="text-red-800">{authError}</p>
+              </div>
+            </div>
+          )}
+          
           <div className="bg-white py-8 px-6 shadow rounded-lg">
             <div className="space-y-4">
               <Button
-                onClick={handleGoogleLogin}
+                onClick={handleSignIn}
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700"
+                className="w-full flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 transform transition-all duration-200 hover:scale-105"
               >
                 <Mail className="h-5 w-5" />
                 {isLoading ? 'Signing in...' : 'Sign in with Google'}
               </Button>
               
               <Button
-                onClick={handleEmailLogin}
-                disabled={isLoading}
+                onClick={() => window.location.href = '/'}
                 variant="outline"
-                className="w-full flex items-center justify-center gap-3"
+                className="w-full flex items-center justify-center gap-3 transform transition-all duration-200 hover:scale-105"
               >
-                <LogIn className="h-5 w-5" />
-                {isLoading ? 'Signing in...' : 'Sign in with Email'}
+                <Home className="h-5 w-5" />
+                Return to Home
               </Button>
             </div>
             
@@ -382,7 +521,7 @@ export default function ProtectedCustomerDashboard() {
             </p>
             <a
               href="/customer-dashboard-demo"
-              className="inline-block bg-yellow-600 text-white px-4 py-2 rounded text-sm hover:bg-yellow-700"
+              className="inline-block bg-yellow-600 text-white px-4 py-2 rounded text-sm hover:bg-yellow-700 transform transition-all duration-200 hover:scale-105"
             >
               View Demo Dashboard
             </a>
@@ -428,40 +567,44 @@ export default function ProtectedCustomerDashboard() {
           {/* Main content - 3 columns */}
           <div className="lg:col-span-3 space-y-6">
             {activeTab === 'overview' && (
-              <>
+              <div className="space-y-6 animate-in slide-in-from-left-2 duration-300">
                 {/* Stats Overview */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-white rounded-lg shadow p-6">
+                  <div className="bg-gradient-to-br from-white to-blue-50 rounded-lg shadow p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-blue-100">
                     <div className="flex items-center">
                       <Package className="w-8 h-8 text-blue-600" />
                       <div className="ml-4">
                         <h3 className="text-sm font-medium text-gray-500">Total Orders</h3>
                         <div className="text-2xl font-bold text-gray-900">
-                          {ordersLoading ? <LoadingSpinner /> : orders.length}
+                          {ordersLoading ? (
+                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                          ) : orders.length}
                         </div>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="bg-white rounded-lg shadow p-6">
+                  <div className="bg-gradient-to-br from-white to-green-50 rounded-lg shadow p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-green-100">
                     <div className="flex items-center">
                       <DollarSign className="w-8 h-8 text-green-600" />
                       <div className="ml-4">
                         <h3 className="text-sm font-medium text-gray-500">Total Spent</h3>
                         <div className="text-2xl font-bold text-gray-900">
-                          {ordersLoading ? <LoadingSpinner /> : `$${totalSpent.toFixed(2)}`}
+                          {ordersLoading ? (
+                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-600"></div>
+                          ) : `$${totalSpent.toFixed(2)}`}
                         </div>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="bg-white rounded-lg shadow p-6">
+                  <div className="bg-gradient-to-br from-white to-purple-50 rounded-lg shadow p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-purple-100">
                     <div className="flex items-center">
                       <User className="w-8 h-8 text-purple-600" />
                       <div className="ml-4">
                         <h3 className="text-sm font-medium text-gray-500">Member Since</h3>
                         <div className="text-2xl font-bold text-gray-900">
-                          {authLoading ? <LoadingSpinner /> : 
+                          {authLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 
                            member?._createdDate ? new Date(member._createdDate).getFullYear() : 'N/A'}
                         </div>
                       </div>
@@ -483,10 +626,31 @@ export default function ProtectedCustomerDashboard() {
                       </Button>
                     </div>
                   </div>
-                  <div className="divide-y divide-gray-200">
-                    {ordersLoading ? (
+                  <div className="bg-white rounded-lg border divide-y divide-gray-200">
+                    {ordersError ? (
                       <div className="px-6 py-12 text-center">
-                        <LoadingSpinner />
+                        <AlertTriangle className="w-16 h-16 text-red-400 mx-auto mb-4" />
+                        <h3 className="text-lg font-medium text-red-900 mb-2">Failed to load orders</h3>
+                        <p className="text-red-600 mb-4">
+                          {ordersError instanceof Error ? ordersError.message : 'Unable to fetch orders. Please try again.'}
+                        </p>
+                        <Button 
+                          onClick={handleRefreshOrders}
+                          variant="outline"
+                          className="text-red-600 border-red-300 hover:bg-red-50 transform transition-all duration-200 hover:scale-105"
+                          disabled={refreshing}
+                        >
+                          {refreshing ? (
+                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                          ) : (
+                            <RefreshCw className="h-4 w-4 mr-2" />
+                          )}
+                          Try Again
+                        </Button>
+                      </div>
+                    ) : ordersLoading ? (
+                      <div className="px-6 py-12 text-center">
+                        <Loader2 className="h-8 w-8 animate-spin text-blue-600 mx-auto mb-2" />
                         <p className="text-gray-500 mt-2">Loading orders...</p>
                       </div>
                     ) : orders.length === 0 ? (
@@ -529,7 +693,7 @@ export default function ProtectedCustomerDashboard() {
                     )}
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {activeTab === 'orders' && (
@@ -543,7 +707,7 @@ export default function ProtectedCustomerDashboard() {
                       onClick={() => refetch()}
                       disabled={ordersLoading}
                     >
-                      {ordersLoading ? <LoadingSpinner /> : <Package className="w-4 h-4 mr-2" />}
+                      {ordersLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Package className="w-4 h-4 mr-2" />}
                       Refresh
                     </Button>
                   </div>
@@ -551,7 +715,7 @@ export default function ProtectedCustomerDashboard() {
                 
                 {ordersLoading ? (
                   <div className="px-6 py-12 text-center">
-                    <LoadingSpinner />
+                    <Loader2 className="h-8 w-8 animate-spin text-blue-600 mx-auto mb-2" />
                     <p className="text-gray-500 mt-2">Loading orders...</p>
                   </div>
                 ) : orders.length === 0 ? (
@@ -658,62 +822,70 @@ export default function ProtectedCustomerDashboard() {
               </div>
             )}
 
-            {activeTab === 'account' && (
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-6">Account Information</h3>
+            {activeTab === 'profile' && (
+              <div className="bg-white rounded-lg shadow p-6 animate-in slide-in-from-right-2 duration-300">
+                <h3 className="text-lg font-semibold text-gray-900 mb-6">Profile Information</h3>
                 
                 {authLoading ? (
                   <div className="text-center py-8">
-                    <LoadingSpinner />
-                    <p className="text-gray-500 mt-2">Loading account information...</p>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <p className="text-gray-500 mt-2">Loading profile information...</p>
                   </div>
                 ) : member ? (
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
+                      <div className="transform transition-all duration-200 hover:scale-105">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           First Name
                         </label>
-                        <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
+                        <div className="text-gray-900 bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3 rounded-lg border border-gray-200">
                           {member.contact?.firstName || 'Not provided'}
-                        </p>
+                        </div>
                       </div>
                       
-                      <div>
+                      <div className="transform transition-all duration-200 hover:scale-105">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           Last Name
                         </label>
-                        <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
+                        <div className="text-gray-900 bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3 rounded-lg border border-gray-200">
                           {member.contact?.lastName || 'Not provided'}
-                        </p>
+                        </div>
                       </div>
                       
-                      <div>
+                      <div className="transform transition-all duration-200 hover:scale-105">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Email
+                          Email Address
                         </label>
-                        <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
+                        <div className="text-gray-900 bg-gradient-to-r from-blue-50 to-blue-100 px-4 py-3 rounded-lg border border-blue-200">
                           {member.loginEmail || 'Not provided'}
-                        </p>
+                        </div>
                       </div>
                       
-                      <div>
+                      <div className="transform transition-all duration-200 hover:scale-105">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           Member Since
                         </label>
-                        <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
+                        <div className="text-gray-900 bg-gradient-to-r from-green-50 to-green-100 px-4 py-3 rounded-lg border border-green-200">
                           {member._createdDate ? new Date(member._createdDate).toLocaleDateString() : 'Unknown'}
-                        </p>
+                        </div>
                       </div>
                     </div>
 
                     <div className="pt-6 border-t border-gray-200">
                       <div className="flex space-x-4">
-                        <Button asChild>
-                          <Link href="/profile">Edit Profile</Link>
+                        <Button 
+                          className="bg-blue-600 hover:bg-blue-700 transform transition-all duration-200 hover:scale-105"
+                          onClick={() => {
+                            // Future: Add edit profile functionality
+                            alert('Profile editing coming soon!');
+                          }}
+                        >
+                          <Settings className="w-4 h-4 mr-2" />
+                          Edit Profile
                         </Button>
                         <Button 
                           variant="outline"
+                          className="transform transition-all duration-200 hover:scale-105"
                           onClick={() => {
                             enhancedAuth.logout();
                           }}
@@ -727,7 +899,7 @@ export default function ProtectedCustomerDashboard() {
                 ) : (
                   <div className="text-center py-8">
                     <User className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-500">Unable to load account information</p>
+                    <p className="text-gray-500">Unable to load profile information</p>
                   </div>
                 )}
               </div>
