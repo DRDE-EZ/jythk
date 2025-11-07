@@ -25,7 +25,10 @@ const getAdminEmails = (): string[] => {
   try {
     const stored = localStorage.getItem('adminEmails');
     if (stored) {
-      return JSON.parse(stored);
+      const storedEmails = JSON.parse(stored);
+      // Always include default admins even if localStorage exists
+      const allEmails = [...new Set([...ADMIN_CONFIG.defaultAdminEmails, ...storedEmails])];
+      return allEmails;
     }
   } catch (error) {
     console.error('Error loading admin emails:', error);
@@ -41,7 +44,10 @@ const getSuperAdminEmails = (): string[] => {
   try {
     const stored = localStorage.getItem('superAdminEmails');
     if (stored) {
-      return JSON.parse(stored);
+      const storedEmails = JSON.parse(stored);
+      // Always include default super admins even if localStorage exists
+      const allEmails = [...new Set([...ADMIN_CONFIG.defaultSuperAdminEmails, ...storedEmails])];
+      return allEmails;
     }
   } catch (error) {
     console.error('Error loading super admin emails:', error);

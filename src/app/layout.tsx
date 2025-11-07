@@ -1,15 +1,14 @@
+import ClientLayout from "./ClientLayout";
 import type { Metadata } from "next";
 import { Roboto, Poppins } from "next/font/google";
 import "./globals.css";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import AnimatedSection from "@/components/AnimatedSection";
 import StickyScrollReveal from "@/components/StickyScrollReveal";
-import ReactQueryProvider from "./ReactQueryProvider";
-import { Toaster } from "@/components/ui/sonner";
+import AnimatedSection from "@/components/AnimatedSection";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+// Removed ErrorBoundary to resolve system error
 
 const roboto = Roboto({ 
   subsets: ["latin"], 
@@ -53,22 +52,19 @@ export default function RootLayout({
       <body className={`${roboto.className} ${poppins.className} antialiased`}>
         <Analytics />
         <SpeedInsights />
-        <ErrorBoundary>
-          <ReactQueryProvider>
-            <StickyScrollReveal>
-              <NavBar />
-            </StickyScrollReveal>
-
-            <div className="flex min-h-screen flex-col pt-20">
-              <main className="flex-1 w-full">{children}</main>
-
-              <AnimatedSection duration={1.2}>
-                <Footer />
-              </AnimatedSection>
-            </div>
-          </ReactQueryProvider>
-        </ErrorBoundary>
-        <Toaster />
+        <ClientLayout>
+          {/* Server components with React Query context available */}
+          <StickyScrollReveal>
+            <NavBar />
+          </StickyScrollReveal>
+          
+          <div className="flex min-h-screen flex-col pt-20">
+            <main className="flex-1 w-full">{children}</main>
+            <AnimatedSection duration={1.2}>
+              <Footer />
+            </AnimatedSection>
+          </div>
+        </ClientLayout>
       </body>
     </html>
   );

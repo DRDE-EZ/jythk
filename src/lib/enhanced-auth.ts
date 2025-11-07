@@ -146,24 +146,41 @@ export class EnhancedAuth {
       // First check if we have valid session tokens
       const sessionToken = Cookies.get(WIX_SESSION_COOKIE);
       if (!sessionToken) {
-        console.log('No session token found');
-        return null;
+        console.log('❌ No session token found');
+        throw new Error('No active session. Please sign in.');
+      }
+
+      // Reload session to ensure tokens are set
+      try {
+        const tokens = JSON.parse(sessionToken);
+        if (!tokens || !tokens.accessToken) {
+          console.log('❌ Invalid session tokens');
+          Cookies.remove(WIX_SESSION_COOKIE);
+          throw new Error('Invalid session. Please sign in again.');
+        }
+        this.wixClient.auth.setTokens(tokens);
+        console.log('✅ Using OAuth tokens from session');
+      } catch (parseError) {
+        console.error('Failed to parse session tokens:', parseError);
+        Cookies.remove(WIX_SESSION_COOKIE);
+        throw new Error('Invalid session. Please sign in again.');
       }
 
       const member = await this.wixClient.members.getCurrentMember();
-      console.log('✅ Current member retrieved:', member.member?.contact?.firstName || 'Unknown');
+      console.log('✅ Current member retrieved:', member.member?.contact?.firstName || member.member?.loginEmail || 'Unknown');
       return member;
     } catch (error: any) {
       console.error('Failed to get current member:', error);
       
       // If it's a permission denied error, clear invalid session
-      if (error?.details?.applicationError?.code === 'PERMISSION_DENIED') {
+      if (error?.details?.applicationError?.code === 'PERMISSION_DENIED' ||
+          error?.message?.includes('Member authentication not available')) {
         console.log('🚫 Permission denied - clearing invalid session');
         Cookies.remove(WIX_SESSION_COOKIE);
         Cookies.remove(WIX_OAUTH_DATA_COOKIE);
       }
       
-      return null;
+      throw error; // Re-throw instead of returning null
     }
   }
 

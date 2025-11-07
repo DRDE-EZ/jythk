@@ -49,9 +49,34 @@ export default function MobileMenu({
             <SheetTitle>Mycro</SheetTitle>
           </SheetHeader>
           <div className="flex flex-col items-center space-y-6 py-8">
+            <Link 
+              href="/shop"
+              className="text-lg font-semibold text-gray-800 hover:text-[#1a4ba8] transition-colors"
+            >
+              Shop
+            </Link>
+            <Link 
+              href="/terms"
+              className="text-lg font-semibold text-gray-800 hover:text-[#1a4ba8] transition-colors"
+            >
+              Shipping
+            </Link>
+            <Link 
+              href="/about"
+              className="text-lg font-semibold text-gray-800 hover:text-[#1a4ba8] transition-colors"
+            >
+              About
+            </Link>
+            <Link 
+              href="/portal"
+              className="text-lg font-semibold text-gray-800 hover:text-[#1a4ba8] transition-colors"
+            >
+              Portal
+            </Link>
+            
             {loggedInMember ? (
               // Show dashboard option for logged-in users
-              <div className="text-center">
+              <div className="text-center mt-6 pt-6 border-t border-gray-200 w-full">
                 <h3 className="text-lg font-semibold mb-4 text-gray-800">Welcome back!</h3>
                 <Link 
                   href="/customer-dashboard-protected"
@@ -62,7 +87,7 @@ export default function MobileMenu({
               </div>
             ) : (
               // Show login option for non-logged-in users
-              <div className="text-center">
+              <div className="text-center mt-6 pt-6 border-t border-gray-200 w-full">
                 <h3 className="text-lg font-semibold mb-4 text-gray-800">Get Started</h3>
                 <UserButton loggedInMember={loggedInMember} />
               </div>

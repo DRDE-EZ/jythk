@@ -61,12 +61,9 @@ export default function RandomizedCategoriesClient({ items, limit }: RandomizedC
                     <WixImage
                       mediaIdentifier={cat.media?.mainMedia?.image?.url}
                       alt={cat.media?.mainMedia?.image?.altText || cat.name || "Category"}
-                      width={1200} // Increased from 800 for better quality
-                      height={900}  // Increased from 600 for better quality
+                      width={1200}
+                      height={900}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 filter group-hover:brightness-110 group-hover:contrast-105"
-                      style={{
-                        imageRendering: 'crisp-edges', // Better image rendering
-                      }}
                     />
                     {/* Enhanced gradient overlay with better opacity control */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 group-hover:from-black/75 group-hover:via-black/35 transition-all duration-500" />

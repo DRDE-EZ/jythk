@@ -945,12 +945,7 @@ export default function AboutPage() {
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center border-2 border-black group-hover:scale-110 transition-transform relative" style={{ background: '#1a4ba8' }}>
-                    <Mail className="w-8 h-8 text-white" />
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
-                    </div>
-                  </div>
+                  <Mail className="w-12 h-12 mx-auto mb-4 text-[#1a4ba8]" />
                   <h3 className="font-bold text-lg mb-2 text-black">Email Support</h3>
                   <a href="mailto:info@formexconstruction.sk" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
                     info@formexconstruction.sk
@@ -963,16 +958,7 @@ export default function AboutPage() {
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center border-2 border-black group-hover:scale-110 transition-transform relative" style={{ background: '#1a4ba8' }}>
-                    <Phone className="w-8 h-8 text-white" />
-                    <motion.div 
-                      className="absolute -top-2 -right-2 text-green-500"
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      📞
-                    </motion.div>
-                  </div>
+                  <Phone className="w-12 h-12 mx-auto mb-4 text-[#1a4ba8]" />
                   <h3 className="font-bold text-lg mb-2 text-black">Call Direct</h3>
                   <a href="tel:+421123456789" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
                     +421 123 456 789
@@ -985,10 +971,7 @@ export default function AboutPage() {
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center border-2 border-black group-hover:scale-110 transition-transform relative" style={{ background: '#1a4ba8' }}>
-                    <MapPin className="w-8 h-8 text-white" />
-                    <HardHat className="w-4 h-4 text-orange-500 absolute -bottom-1 -right-1" />
-                  </div>
+                  <MapPin className="w-12 h-12 mx-auto mb-4 text-[#1a4ba8]" />
                   <h3 className="font-bold text-lg mb-2 text-black">Visit Our Warehouse</h3>
                   <p className="text-gray-700 font-medium">
                     Bratislava, Slovakia

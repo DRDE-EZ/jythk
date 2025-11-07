@@ -121,6 +121,11 @@ export default function MainNavigation({
             About
           </Link>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/portal" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-white hover:text-[#1a4ba8] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
+            Portal
+          </Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
