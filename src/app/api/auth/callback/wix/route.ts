@@ -93,27 +93,44 @@ export async function GET(req: NextRequest) {
     
     try {
       const currentMember = await wixClient.members.getCurrentMember();
+      console.log("📧 Full member object:", JSON.stringify(currentMember, null, 2));
+      
       if (currentMember && currentMember.member) {
         const memberData = currentMember.member as any;
+        
+        // Try multiple ways to extract email
         const userEmail = 
           memberData.loginEmail || 
-          memberData.contact?.emails?.[0] || 
+          memberData.contact?.emails?.[0] ||
+          memberData.profile?.loginEmail ||
           memberData.profile?.emails?.[0] ||
-          memberData.email ||
+          memberData.contact?.email ||
           '';
         
         console.log("Checking admin status for:", userEmail);
-        const userRole = checkAdminRole(userEmail);
+        console.log("Member data structure:", {
+          loginEmail: memberData.loginEmail,
+          contactEmails: memberData.contact?.emails,
+          profileLoginEmail: memberData.profile?.loginEmail,
+          profileEmails: memberData.profile?.emails,
+          contactEmail: memberData.contact?.email
+        });
         
-        // If user is admin and not explicitly going somewhere else, redirect to admin dashboard
-        if ((userRole === 'admin' || userRole === 'super_admin') && 
-            (!oAuthData.originalUri || oAuthData.originalUri === '/profile' || oAuthData.originalUri === '/customer-dashboard-protected')) {
-          redirectPath = '/admin-dashboard';
-          console.log("✅ Admin detected, redirecting to admin dashboard");
-        } else if (!oAuthData.originalUri || oAuthData.originalUri === '/profile') {
-          // Regular users go to customer dashboard by default
-          redirectPath = '/customer-dashboard-protected';
-          console.log("👤 Regular user, redirecting to customer dashboard");
+        if (userEmail) {
+          const userRole = checkAdminRole(userEmail);
+          
+          // If user is admin and not explicitly going somewhere else, redirect to admin dashboard
+          if ((userRole === 'admin' || userRole === 'super_admin') && 
+              (!oAuthData.originalUri || oAuthData.originalUri === '/profile' || oAuthData.originalUri === '/customer-dashboard-protected')) {
+            redirectPath = '/admin-dashboard';
+            console.log("✅ Admin detected, redirecting to admin dashboard");
+          } else if (!oAuthData.originalUri || oAuthData.originalUri === '/profile') {
+            // Regular users go to customer dashboard by default
+            redirectPath = '/customer-dashboard-protected';
+            console.log("👤 Regular user, redirecting to customer dashboard");
+          }
+        } else {
+          console.log("⚠️ No email found in member data!");
         }
       }
     } catch (err) {
