@@ -805,11 +805,32 @@ export default function ProtectedCustomerDashboard() {
                           </div>
                           
                           <div className="flex space-x-2">
-                            <Button variant="outline" size="sm">
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                // Navigate to order details page if it exists, otherwise show order info
+                                const orderNumber = order.number || order._id?.slice(-8);
+                                if (order._id) {
+                                  window.location.href = `/orders/${order._id}`;
+                                } else {
+                                  alert(`Order #${orderNumber}\nStatus: ${order.fulfillmentStatus}\nTotal: $${order.priceSummary?.subtotal?.amount?.toFixed(2) || '0.00'}`);
+                                }
+                              }}
+                            >
                               View Details
                             </Button>
                             {order.fulfillmentStatus === 'FULFILLED' && (
-                              <Button variant="outline" size="sm">
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={() => {
+                                  // Navigate to shop with order items to reorder
+                                  if (confirm('Would you like to add these items to your cart again?')) {
+                                    window.location.href = '/shop';
+                                  }
+                                }}
+                              >
                                 Reorder
                               </Button>
                             )}
@@ -874,21 +895,18 @@ export default function ProtectedCustomerDashboard() {
                     <div className="pt-6 border-t border-gray-200">
                       <div className="flex space-x-4">
                         <Button 
+                          asChild
                           className="bg-blue-600 hover:bg-blue-700 transform transition-all duration-200 hover:scale-105"
-                          onClick={() => {
-                            // Future: Add edit profile functionality
-                            alert('Profile editing coming soon!');
-                          }}
                         >
-                          <Settings className="w-4 h-4 mr-2" />
-                          Edit Profile
+                          <Link href="/profile">
+                            <Settings className="w-4 h-4 mr-2" />
+                            Edit Profile
+                          </Link>
                         </Button>
                         <Button 
                           variant="outline"
                           className="transform transition-all duration-200 hover:scale-105"
-                          onClick={() => {
-                            enhancedAuth.logout();
-                          }}
+                          onClick={handleSignOut}
                         >
                           <LogOut className="w-4 h-4 mr-2" />
                           Sign Out
