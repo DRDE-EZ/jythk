@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { enhancedAuth } from '@/lib/enhanced-auth';
 import { wixBrowserClient } from '@/lib/wix-client.browser';
 import { getUserOrders } from '@/wix-api/orders';
