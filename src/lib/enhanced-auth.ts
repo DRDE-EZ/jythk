@@ -57,9 +57,9 @@ export class EnhancedAuth {
   }
 
   // Google login with enhanced logging
-  async loginWithGoogle(redirectPath = '/profile') {
+  async loginWithGoogle(redirectPath = '/customer-dashboard-protected') {
     try {
-      console.log('🚀 Starting Google login with new client ID...');
+      console.log('🚀 Starting Google login, will redirect to:', redirectPath);
       
       const oAuthData = await this.generateOAuthData(redirectPath);
       
@@ -75,7 +75,7 @@ export class EnhancedAuth {
         prompt: 'login' // Force Google login prompt
       });
 
-      console.log('✅ Google auth URL generated:', authUrl);
+      console.log('✅ Google auth URL generated');
       
       // Redirect to Google OAuth
       window.location.href = authUrl;

@@ -32,19 +32,13 @@ export default function UserButton({
 
   const handleGoogleLogin = async () => {
     try {
-      toast.loading("Redirecting to Google...");
-      await enhancedAuth.loginWithGoogle();
+      toast.loading("Signing in with Google...");
+      // Redirect to customer dashboard by default (callback will redirect admins to admin dashboard)
+      await enhancedAuth.loginWithGoogle('/customer-dashboard-protected');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Login failed";
       console.error("OAuth Error:", error);
-      
-      // If OAuth fails, redirect to simple login as fallback
-      if (errorMessage.includes("Invalid redirect URI") || errorMessage.includes("redirect")) {
-        toast.error("OAuth configuration needed. Using simple login instead.");
-        window.location.href = "/simple-login";
-      } else {
-        toast.error(errorMessage);
-      }
+      toast.error(errorMessage);
     }
   };
 

@@ -2,6 +2,7 @@ import { createClient, OAuthStrategy, OauthData } from "@wix/sdk";
 import { members } from "@wix/members";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
+import { checkAdminRole } from "@/lib/admin-config";
 
 // Use hardcoded client ID to avoid environment variable conflicts
 const CLIENT_ID = '8ddda745-5ec1-49f1-ab74-5cc13da5c94f';
@@ -86,13 +87,46 @@ export async function GET(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
     });
 
-    console.log("Redirecting to:", oAuthData.originalUri || "/profile");
+    // Get member info to check admin status
+    wixClient.auth.setTokens(memberTokens);
+    let redirectPath = oAuthData.originalUri || "/customer-dashboard-protected";
+    
+    try {
+      const currentMember = await wixClient.members.getCurrentMember();
+      if (currentMember && currentMember.member) {
+        const memberData = currentMember.member as any;
+        const userEmail = 
+          memberData.loginEmail || 
+          memberData.contact?.emails?.[0] || 
+          memberData.profile?.emails?.[0] ||
+          memberData.email ||
+          '';
+        
+        console.log("Checking admin status for:", userEmail);
+        const userRole = checkAdminRole(userEmail);
+        
+        // If user is admin and not explicitly going somewhere else, redirect to admin dashboard
+        if ((userRole === 'admin' || userRole === 'super_admin') && 
+            (!oAuthData.originalUri || oAuthData.originalUri === '/profile' || oAuthData.originalUri === '/customer-dashboard-protected')) {
+          redirectPath = '/admin-dashboard';
+          console.log("✅ Admin detected, redirecting to admin dashboard");
+        } else if (!oAuthData.originalUri || oAuthData.originalUri === '/profile') {
+          // Regular users go to customer dashboard by default
+          redirectPath = '/customer-dashboard-protected';
+          console.log("👤 Regular user, redirecting to customer dashboard");
+        }
+      }
+    } catch (err) {
+      console.error("Error checking admin status:", err);
+    }
+
+    console.log("Redirecting to:", redirectPath);
     console.log("=== CALLBACK DEBUG END ===");
 
     return new Response(null, {
       status: 302,
       headers: {
-        Location: oAuthData.originalUri || "/profile",
+        Location: redirectPath,
       },
     });
   } catch (error) {

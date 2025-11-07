@@ -8,17 +8,22 @@ export async function generateOAuthData(
 ) {
   const baseUrl = env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
   const callbackUrl = baseUrl + "/api/auth/callback/wix";
-  const originalUri = baseUrl + "/" + (originPath || "");
+  
+  // Default to customer dashboard instead of useless profile
+  let redirectPath = originPath || "/customer-dashboard-protected";
+  
+  // Clean up the path
+  if (redirectPath.startsWith('/')) {
+    redirectPath = redirectPath.substring(1);
+  }
+  
+  const originalUri = baseUrl + "/" + redirectPath;
   
   console.log("=== GENERATE OAUTH DATA DEBUG ===");
   console.log("Base URL:", baseUrl);
   console.log("Callback URL:", callbackUrl);
   console.log("Original URI:", originalUri);
-  console.log("Environment vars:", {
-    BASE_URL: env.NEXT_PUBLIC_BASE_URL,
-    CLIENT_ID: env.NEXT_PUBLIC_WIX_CLIENT_ID,
-    SITE_ID: env.NEXT_PUBLIC_WIX_SITE_ID
-  });
+  console.log("Redirect path:", redirectPath);
 
   const result = wixClient.auth.generateOAuthData(callbackUrl, originalUri);
   console.log("OAuth data generated:", result);
