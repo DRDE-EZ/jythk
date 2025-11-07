@@ -1,6 +1,7 @@
 "use client";
 
 import { enhancedAuth } from "@/lib/enhanced-auth";
+import { isAdmin } from "@/lib/admin-config";
 import { Button } from "./ui/button";
 import { members } from "@wix/members";
 import {
@@ -15,6 +16,7 @@ import {
   LogOutIcon,
   UserIcon,
   Package,
+  Shield,
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -52,6 +54,10 @@ export default function UserButton({
     }
   };
 
+  // Check if user is admin
+  const userEmail = loggedInMember?.loginEmail || loggedInMember?.contact?.emails?.[0] || '';
+  const userIsAdmin = userEmail ? isAdmin(userEmail) : false;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -68,8 +74,24 @@ export default function UserButton({
           <>
             <DropdownMenuLabel className="font-medium">
               {loggedInMember.contact?.firstName || "Customer"}
+              {userIsAdmin && (
+                <span className="ml-2 text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">
+                  Admin
+                </span>
+              )}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+            {userIsAdmin && (
+              <>
+                <Link href="/admin-dashboard">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <Shield className="mr-2 size-4" />
+                    🔐 Admin Dashboard
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+              </>
+            )}
             <Link href="/customer-dashboard-protected">
               <DropdownMenuItem className="cursor-pointer">
                 <Package className="mr-2 size-4" />
