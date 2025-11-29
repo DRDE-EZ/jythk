@@ -13,10 +13,11 @@ import { Suspense } from "react";
 export default async function NavBar() {
   const wixClient = await getWixServerClient();
 
+  // Safely fetch data, handling build-time errors
   const [cart, loggedInMember, collections] = await Promise.all([
-    getCart(wixClient),
-    getLoggedInMember(wixClient),
-    getCollections(wixClient),
+    getCart(wixClient).catch(() => null),
+    getLoggedInMember(wixClient).catch(() => null),
+    getCollections(wixClient).catch(() => []),
   ]);
 
   return (
