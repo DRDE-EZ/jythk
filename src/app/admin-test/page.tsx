@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from 'react';
 import { enhancedAuth } from '@/lib/enhanced-auth';
 import { checkAdminRole, ADMIN_CONFIG } from '@/lib/admin-config';

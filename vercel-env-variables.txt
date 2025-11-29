@@ -1,0 +1,38 @@
+VERCEL ENVIRONMENT VARIABLES
+Copy and paste these into Vercel Dashboard → Settings → Environment Variables
+
+=========================================
+Variable 1:
+Name: NEXT_PUBLIC_WIX_CLIENT_ID
+Value: 5ebcbbd4-3b43-4a26-8a0e-b8f9bb34113e
+
+=========================================
+Variable 2:
+Name: NEXT_PUBLIC_WIX_SITE_ID
+Value: 6b95797b-c6a5-4da3-8c58-adebd4e6fc60
+
+=========================================
+Variable 3:
+Name: WIX_API_KEY
+Value: IST.eyJraWQiOiJQb3pIX2FDMiIsImFsZyI6IlJTMjU2In0.eyJkYXRhIjoie1wiaWRcIjpcIjRlZTM3YmYwLTNkZTktNGQwMi05NDZhLTJjNzIxYjc2YzAzNlwiLFwiaWRlbnRpdHlcIjp7XCJ0eXBlXCI6XCJhcHBsaWNhdGlvblwiLFwiaWRcIjpcIjc1MDNkNWFmLTQ4YmQtNDFjNC05YzNkLTZmZTI4YzViYjc0YlwifSxcInRlbmFudFwiOntcInR5cGVcIjpcImFjY291bnRcIixcImlkXCI6XCIzMGYwM2NlZC1jZjc4LTQ1ZjYtOTMxMS0yZjQxYmMzNGE3M2ZcIn19IiwiaWF0IjoxNzY0NDExOTk4fQ.mqL_w7Fs8zuiUox2f1c9bi2kXzogn33Igjzj1qJ1W-DlTq1ADnCCw396tCyEQQCc4inXPlPl2q5Sg4UefL06yB6rV7xY0ac-JSaW8gkdF1P55FrvfY3Ao1USG717_mysSPzYUSpVC0FPcTIyfVzdnVgwYZhmDrfIZEK-umggw90JCd5EyRq1vZSZsmThkBAOL63ISpdItdrjGQhRwgEVApIO7MeVx1t2CWdIfjRXkpKvol7bD00-X34DzOgYS5MHmDis-PuE6mCtZQSF7kpuhKZaX6q_5cs0-DvMoRfdzoFdG9fsJXji84k_byR4U3tOum4PQ0rJ6lnMU0jlZzpBJA
+
+=========================================
+Variable 4 (Optional - Vercel will auto-detect):
+Name: NEXT_PUBLIC_BASE_URL
+Value: https://yourdomain.com
+
+=========================================
+
+INSTRUCTIONS:
+1. Go to https://vercel.com/dashboard
+2. Select your project (jythk)
+3. Click Settings → Environment Variables
+4. For each variable above:
+   - Click "Add New"
+   - Copy the Name (without "Name:" prefix)
+   - Copy the Value (without "Value:" prefix)
+   - Select: Production, Preview, and Development
+   - Click Save
+5. After adding all variables, redeploy your project
+
+IMPORTANT: Keep this file secure and delete it after use!

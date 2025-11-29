@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { enhancedAuth } from '@/lib/enhanced-auth';
 import { wixBrowserClient } from '@/lib/wix-client.browser';

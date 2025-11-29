@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from 'react';
 import { adminService, AdminUser } from '@/lib/admin-service';
 import { customerBackend, Order, Transaction } from '@/lib/customer-backend';
