@@ -50,10 +50,10 @@ export default function MobileMenu({
           </SheetHeader>
           <div className="flex flex-col items-center space-y-6 py-8">
             <Link 
-              href="/collections"
+              href="/shop"
               className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
             >
-              Collections
+              Products
             </Link>
             <Link 
               href="/projects"
