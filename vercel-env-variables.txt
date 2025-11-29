@@ -17,9 +17,14 @@ Name: WIX_API_KEY
 Value: IST.eyJraWQiOiJQb3pIX2FDMiIsImFsZyI6IlJTMjU2In0.eyJkYXRhIjoie1wiaWRcIjpcIjRlZTM3YmYwLTNkZTktNGQwMi05NDZhLTJjNzIxYjc2YzAzNlwiLFwiaWRlbnRpdHlcIjp7XCJ0eXBlXCI6XCJhcHBsaWNhdGlvblwiLFwiaWRcIjpcIjc1MDNkNWFmLTQ4YmQtNDFjNC05YzNkLTZmZTI4YzViYjc0YlwifSxcInRlbmFudFwiOntcInR5cGVcIjpcImFjY291bnRcIixcImlkXCI6XCIzMGYwM2NlZC1jZjc4LTQ1ZjYtOTMxMS0yZjQxYmMzNGE3M2ZcIn19IiwiaWF0IjoxNzY0NDExOTk4fQ.mqL_w7Fs8zuiUox2f1c9bi2kXzogn33Igjzj1qJ1W-DlTq1ADnCCw396tCyEQQCc4inXPlPl2q5Sg4UefL06yB6rV7xY0ac-JSaW8gkdF1P55FrvfY3Ao1USG717_mysSPzYUSpVC0FPcTIyfVzdnVgwYZhmDrfIZEK-umggw90JCd5EyRq1vZSZsmThkBAOL63ISpdItdrjGQhRwgEVApIO7MeVx1t2CWdIfjRXkpKvol7bD00-X34DzOgYS5MHmDis-PuE6mCtZQSF7kpuhKZaX6q_5cs0-DvMoRfdzoFdG9fsJXji84k_byR4U3tOum4PQ0rJ6lnMU0jlZzpBJA
 
 =========================================
-Variable 4 (Optional - Vercel will auto-detect):
+Variable 4 (REQUIRED FOR OAUTH):
+Name: NEXT_PUBLIC_WIX_REDIRECT_URL
+Value: https://jythk.vercel.app/api/auth/callback/wix
+
+=========================================
+Variable 5 (Optional - Vercel will auto-detect):
 Name: NEXT_PUBLIC_BASE_URL
-Value: https://yourdomain.com
+Value: https://jythk.vercel.app
 
 =========================================
 

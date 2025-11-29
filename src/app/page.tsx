@@ -30,7 +30,7 @@ export default async function Home() {
           <AnimatedSection>
             <div className="relative">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 md:mb-8 leading-tight">
-                <span className="text-black bg-white/90 px-6 py-3 rounded-lg shadow-2xl inline-block backdrop-blur-sm">
+                <span className="text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] [text-shadow:_2px_2px_4px_rgb(0_0_0_/_80%)]">
                   Jingyuntong Hong Kong
                 </span>
               </h1>
