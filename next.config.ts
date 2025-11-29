@@ -30,9 +30,6 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_WIX_SITE_ID: process.env.NEXT_PUBLIC_WIX_SITE_ID,
   },
   
-  // Improve build performance
-  swcMinify: true,
-  
   // Optimize on-demand entries
   onDemandEntries: {
     maxInactiveAge: 60 * 1000,
