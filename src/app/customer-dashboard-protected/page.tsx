@@ -91,21 +91,29 @@ export default function ProtectedCustomerDashboard() {
   const { data: ordersData, isLoading: ordersLoading, error: ordersError, refetch } = useQuery({
     queryKey: ['customer-orders', member?._id],
     queryFn: async () => {
-      if (!wixBrowserClient || !member?._id) {
-        throw new Error('Authentication required to fetch orders');
+      // Only fetch if fully authenticated with valid member ID
+      if (!isAuthenticated || !member?._id) {
+        console.log('⏸️ Skipping order fetch - not authenticated');
+        throw new Error('Not authenticated');
       }
+      
+      if (!wixBrowserClient) {
+        console.log('⏸️ Skipping order fetch - no Wix client');
+        throw new Error('Wix client not available');
+      }
+      
       try {
+        console.log('🔄 Fetching orders for member:', member._id);
         return await getUserOrders(wixBrowserClient, { limit: 20 });
       } catch (error) {
         console.error('Failed to fetch orders:', error);
-        throw new Error('Unable to load orders. Please try again.');
+        throw error; // Throw to prevent retry loops
       }
     },
-    enabled: !!wixBrowserClient && !!member?._id && isAuthenticated,
-    refetchOnWindowFocus: true,
+    enabled: false, // Disable automatic queries - we'll manually refetch when authenticated
+    refetchOnWindowFocus: false,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retry: false, // Don't retry on auth errors
   });
 
   const orders = ordersData?.orders || [];
@@ -117,41 +125,59 @@ export default function ProtectedCustomerDashboard() {
 
   const checkAuthentication = async () => {
     try {
+      console.log('🔍 Starting authentication check...');
       setIsLoading(true);
       setAuthError(null);
+      
+      // Wait a moment for session to be available
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       // Try to get current member from Wix
       const currentMember = await enhancedAuth.getCurrentMember();
       
-      if (currentMember && currentMember.member) {
-        // User is authenticated with Wix - extract real Gmail
-        const memberData = currentMember.member as any;
-        const userEmail = memberData.loginEmail || memberData.contact?.emails?.[0] || '';
-        
-        // Check if user is an admin
-        if (isAdmin(userEmail)) {
-          // Redirect admin users to admin dashboard
-          console.log('🔑 Admin user detected, redirecting to admin dashboard');
-          window.location.href = '/admin-dashboard';
-          return;
-        }
-        
-        setMember({
-          _id: memberData._id,
-          loginEmail: userEmail,
-          contact: memberData.contact
-        });
-        setIsAuthenticated(true);
-        
-        console.log('✅ Authenticated user:', userEmail);
-        console.log('✅ Member ID:', memberData._id);
-      } else {
-        // User is not authenticated
+      if (!currentMember || !currentMember.member) {
+        // No authenticated user - must login
+        console.log('❌ No authenticated user found');
         setIsAuthenticated(false);
-        setAuthError('Please sign in to access your customer dashboard.');
+        setAuthError('Please sign in with Google to access your dashboard.');
+        setIsLoading(false);
+        return;
       }
+      
+      // User is authenticated with Wix - extract real Gmail
+      const memberData = currentMember.member as any;
+      const userEmail = memberData.loginEmail || memberData.contact?.emails?.[0] || '';
+      
+      console.log('📧 Member data:', {
+        id: memberData._id,
+        loginEmail: memberData.loginEmail,
+        contactEmails: memberData.contact?.emails,
+        hasContact: !!memberData.contact
+      });
+      
+      // Verify we have a valid email (Google sign-in required)
+      if (!userEmail || !userEmail.includes('@')) {
+        console.log('❌ No valid email found for user');
+        setIsAuthenticated(false);
+        setAuthError('Please sign in with Google to access your dashboard.');
+        setIsLoading(false);
+        return;
+      }
+      
+      // Set authenticated state
+      console.log('✅ User authenticated:', userEmail, isAdmin(userEmail) ? '(Admin)' : '(Customer)');
+      
+      setMember({
+        _id: memberData._id,
+        loginEmail: userEmail,
+        contact: memberData.contact
+      });
+      setIsAuthenticated(true);
+      
+      // Now fetch orders after authentication is confirmed
+      setTimeout(() => refetch(), 100);
     } catch (error) {
-      console.error('Authentication check failed:', error);
+      console.error('❌ Authentication check failed:', error);
       setIsAuthenticated(false);
       setAuthError('Authentication failed. Please try signing in again.');
     } finally {
@@ -174,10 +200,8 @@ export default function ProtectedCustomerDashboard() {
 
   const handleSignIn = async () => {
     try {
-      const result = await enhancedAuth.loginWithGoogle();
-      if (result.success) {
-        await checkAuthentication();
-      }
+      console.log('🔑 Initiating Google sign-in from customer dashboard...');
+      await enhancedAuth.loginWithGoogle('/customer-dashboard-protected');
     } catch (error) {
       console.error('Sign-in error:', error);
       setAuthError('Sign-in failed. Please try again.');
@@ -456,6 +480,18 @@ export default function ProtectedCustomerDashboard() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <LoadingSpinner message="Checking authentication..." />
+      </div>
+    );
+  }
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <p className="text-gray-600">Checking your authentication...</p>
+        </div>
       </div>
     );
   }

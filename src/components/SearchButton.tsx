@@ -22,7 +22,7 @@ export default function SearchButton({ className }: SearchButtonProps) {
           <Button
             size="icon"
             variant={"ghost"}
-            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-[#1a4ba8] hover:bg-white/90 hover:scale-105 transition-all shadow-sm"
+            className="inline-flex items-center justify-center w-10 h-10 rounded-full text-white hover:bg-[#2a2a2a] hover:scale-105 transition-all"
           >
             <SearchIcon className="w-5 h-5" />
           </Button>

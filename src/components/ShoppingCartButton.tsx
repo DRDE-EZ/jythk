@@ -36,10 +36,10 @@ export default function ShoppingCartButton({
           variant={"ghost"}
           size="icon"
           onClick={() => setShowSheet(true)}
-          className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-[#1a4ba8] hover:bg-white/90 hover:scale-105 transition-all shadow-sm"
+          className="inline-flex items-center justify-center w-10 h-10 rounded-full text-white hover:bg-[#2a2a2a] hover:scale-105 transition-all"
         >
           <ShoppingCartIcon />
-          <span className="absolute top-0 right-0 translate-y-1 -translate-x-1 w-5 h-5 bg-[#1a4ba8] text-white text-[10px] flex items-center justify-center rounded-full font-bold border border-white">
+          <span className="absolute top-0 right-0 translate-y-1 -translate-x-1 w-5 h-5 bg-blue-600 text-white text-[10px] flex items-center justify-center rounded-full font-bold border-2 border-[#1f1f1f]">
             {totalQuantity < 10 ? totalQuantity : "9+"}
           </span>
         </Button>

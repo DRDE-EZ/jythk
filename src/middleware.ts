@@ -11,6 +11,16 @@ export async function middleware(req: NextRequest) {
   try {
     const cookies = req.cookies;
     const sessionCookie = cookies.get(WIX_SESSION_COOKIE);
+    const pathname = req.nextUrl.pathname;
+    
+    // Protected routes that require authentication
+    const protectedRoutes = ['/customer-dashboard-protected', '/admin-dashboard', '/portal'];
+    const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
+
+    // If accessing protected route without session, don't create visitor token
+    if (isProtectedRoute && !sessionCookie) {
+      return NextResponse.next({ request: req });
+    }
 
     let sessionTokens = sessionCookie
       ? (JSON.parse(sessionCookie.value) as Tokens)
@@ -23,6 +33,10 @@ export async function middleware(req: NextRequest) {
         );
       } catch (error) {
         console.log("Token renewal failed:", error);
+        // Don't create visitor tokens for protected routes
+        if (isProtectedRoute) {
+          return NextResponse.next({ request: req });
+        }
         sessionTokens = await wixClient.auth.generateVisitorTokens();
       }
     }

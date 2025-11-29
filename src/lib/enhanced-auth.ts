@@ -3,8 +3,11 @@ import { members } from '@wix/members';
 import { createClient, OAuthStrategy } from '@wix/sdk';
 import Cookies from 'js-cookie';
 
-// Use hardcoded client ID to avoid environment variable conflicts
-const CLIENT_ID = '8ddda745-5ec1-49f1-ab74-5cc13da5c94f';
+// Get client ID from environment variable
+const CLIENT_ID = typeof window !== 'undefined' 
+  ? (window as any).__NEXT_PUBLIC_WIX_CLIENT_ID || process.env.NEXT_PUBLIC_WIX_CLIENT_ID || '5ebcbbd4-3b43-4a26-8a0e-b8f9bb34113e'
+  : process.env.NEXT_PUBLIC_WIX_CLIENT_ID || '5ebcbbd4-3b43-4a26-8a0e-b8f9bb34113e';
+
 const WIX_SESSION_COOKIE = `wix_session_${CLIENT_ID}`;
 const WIX_OAUTH_DATA_COOKIE = `wix_oauth_data_${CLIENT_ID}`;
 
@@ -60,22 +63,42 @@ export class EnhancedAuth {
   async loginWithGoogle(redirectPath = '/customer-dashboard-protected') {
     try {
       console.log('🚀 Starting Google login, will redirect to:', redirectPath);
+      console.log('🔑 Client ID:', CLIENT_ID);
+      
+      // Clear any existing session FIRST
+      Cookies.remove(WIX_SESSION_COOKIE);
       
       const oAuthData = await this.generateOAuthData(redirectPath);
+      console.log('📝 OAuth data generated:', {
+        redirectUri: oAuthData.redirectUri,
+        originalUri: oAuthData.originalUri,
+        hasCodeChallenge: !!oAuthData.codeChallenge,
+        hasCodeVerifier: !!oAuthData.codeVerifier
+      });
       
-      // Store OAuth data
+      // Store OAuth data in BOTH sessionStorage AND cookie for redundancy
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem(WIX_OAUTH_DATA_COOKIE, JSON.stringify(oAuthData));
+        console.log('💾 OAuth data saved to sessionStorage');
+      }
+      
       Cookies.set(WIX_OAUTH_DATA_COOKIE, JSON.stringify(oAuthData), {
-        secure: process.env.NODE_ENV === 'production',
+        secure: false, // Set to false for localhost
+        sameSite: 'lax',
+        path: '/',
         expires: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
       });
-
-      // Generate Google auth URL with specific prompt
+      console.log('🍪 OAuth data saved to cookie:', WIX_OAUTH_DATA_COOKIE);
+      console.log('🍪 Cookie value:', JSON.stringify(oAuthData));
+      
+      // Generate Google auth URL with select_account to force account picker
       const { authUrl } = await this.wixClient.auth.getAuthUrl(oAuthData, {
         responseMode: 'query',
-        prompt: 'login' // Force Google login prompt
+        prompt: 'select_account' // Force Google account selection screen
       });
 
       console.log('✅ Google auth URL generated');
+      console.log('🔗 Redirecting to:', authUrl);
       
       // Redirect to Google OAuth
       window.location.href = authUrl;
@@ -83,6 +106,11 @@ export class EnhancedAuth {
       return { success: true, authUrl };
     } catch (error) {
       console.error('❌ Google login failed:', error);
+      console.error('Error details:', {
+        name: error instanceof Error ? error.name : 'Unknown',
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined
+      });
       const errorMessage = error instanceof Error ? error.message : String(error);
       throw new Error(`Google login failed: ${errorMessage}`);
     }
@@ -119,35 +147,48 @@ export class EnhancedAuth {
     }
   }
 
-  // Logout function
-  async logout() {
+  // Logout function with optional silent mode (for clearing session before login)
+  async logout(silent = false) {
     try {
-      const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001';
-      const { logoutUrl } = await this.wixClient.auth.logout(baseUrl);
-      
-      // Clear session cookies
+      // Clear all session data
       Cookies.remove(WIX_SESSION_COOKIE);
       Cookies.remove(WIX_OAUTH_DATA_COOKIE);
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem(WIX_OAUTH_DATA_COOKIE);
+      }
+      console.log('🚪 Logged out - all session data cleared');
       
-      // Redirect to logout URL
+      if (silent) {
+        // Just clear session without redirect (for re-login flow)
+        return;
+      }
+      
+      // Full logout with redirect
+      const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001';
+      const { logoutUrl } = await this.wixClient.auth.logout(baseUrl);
       window.location.href = logoutUrl;
     } catch (error) {
       console.error('Logout error:', error);
-      // Fallback: just clear cookies and redirect home
+      // Fallback: just clear cookies
       Cookies.remove(WIX_SESSION_COOKIE);
       Cookies.remove(WIX_OAUTH_DATA_COOKIE);
-      window.location.href = '/';
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem(WIX_OAUTH_DATA_COOKIE);
+      }
+      if (!silent) {
+        window.location.href = '/';
+      }
     }
   }
 
-  // Get current member with better error handling
+  // Get current member with better error handling - returns null if not authenticated
   async getCurrentMember() {
     try {
       // First check if we have valid session tokens
       const sessionToken = Cookies.get(WIX_SESSION_COOKIE);
       if (!sessionToken) {
         console.log('❌ No session token found');
-        throw new Error('No active session. Please sign in.');
+        return null; // Return null instead of throwing
       }
 
       // Reload session to ensure tokens are set
@@ -156,14 +197,14 @@ export class EnhancedAuth {
         if (!tokens || !tokens.accessToken) {
           console.log('❌ Invalid session tokens');
           Cookies.remove(WIX_SESSION_COOKIE);
-          throw new Error('Invalid session. Please sign in again.');
+          return null; // Return null instead of throwing
         }
         this.wixClient.auth.setTokens(tokens);
         console.log('✅ Using OAuth tokens from session');
       } catch (parseError) {
         console.error('Failed to parse session tokens:', parseError);
         Cookies.remove(WIX_SESSION_COOKIE);
-        throw new Error('Invalid session. Please sign in again.');
+        return null; // Return null instead of throwing
       }
 
       const member = await this.wixClient.members.getCurrentMember();
@@ -180,7 +221,7 @@ export class EnhancedAuth {
         Cookies.remove(WIX_OAUTH_DATA_COOKIE);
       }
       
-      throw error; // Re-throw instead of returning null
+      return null; // Return null for any error - don't throw
     }
   }
 

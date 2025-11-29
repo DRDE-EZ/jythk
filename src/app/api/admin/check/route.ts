@@ -45,13 +45,29 @@ export async function GET(request: NextRequest) {
       }, { status: 401 });
     }
 
-    const userEmail = loggedInMember.loginEmail?.toLowerCase().trim();
+    // Try multiple ways to get the email
+    const userEmail = (
+      loggedInMember.loginEmail ||
+      loggedInMember.contact?.emails?.[0] ||
+      loggedInMember.profile?.loginEmail ||
+      ''
+    )?.toLowerCase().trim();
+    
+    console.log('🔍 Admin check - User email:', userEmail);
+    console.log('🔍 Admin check - Member data:', JSON.stringify({
+      loginEmail: loggedInMember.loginEmail,
+      contactEmails: loggedInMember.contact?.emails,
+      profileLoginEmail: loggedInMember.profile?.loginEmail,
+      memberId: loggedInMember._id
+    }));
     
     if (!userEmail) {
+      console.log('⚠️ No email found for member:', loggedInMember._id);
       return NextResponse.json({ 
         role: 'customer',
         isAuthenticated: true,
-        message: 'Email not found'
+        message: 'Email not found. Please ensure your account has an email associated.',
+        memberId: loggedInMember._id
       }, { status: 200 });
     }
 

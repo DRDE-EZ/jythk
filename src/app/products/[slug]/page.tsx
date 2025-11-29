@@ -227,32 +227,51 @@ interface ProductReviewsSectionProps {
 async function ProductReviewsSection({ product }: ProductReviewsSectionProps) {
   if (!product._id) return null;
 
-  const wixClient = await getWixServerClient();
+  try {
+    const wixClient = await getWixServerClient();
 
-  const loggedInMember = await getLoggedInMember(wixClient);
+    const loggedInMember = await getLoggedInMember(wixClient);
 
-  const existingReview = loggedInMember?.contactId
-    ? (
-        await getProductReviews(wixClient, {
-          contactId: loggedInMember.contactId,
-          productId: product._id,
-        })
-      ).items[0]
-    : null;
+    const existingReview = loggedInMember?.contactId
+      ? (
+          await getProductReviews(wixClient, {
+            contactId: loggedInMember.contactId,
+            productId: product._id,
+          })
+        ).items[0]
+      : null;
 
-  return (
-    <div className="space-y-6">
-      <div className="p-4 bg-muted/30 border border-border rounded-lg">
-        <CreateProductReviewButton
-          product={product}
-          loggedInMember={loggedInMember}
-          hasExistingReview={!!existingReview}
-        />
+    return (
+      <div className="space-y-6">
+        <div className="p-4 bg-muted/30 border border-border rounded-lg">
+          <CreateProductReviewButton
+            product={product}
+            loggedInMember={loggedInMember}
+            hasExistingReview={!!existingReview}
+          />
+        </div>
+
+        <div className="space-y-4">
+          <ProductReviews product={product} />
+        </div>
       </div>
-
-      <div className="space-y-4">
-        <ProductReviews product={product} />
-      </div>
-    </div>
-  );
+    );
+  } catch (error: any) {
+    // Check if the error is due to the Reviews app not being installed
+    if (error?.details?.applicationError?.code === "APP_NOT_INSTALLED") {
+      return (
+        <div className="p-6 bg-muted/30 border border-border rounded-lg text-center space-y-3">
+          <p className="text-muted-foreground">
+            Reviews are currently unavailable.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            To enable product reviews, install the Wix Reviews app from your Wix Dashboard.
+          </p>
+        </div>
+      );
+    }
+    
+    // Re-throw other errors
+    throw error;
+  }
 }

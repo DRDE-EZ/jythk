@@ -35,10 +35,10 @@ export async function GET() {
       }, { status: 403 });
     }
 
-    // Fetch all products from Wix
+    // Fetch all products from Wix (max 100 per request)
     const productsResponse = await (wixClient.products as any)
       .queryProducts()
-      .limit(1000)
+      .limit(100)
       .find();
 
     const products: any[] = productsResponse.items || [];

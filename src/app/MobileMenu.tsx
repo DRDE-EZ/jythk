@@ -44,40 +44,52 @@ export default function MobileMenu({
         <MenuIcon />
       </Button>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent side="left" className="w-full">
+        <SheetContent side="left" className="w-full bg-[#1f1f1f] border-gray-800">
           <SheetHeader>
-            <SheetTitle>Mycro</SheetTitle>
+            <SheetTitle className="text-white">JYT HK</SheetTitle>
           </SheetHeader>
           <div className="flex flex-col items-center space-y-6 py-8">
             <Link 
-              href="/shop"
-              className="text-lg font-semibold text-gray-800 hover:text-[#1a4ba8] transition-colors"
+              href="/collections"
+              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
             >
-              Shop
+              Collections
             </Link>
             <Link 
-              href="/terms"
-              className="text-lg font-semibold text-gray-800 hover:text-[#1a4ba8] transition-colors"
+              href="/projects"
+              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
             >
-              Shipping
+              Projects
+            </Link>
+            <Link 
+              href="/partners"
+              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
+            >
+              Partners
+            </Link>
+            <Link 
+              href="/contact"
+              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
+            >
+              Contact
             </Link>
             <Link 
               href="/about"
-              className="text-lg font-semibold text-gray-800 hover:text-[#1a4ba8] transition-colors"
+              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
             >
               About
             </Link>
             <Link 
               href="/portal"
-              className="text-lg font-semibold text-gray-800 hover:text-[#1a4ba8] transition-colors"
+              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
             >
               Portal
             </Link>
             
             {loggedInMember ? (
               // Show dashboard option for logged-in users
-              <div className="text-center mt-6 pt-6 border-t border-gray-200 w-full">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">Welcome back!</h3>
+              <div className="text-center mt-6 pt-6 border-t border-gray-800 w-full">
+                <h3 className="text-lg font-semibold mb-4 text-white">Welcome back!</h3>
                 <Link 
                   href="/customer-dashboard-protected"
                   className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
@@ -87,8 +99,8 @@ export default function MobileMenu({
               </div>
             ) : (
               // Show login option for non-logged-in users
-              <div className="text-center mt-6 pt-6 border-t border-gray-200 w-full">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">Get Started</h3>
+              <div className="text-center mt-6 pt-6 border-t border-gray-800 w-full">
+                <h3 className="text-lg font-semibold mb-4 text-white">Get Started</h3>
                 <UserButton loggedInMember={loggedInMember} />
               </div>
             )}

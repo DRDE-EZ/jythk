@@ -34,13 +34,25 @@ export default function UserButton({
 
   const handleGoogleLogin = async () => {
     try {
-      toast.loading("Signing in with Google...");
-      // Redirect to customer dashboard by default (callback will redirect admins to admin dashboard)
+      console.log("🔑 Starting Google sign-in...");
+      
+      // Redirect to Google OAuth (callback will handle admin/customer routing)
       await enhancedAuth.loginWithGoogle('/customer-dashboard-protected');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Login failed";
-      console.error("OAuth Error:", error);
-      toast.error(errorMessage);
+      console.error("❌ OAuth Error:", error);
+      
+      // Dismiss loading toast and show error
+      if (typeof toast !== 'undefined') {
+        toast.dismiss();
+        if (toast.error) {
+          toast.error(errorMessage);
+        } else {
+          alert(errorMessage);
+        }
+      } else {
+        alert(errorMessage);
+      }
     }
   };
 
@@ -64,7 +76,7 @@ export default function UserButton({
         <Button
           size={"icon"}
           variant={"ghost"}
-          className={cn("rounded-md hover:bg-white transition-all text-white hover:text-[#1a4ba8]", className)}
+          className={cn("rounded-md hover:bg-[#2a2a2a] transition-all text-white", className)}
         >
           <UserIcon className="size-5" />
         </Button>

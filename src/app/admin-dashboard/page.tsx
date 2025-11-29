@@ -85,6 +85,19 @@ export default function AdminDashboard() {
       setIsLoading(true);
       setAuthError(null);
       
+      // First check if user is authenticated with Wix
+      const currentMember = await enhancedAuth.getCurrentMember();
+      
+      if (!currentMember || !currentMember.member) {
+        // No authenticated user - must login
+        console.log('❌ No authenticated user found');
+        setIsAuthenticated(false);
+        setAuthError('Please sign in with Google to access the admin dashboard.');
+        setIsLoading(false);
+        return;
+      }
+      
+      // Now check admin privileges
       const response = await fetch('/api/admin/check');
       const data = await response.json();
       
@@ -98,6 +111,14 @@ export default function AdminDashboard() {
       if (data.role === 'customer' || data.role === 'guest') {
         setIsAuthenticated(false);
         setAuthError('You do not have admin access. Please contact a super administrator.');
+        setIsLoading(false);
+        return;
+      }
+      
+      // Verify email exists and is valid
+      if (!data.email || !data.email.includes('@')) {
+        setIsAuthenticated(false);
+        setAuthError('Invalid admin email. Please sign in with a valid Google account.');
         setIsLoading(false);
         return;
       }

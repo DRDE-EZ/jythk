@@ -6,8 +6,8 @@
   --radius: 0.625rem;
   /* Brand variables for Formex Construction & Wholesale - Light Theme */
   --radius: 1rem; /* larger rounded corners (approx 2xl) */
-  --background: #FFFFFF; /* White background */
-  --foreground: #000000; /* Black text */
+  --background: #000000; /* Black background */
+  --foreground: #FFFFFF; /* White text */
   --card: #FFFFFF; /* White cards */
   --card-foreground: #000000;
   --muted: #F3F4F6; /* Light gray */

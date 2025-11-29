@@ -25,14 +25,14 @@ export default async function Home() {
           <AnimatedSection>
             <div className="relative">
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white mb-6 md:mb-8 leading-tight">
-                Formex Construction & Wholesale
+                JYT HK
               </h1>
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 md:w-40 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 md:w-40 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-white/90 mb-8 md:mb-10 max-w-3xl leading-relaxed">
-              Trusted imports. On-time supply for tomorrow’s builds.
+              Your Overseas Supplier for Solar Solutions & Custom Projects
             </h2>
           </AnimatedSection>
           <AnimatedSection delay={0.4}>
@@ -68,10 +68,10 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
               {[
-                { number: "500+", label: "Dream Projects" },
-                { number: "24/7", label: "Support" },
-                { number: "98%", label: "Satisfaction" },
-                { number: "5★", label: "Reviews" },
+                { number: "500+", label: "Projects Delivered" },
+                { number: "30+", label: "Countries Served" },
+                { number: "99%", label: "Client Satisfaction" },
+                { number: "10+", label: "Years Experience" },
               ].map((stat) => (
                 <div key={stat.label} className="group cursor-pointer">
                   <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-3 group-hover:scale-110 transition-transform duration-300">
@@ -87,14 +87,66 @@ export default async function Home() {
         </div>
       </AnimatedSection>
 
-      {/* Products Section */}
-      <div className="bg-background">
-        <div className="w-[95%] mx-auto py-12 sm:py-16 md:py-20">
-          <Suspense fallback={<LoadingSkeleton />}>
-            <FeaturedProducts />
-          </Suspense>
+      {/* Featured Projects Section */}
+      <AnimatedSection delay={0.4}>
+        <div className="bg-background py-12 sm:py-16 md:py-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-foreground">
+                Featured Projects
+              </h2>
+              <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto">
+                Delivering solar excellence across the globe
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <div className="bg-gradient-to-br from-blue-900/20 to-gray-900/20 p-8 rounded-2xl border border-blue-800 hover:border-blue-600 transition-all">
+                <div className="text-5xl font-bold text-blue-400 mb-4">50MW</div>
+                <h3 className="text-2xl font-bold text-white mb-3">Leshan Solar Farm</h3>
+                <p className="text-gray-400 mb-4">Large-scale photovoltaic power station serving 15,000+ households in Leshan region.</p>
+                <div className="flex items-center gap-2 text-gray-500 text-sm">
+                  <span>Leshan, China</span>
+                  <span>•</span>
+                  <span>2023</span>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-teal-900/20 to-gray-900/20 p-8 rounded-2xl border border-teal-800 hover:border-teal-600 transition-all">
+                <div className="text-5xl font-bold text-teal-400 mb-4">12MW</div>
+                <h3 className="text-2xl font-bold text-white mb-3">Industrial Rooftop</h3>
+                <p className="text-gray-400 mb-4">Commercial rooftop installation with smart monitoring across 25,000 m² facility.</p>
+                <div className="flex items-center gap-2 text-gray-500 text-sm">
+                  <span>Suzhou, Jiangsu</span>
+                  <span>•</span>
+                  <span>2022</span>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-green-900/20 to-gray-900/20 p-8 rounded-2xl border border-green-800 hover:border-green-600 transition-all">
+                <div className="text-5xl font-bold text-green-400 mb-4">40MW</div>
+                <h3 className="text-2xl font-bold text-white mb-3">Floating Solar Plant</h3>
+                <p className="text-gray-400 mb-4">Innovative floating PV installation on water reservoir with ecological benefits.</p>
+                <div className="flex items-center gap-2 text-gray-500 text-sm">
+                  <span>Anhui Province</span>
+                  <span>•</span>
+                  <span>2021</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <Button
+                asChild
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 text-lg font-semibold"
+              >
+                <Link href="/projects">View All Projects</Link>
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
+      </AnimatedSection>
 
       {/* Categories Preview Section */}
       <AnimatedSection delay={0.6}>

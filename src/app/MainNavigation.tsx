@@ -57,40 +57,35 @@ export default function MainNavigation({
   return (
     <NavigationMenu className={className} viewport={false}>
       <NavigationMenuList className="gap-3">
-        <NavigationMenuItem>
-          <Link href="/shop" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-white hover:text-[#1a4ba8] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
-            Shop
-          </Link>
-        </NavigationMenuItem>
         <NavigationMenuItem className="group relative">
-          <NavigationMenuTrigger className="flex items-center gap-1 px-4 py-2 text-lg font-medium rounded-md text-white hover:bg-white hover:text-[#1a4ba8]">
+          <NavigationMenuTrigger className="flex items-center gap-1 px-4 py-2 text-lg font-medium rounded-md text-white hover:bg-[#2a2a2a]">
             <span>Collections</span>
           </NavigationMenuTrigger>
           <NavigationMenuContent 
-            className="!rounded-lg !p-0 !bg-white shadow-2xl border border-gray-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2"
+            className="!rounded-lg !p-0 !bg-[#1f1f1f] shadow-2xl border border-gray-700 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2"
           >
             <div className="w-[800px] max-w-[90vw] p-6">
-              <div className="mb-4 pb-3 border-b border-gray-200">
-                <h3 className="text-lg font-bold text-gray-900">Browse Collections</h3>
-                <p className="text-sm text-gray-600 mt-1">Explore our product categories</p>
+              <div className="mb-4 pb-3 border-b border-gray-700">
+                <h3 className="text-lg font-bold text-white">Browse Collections</h3>
+                <p className="text-sm text-gray-400 mt-1">Explore our product categories</p>
               </div>
-              <div className="grid grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+              <div className="grid grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
                 {collections.map((c) => (
                   <Link 
                     key={c._id} 
                     href={`/collections/${c.slug}`} 
-                    className="group flex items-start p-4 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-[#1a4ba8] transition-all duration-200"
+                    className="group flex items-start p-4 border border-gray-700 rounded-lg hover:bg-[#2a2a2a] hover:border-gray-500 transition-all duration-200"
                   >
                     <div className="flex-1">
-                      <span className="text-base font-semibold text-gray-900 group-hover:text-[#1a4ba8] transition-colors block mb-1">
+                      <span className="text-base font-semibold text-white group-hover:text-blue-400 transition-colors block mb-1">
                         {c.name}
                       </span>
-                      <span className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                      <span className="text-xs text-gray-400 line-clamp-2 leading-relaxed">
                         {getCollectionDescription(c)}
                       </span>
                     </div>
                     <svg 
-                      className="w-5 h-5 text-gray-400 group-hover:text-[#1a4ba8] transition-colors ml-2 mt-0.5 flex-shrink-0" 
+                      className="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-colors ml-2 mt-0.5 flex-shrink-0" 
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
@@ -100,10 +95,10 @@ export default function MainNavigation({
                   </Link>
                 ))}
               </div>
-              <div className="mt-4 pt-3 border-t border-gray-200">
+              <div className="mt-4 pt-3 border-t border-gray-700">
                 <Link 
                   href="/shop" 
-                  className="block w-full text-center py-3 px-4 text-white font-semibold rounded-lg transition-colors bg-[#1a4ba8] hover:bg-[#14396b]"
+                  className="block w-full text-center py-3 px-4 text-black font-semibold rounded-lg transition-colors bg-white hover:bg-gray-200"
                 >
                   View All Products
                 </Link>
@@ -112,17 +107,27 @@ export default function MainNavigation({
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/terms" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-white hover:text-[#1a4ba8] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
-            Shipping
+          <Link href="/projects" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-[#2a2a2a] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
+            Projects
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/about" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-white hover:text-[#1a4ba8] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
+          <Link href="/partners" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-[#2a2a2a] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
+            Partners
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/contact" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-[#2a2a2a] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
+            Contact
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/about" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-[#2a2a2a] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
             About
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/portal" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-white hover:text-[#1a4ba8] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
+          <Link href="/portal" className="text-lg font-medium text-white rounded-md px-4 py-2 hover:bg-[#2a2a2a] transition-all duration-200" legacyBehavior={undefined} passHref={undefined}>
             Portal
           </Link>
         </NavigationMenuItem>
