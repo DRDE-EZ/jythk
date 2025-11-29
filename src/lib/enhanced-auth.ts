@@ -179,7 +179,7 @@ export class EnhancedAuth {
       }
       
       // Full logout with redirect
-      const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001';
+      const baseUrl = 'https://jythk.vercel.app';
       const { logoutUrl } = await this.wixClient.auth.logout(baseUrl);
       window.location.href = logoutUrl;
     } catch (error) {
