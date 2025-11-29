@@ -7,11 +7,13 @@ const nextConfig: NextConfig = {
       dynamic: 30,
       static: 180,
     },
-    optimizePackageImports: ['@wix/sdk', '@wix/stores', '@wix/ecom', '@wix/members'],
   },
   
   // Enable compression
   compress: true,
+  
+  // Ensure Wix packages are bundled properly
+  transpilePackages: ['@wix/sdk', '@wix/stores', '@wix/ecom', '@wix/members', '@wix/reviews', '@wix/crm', '@wix/media', '@wix/redirects'],
   
   // Optimize images
   images: {
