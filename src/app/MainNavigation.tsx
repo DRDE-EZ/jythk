@@ -59,14 +59,14 @@ export default function MainNavigation({
       <NavigationMenuList className="gap-3">
         <NavigationMenuItem className="group relative">
           <NavigationMenuTrigger className="flex items-center gap-1 px-4 py-2 text-lg font-medium rounded-md text-white hover:bg-[#2a2a2a]">
-            <span>Collections</span>
+            <span>Products</span>
           </NavigationMenuTrigger>
           <NavigationMenuContent 
             className="!rounded-lg !p-0 !bg-[#1f1f1f] shadow-2xl border border-gray-700 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2"
           >
             <div className="w-[800px] max-w-[90vw] p-6">
               <div className="mb-4 pb-3 border-b border-gray-700">
-                <h3 className="text-lg font-bold text-white">Browse Collections</h3>
+                <h3 className="text-lg font-bold text-white">Browse Products</h3>
                 <p className="text-sm text-gray-400 mt-1">Explore our product categories</p>
               </div>
               <div className="grid grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">

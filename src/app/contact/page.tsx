@@ -1,14 +1,51 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
-
-export const metadata = {
-  title: "Contact Us | JYT HK",
-  description: "Get in touch with JYT HK for inquiries, support, or custom quotes.",
-};
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function ContactPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast.success(result.message || 'Message sent successfully!');
+        form.reset();
+      } else {
+        toast.error(result.error || 'Failed to send message');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast.error('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
   return (
     <div className="min-h-screen bg-black py-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -88,7 +125,7 @@ export default function ContactPage() {
           {/* Right Side - Contact Form */}
           <div className="bg-[#1a1a1a] p-8 rounded-lg border border-gray-800">
             <h2 className="text-3xl font-bold text-white mb-6">Send Us a Message</h2>
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2 text-gray-300">
                   Full Name *
@@ -160,9 +197,10 @@ export default function ContactPage() {
               
               <Button 
                 type="submit" 
-                className="w-full text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white py-6"
+                disabled={isSubmitting}
+                className="w-full text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white py-6 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
           </div>
