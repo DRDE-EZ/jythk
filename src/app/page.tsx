@@ -24,8 +24,21 @@ export default async function Home() {
         <div className="relative z-10 w-full flex flex-col items-center justify-center">
           <AnimatedSection>
             <div className="relative">
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white mb-6 md:mb-8 leading-tight">
-                JYT HK
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 md:mb-8 leading-tight">
+                <span className="relative inline-block">
+                  {/* Background building image */}
+                  <span className="absolute inset-0 opacity-20">
+                    <img
+                      src="/building-bg.png"
+                      alt=""
+                      className="w-full h-full object-cover rounded"
+                    />
+                  </span>
+                  {/* Text with black color */}
+                  <span className="relative z-10 text-black drop-shadow-lg px-4">
+                    Jingyuntong Hong Kong
+                  </span>
+                </span>
               </h1>
               <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 md:w-40 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
             </div>

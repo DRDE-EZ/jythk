@@ -44,7 +44,7 @@ export default function MobileMenu({
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent side="left" className="w-full bg-[#1f1f1f] border-gray-800">
           <SheetHeader>
-            <SheetTitle className="text-white">Jingyuntong Hong Kong</SheetTitle>
+            <SheetTitle className="text-white">JYT HK</SheetTitle>
           </SheetHeader>
           <div className="flex flex-col items-center space-y-6 py-8">
             <Link 
