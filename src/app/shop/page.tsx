@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import ProductClient from "@/components/ProductClient";
 
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
   searchParams: Promise<{
     q?: string;
@@ -76,17 +78,18 @@ async function ProductResults({
 }: ProductResultsProps) {
   const pageSize = 8;
 
-  const products = await queryProducts(await getWixServerClient(), {
-    q,
-    itemLimit: pageSize,
-    skip: (page - 1) * pageSize,
-    collectionIds,
-    price_min,
-    price_max,
-    sort,
-  });
+  try {
+    const products = await queryProducts(await getWixServerClient(), {
+      q,
+      itemLimit: pageSize,
+      skip: (page - 1) * pageSize,
+      collectionIds,
+      price_min,
+      price_max,
+      sort,
+    });
 
-  if (page > (products.totalPages || 1)) notFound();
+    if (page > (products.totalPages || 1)) notFound();
 
   const title = q ? `Results for "${q}"` : "All Products";
 
@@ -197,6 +200,27 @@ async function ProductResults({
       )}
     </div>
   );
+  } catch (error) {
+    console.error('Error loading products:', error);
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 p-8 text-center">
+        <div className="space-y-4">
+          <h3 className="text-2xl font-bold text-destructive">
+            Unable to Load Products
+          </h3>
+          <p className="text-muted-foreground max-w-md mx-auto">
+            We're having trouble connecting to the product catalog. Please try again later.
+          </p>
+        </div>
+        <button
+          onClick={() => window.location.reload()}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
 }
 
 function ProductResultsSkeleton() {
