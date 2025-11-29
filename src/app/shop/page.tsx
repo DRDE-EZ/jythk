@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import ProductClient from "@/components/ProductClient";
+import { SearchField } from "@/components/SearchButton";
 
 export const dynamic = 'force-dynamic';
 
@@ -95,6 +96,11 @@ async function ProductResults({
 
   return (
     <div className="space-y-8 group-has-[[data-pending]]:animate-pulse">
+      {/* Search Bar */}
+      <div className="max-w-2xl mx-auto">
+        <SearchField className="w-full" />
+      </div>
+
       {/* Results Header */}
       <div className="text-center space-y-4">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">

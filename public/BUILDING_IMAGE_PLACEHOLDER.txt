@@ -1,0 +1,14 @@
+IMPORTANT: Building Background Image Required
+==========================================
+
+Please save the building image from your attachments as:
+public/building-bg.jpg
+
+The image will be used as a background behind the "Jingyuntong Hong Kong" logo text.
+
+Recommended image specifications:
+- Format: JPG
+- Dimensions: At least 800x200 pixels
+- File size: Under 500KB for optimal performance
+
+Once you save the image, delete this placeholder file.
