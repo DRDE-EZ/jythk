@@ -102,7 +102,18 @@ export class EnhancedAuth {
       });
 
       console.log('✅ Google auth URL generated');
-      console.log('🔗 Redirecting to:', authUrl);
+      console.log('🚀 Full auth URL:', authUrl);
+      console.log('🔍 Verify this URL contains: https://jythk.vercel.app/api/auth/callback/wix');
+      
+      // Extract and log the redirect URI from the auth URL
+      const url = new URL(authUrl);
+      const redirectUri = url.searchParams.get('redirectUri');
+      console.log('📍 Redirect URI in auth URL:', redirectUri);
+      
+      if (redirectUri !== 'https://jythk.vercel.app/api/auth/callback/wix') {
+        console.error('❌ WRONG REDIRECT URI! Expected: https://jythk.vercel.app/api/auth/callback/wix');
+        console.error('❌ Got:', redirectUri);
+      }
       
       // Redirect to Google OAuth
       window.location.href = authUrl;
