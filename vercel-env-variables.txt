@@ -22,9 +22,11 @@ Name: NEXT_PUBLIC_WIX_REDIRECT_URL
 Value: https://jythk.vercel.app/api/auth/callback/wix
 
 =========================================
-Variable 5 (Optional - Vercel will auto-detect):
+Variable 5 (REQUIRED):
 Name: NEXT_PUBLIC_BASE_URL
 Value: https://jythk.vercel.app
+
+IMPORTANT: Update this in Vercel NOW - go to Settings → Environment Variables
 
 =========================================
 
