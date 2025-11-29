@@ -178,10 +178,10 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto px-6 py-12 sm:py-16 md:py-20">
           <div className="text-center bg-gradient-to-br from-primary/5 to-secondary/10 rounded-3xl p-8 sm:p-10 md:p-12 border border-border">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-black leading-tight">
-              Ready to Start Your Dream Project?
+              Looking for a Trusted Supplier?
             </h2>
             <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-              Let our team help you source quality materials and supplies for your construction project within your budget.
+              Jingyuntong Hong Kong - Your reliable overseas supplier for solar solutions and custom projects. Quality products, competitive prices, on-time delivery.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button

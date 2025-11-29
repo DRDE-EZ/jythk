@@ -7,9 +7,9 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-x-12 gap-y-16 md:col-span-3 lg:grid-cols-6">
           <div className="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
-            <div className="text-2xl font-bold">Formex Construction & Wholesale</div>
+            <div className="text-2xl font-bold">Jingyuntong Hong Kong</div>
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-              Trusted imports. On-time supply for tomorrow’s builds.
+              Your trusted overseas supplier for solar solutions and custom projects. Quality products delivered on time.
             </p>
 
             <ul className="flex items-center space-x-4 mt-4">

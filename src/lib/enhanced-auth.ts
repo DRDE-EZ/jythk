@@ -52,9 +52,13 @@ export class EnhancedAuth {
 
   // Generate OAuth data for authentication
   async generateOAuthData(redirectPath = '/profile') {
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001';
+    // HARDCODED FIX: Force use of jythk.vercel.app regardless of environment variables
+    const baseUrl = 'https://jythk.vercel.app';
     const callbackUrl = `${baseUrl}/api/auth/callback/wix`;
     const originalUri = `${baseUrl}${redirectPath}`;
+
+    console.log('🔧 HARDCODED baseUrl:', baseUrl);
+    console.log('🔧 HARDCODED callbackUrl:', callbackUrl);
 
     return await this.wixClient.auth.generateOAuthData(callbackUrl, originalUri);
   }
