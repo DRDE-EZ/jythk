@@ -13,31 +13,25 @@ import ProductClient from "@/components/ProductClient";
 export default async function Home() {
   return (
     <div className="max-w-full mx-auto space-y-0 pb-10">
-      {/* Enhanced Hero Section */}
-      <div className="relative w-full h-[420px] md:h-[520px] flex items-center justify-center bg-gradient-to-b from-black/20 via-black/40 to-black/60 text-center gap-3 px-4">
-        {/* Floating particles effect */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
-          <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-white/40 rounded-full animate-ping"></div>
-          <div className="absolute bottom-1/3 left-1/2 w-1.5 h-1.5 bg-white/20 rounded-full animate-pulse delay-1000"></div>
+      {/* Enhanced Hero Section with Building Background */}
+      <div className="relative w-full h-[420px] md:h-[520px] flex items-center justify-center text-center gap-3 px-4 overflow-hidden">
+        {/* Full brightness building background image */}
+        <div className="absolute inset-0">
+          <img
+            src="/building-bg.png"
+            alt="Jingyuntong Hong Kong Building"
+            className="w-full h-full object-cover"
+          />
+          {/* Subtle dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/30"></div>
         </div>
+        
         <div className="relative z-10 w-full flex flex-col items-center justify-center">
           <AnimatedSection>
             <div className="relative">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 md:mb-8 leading-tight">
-                <span className="relative inline-block">
-                  {/* Background building image */}
-                  <span className="absolute inset-0 opacity-20">
-                    <img
-                      src="/building-bg.png"
-                      alt=""
-                      className="w-full h-full object-cover rounded"
-                    />
-                  </span>
-                  {/* Text with black color */}
-                  <span className="relative z-10 text-black drop-shadow-lg px-4">
-                    Jingyuntong Hong Kong
-                  </span>
+                <span className="text-black bg-white/90 px-6 py-3 rounded-lg shadow-2xl inline-block backdrop-blur-sm">
+                  Jingyuntong Hong Kong
                 </span>
               </h1>
               <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 md:w-40 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
