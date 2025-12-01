@@ -1,10 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import sgMail from '@sendgrid/mail';
-
-// Initialize SendGrid with API key from environment variable
-if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -40,6 +34,9 @@ export async function POST(request: NextRequest) {
     // Send email notification if SendGrid is configured
     if (process.env.SENDGRID_API_KEY && process.env.CONTACT_EMAIL_TO) {
       try {
+        // Dynamic import to avoid build-time issues
+        const sgMail = (await import('@sendgrid/mail')).default;
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const emailContent = {
           to: process.env.CONTACT_EMAIL_TO, // Your email address
           from: process.env.SENDGRID_FROM_EMAIL || process.env.CONTACT_EMAIL_TO, // Verified sender email
