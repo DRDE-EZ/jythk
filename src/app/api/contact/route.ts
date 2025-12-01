@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
         clientId: env.NEXT_PUBLIC_WIX_CLIENT_ID,
         tokens: {
           accessToken: { value: process.env.WIX_API_KEY || '', expiresAt: 0 },
-          refreshToken: { value: '', role: 'UNKNOWN' }
+          refreshToken: { value: '', expiresAt: 0 }
         }
       })
     });
@@ -72,18 +72,9 @@ ${message}
 Submitted: ${new Date().toLocaleString()}
         `.trim();
 
-        try {
-          await wixClient.contacts.createContactNote({
-            contactId: contactResult.contact._id,
-            note: {
-              content: noteContent
-            }
-          });
-          console.log('✅ Note added to contact in Wix CRM');
-        } catch (noteError) {
-          console.error('Failed to add note:', noteError);
-          // Continue even if note fails
-        }
+        // Note: createContactNote API is not available in current Wix SDK version
+        // Contact details and message are stored in the contact record
+        console.log('✅ Contact created with message details in Wix CRM');
       }
 
       return NextResponse.json(

@@ -88,8 +88,7 @@ export class EnhancedAuth {
       
       // Generate Google auth URL
       const { authUrl } = await this.wixClient.auth.getAuthUrl(oAuthData, {
-        responseMode: 'query',
-        prompt: 'select_account'
+        responseMode: 'query'
       });
       
       console.log('Redirecting to Google...', authUrl);
