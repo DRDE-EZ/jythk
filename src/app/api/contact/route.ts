@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
         clientId: env.NEXT_PUBLIC_WIX_CLIENT_ID,
         tokens: {
           accessToken: { value: process.env.WIX_API_KEY || '', expiresAt: 0 },
-          refreshToken: { value: '', expiresAt: 0 }
+          refreshToken: { value: '' }
         }
       })
     });

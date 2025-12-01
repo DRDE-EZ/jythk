@@ -163,6 +163,43 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     console.error("getMemberTokens failed:", error);
-    return new Response(`Authentication failed: ${error}`, { status: 400 });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    // Return HTML with detailed error for debugging
+    return new Response(
+      `<!DOCTYPE html>
+      <html>
+      <head><title>Login Failed</title></head>
+      <body style="font-family: sans-serif; max-width: 600px; margin: 50px auto; padding: 20px;">
+        <h1>🔴 Authentication Failed</h1>
+        <p><strong>Error:</strong> ${errorMessage}</p>
+        <h3>Troubleshooting Steps:</h3>
+        <ol>
+          <li>Verify the redirect URL is configured in Wix Dashboard:
+            <br><code>https://jythk.vercel.app/api/auth/callback/wix</code>
+          </li>
+          <li>Clear browser cookies and cache</li>
+          <li>Try in incognito/private browsing mode</li>
+          <li>Check that your Wix Client ID is correct: <code>${CLIENT_ID}</code></li>
+        </ol>
+        <p><a href="/" style="color: blue;">Return to Home</a> | <a href="/test-login" style="color: blue;">Test Login Page</a></p>
+        <hr>
+        <details>
+          <summary>Technical Details (click to expand)</summary>
+          <pre style="background: #f5f5f5; padding: 10px; overflow: auto;">${JSON.stringify({
+            code: code ? 'present' : 'missing',
+            state: state ? 'present' : 'missing',
+            oAuthData: oAuthData ? 'parsed successfully' : 'missing',
+            clientId: CLIENT_ID,
+            error: errorMessage
+          }, null, 2)}</pre>
+        </details>
+      </body>
+      </html>`,
+      { 
+        status: 400,
+        headers: { 'Content-Type': 'text/html' }
+      }
+    );
   }
 }
