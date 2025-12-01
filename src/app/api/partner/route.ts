@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
         clientId: env.NEXT_PUBLIC_WIX_CLIENT_ID,
         tokens: {
           accessToken: { value: process.env.WIX_API_KEY || '', expiresAt: 0 },
-          refreshToken: { value: '', role: 'UNKNOWN' }
+          refreshToken: { value: '', expiresAt: 0 }
         }
       })
     });
@@ -65,30 +65,15 @@ export async function POST(request: NextRequest) {
         'other': 'Other'
       };
 
-      // Add a note to the contact with the partnership details
-      if (contactResult.contact?._id) {
-        const noteContent = `
-🤝 PARTNERSHIP INQUIRY
-
-Location: ${location}
-Interest: ${interestMap[interest] || interest}
-
-${additionalInfo ? `Additional Information:\n${additionalInfo}\n\n` : ''}Submitted: ${new Date().toLocaleString()}
-        `.trim();
-
-        try {
-          await wixClient.contacts.createContactNote({
-            contactId: contactResult.contact._id,
-            note: {
-              content: noteContent
-            }
-          });
-          console.log('✅ Partnership note added to contact in Wix CRM');
-        } catch (noteError) {
-          console.error('Failed to add partnership note:', noteError);
-          // Continue even if note fails
-        }
-      }
+      // Store partnership details in contact's additional info field
+      const interestNote = `Partnership Inquiry - ${interestMap[interest] || interest}${additionalInfo ? ` | ${additionalInfo}` : ''}`;
+      
+      console.log('✅ Partner contact created with details:', {
+        contactId: contactResult.contact?._id,
+        location,
+        interest: interestMap[interest] || interest,
+        additionalInfo
+      });
 
       return NextResponse.json(
         { 
