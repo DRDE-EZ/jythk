@@ -31,7 +31,7 @@ export default function RandomizedCategoriesClient({ items, limit }: RandomizedC
   if (!selected.length) return null;
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 md:gap-8">
+    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-7xl mx-auto">
       {selected.map((cat: collections.Collection, index: number) => {
         const hasImage = cat.media?.mainMedia?.image?.url;
         
@@ -47,14 +47,14 @@ export default function RandomizedCategoriesClient({ items, limit }: RandomizedC
               stiffness: 100
             }}
             whileHover={{ 
-              scale: 1.05,
-              y: -10,
+              scale: 1.03,
+              y: -8,
               transition: { duration: 0.3 }
             }}
             className="group relative"
           >
             <Link href={`/collections/${cat.slug}`}>
-              <div className="group relative overflow-hidden rounded-3xl aspect-[4/3] cursor-pointer transform transition-all duration-700 bg-white border-2 border-gray-200/50 shadow-xl hover:shadow-2xl hover:border-primary/30">
+              <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer transform transition-all duration-500 bg-gradient-to-br from-gray-900 to-blue-900/50 border border-gray-700/50 shadow-2xl hover:shadow-blue-500/20 hover:border-blue-500/50">
                 {/* Enhanced Background Image with better quality */}
                 {hasImage ? (
                   <div className="absolute inset-0">

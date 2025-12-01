@@ -52,82 +52,55 @@ export class EnhancedAuth {
 
   // Generate OAuth data for authentication
   async generateOAuthData(redirectPath = '/profile') {
-    // HARDCODED FIX: Force use of jythk.vercel.app regardless of environment variables
     const baseUrl = 'https://jythk.vercel.app';
     const callbackUrl = `${baseUrl}/api/auth/callback/wix`;
     const originalUri = `${baseUrl}${redirectPath}`;
 
-    console.log('🔧 HARDCODED baseUrl:', baseUrl);
-    console.log('🔧 HARDCODED callbackUrl:', callbackUrl);
+    console.log('OAuth callback URL:', callbackUrl);
+    console.log('OAuth redirect after login:', originalUri);
 
     return await this.wixClient.auth.generateOAuthData(callbackUrl, originalUri);
   }
 
-  // Google login with enhanced logging
+  // Google login
   async loginWithGoogle(redirectPath = '/customer-dashboard-protected') {
     try {
-      console.log('🚀 Starting Google login, will redirect to:', redirectPath);
-      console.log('🔑 Client ID:', CLIENT_ID);
+      console.log('Starting Google login');
       
-      // Clear any existing session FIRST
+      // Clear any existing session
       Cookies.remove(WIX_SESSION_COOKIE);
       
+      // Generate OAuth data
       const oAuthData = await this.generateOAuthData(redirectPath);
-      console.log('📝 OAuth data generated:', {
-        redirectUri: oAuthData.redirectUri,
-        originalUri: oAuthData.originalUri,
-        hasCodeChallenge: !!oAuthData.codeChallenge,
-        hasCodeVerifier: !!oAuthData.codeVerifier
-      });
       
-      // Store OAuth data in BOTH sessionStorage AND cookie for redundancy
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem(WIX_OAUTH_DATA_COOKIE, JSON.stringify(oAuthData));
-        console.log('💾 OAuth data saved to sessionStorage');
-      }
-      
+      // Store OAuth data in cookie
       Cookies.set(WIX_OAUTH_DATA_COOKIE, JSON.stringify(oAuthData), {
-        secure: false, // Set to false for localhost
+        secure: true,
         sameSite: 'lax',
         path: '/',
-        expires: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+        expires: new Date(Date.now() + 10 * 60 * 1000)
       });
-      console.log('🍪 OAuth data saved to cookie:', WIX_OAUTH_DATA_COOKIE);
-      console.log('🍪 Cookie value:', JSON.stringify(oAuthData));
       
-      // Generate Google auth URL with select_account to force account picker
+      // Also store in sessionStorage as backup
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem(WIX_OAUTH_DATA_COOKIE, JSON.stringify(oAuthData));
+      }
+      
+      // Generate Google auth URL
       const { authUrl } = await this.wixClient.auth.getAuthUrl(oAuthData, {
         responseMode: 'query',
-        prompt: 'select_account' // Force Google account selection screen
+        prompt: 'select_account'
       });
-
-      console.log('✅ Google auth URL generated');
-      console.log('🚀 Full auth URL:', authUrl);
-      console.log('🔍 Verify this URL contains: https://jythk.vercel.app/api/auth/callback/wix');
       
-      // Extract and log the redirect URI from the auth URL
-      const url = new URL(authUrl);
-      const redirectUri = url.searchParams.get('redirectUri');
-      console.log('📍 Redirect URI in auth URL:', redirectUri);
-      
-      if (redirectUri !== 'https://jythk.vercel.app/api/auth/callback/wix') {
-        console.error('❌ WRONG REDIRECT URI! Expected: https://jythk.vercel.app/api/auth/callback/wix');
-        console.error('❌ Got:', redirectUri);
-      }
+      console.log('Redirecting to Google...', authUrl);
       
       // Redirect to Google OAuth
       window.location.href = authUrl;
       
       return { success: true, authUrl };
     } catch (error) {
-      console.error('❌ Google login failed:', error);
-      console.error('Error details:', {
-        name: error instanceof Error ? error.name : 'Unknown',
-        message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined
-      });
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      throw new Error(`Google login failed: ${errorMessage}`);
+      console.error('Google login error:', error);
+      throw error;
     }
   }
 

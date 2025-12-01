@@ -161,10 +161,10 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-foreground leading-tight">
-                Explore a Random Category
+                Browse Our Product Categories
               </h2>
               <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Discover new collections and inspiration for your next project.
+                Discover high-quality solar products and components for your projects.
               </p>
             </div>
             {/* Server component renders a randomized grid of categories */}

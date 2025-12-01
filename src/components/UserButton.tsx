@@ -35,24 +35,11 @@ export default function UserButton({
   const handleGoogleLogin = async () => {
     try {
       console.log("🔑 Starting Google sign-in...");
-      
-      // Redirect to Google OAuth (callback will handle admin/customer routing)
       await enhancedAuth.loginWithGoogle('/customer-dashboard-protected');
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Login failed";
-      console.error("❌ OAuth Error:", error);
-      
-      // Dismiss loading toast and show error
-      if (typeof toast !== 'undefined') {
-        toast.dismiss();
-        if (toast.error) {
-          toast.error(errorMessage);
-        } else {
-          alert(errorMessage);
-        }
-      } else {
-        alert(errorMessage);
-      }
+      console.error("❌ Login error:", error);
+      const message = error instanceof Error ? error.message : "Login failed. Please try again.";
+      toast.error(message);
     }
   };
 

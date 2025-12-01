@@ -1,14 +1,48 @@
-import { MapPin, Calendar, Zap, Building2, Sun, Battery, TrendingUp } from "lucide-react";
+import { Building2, Sun, Battery, Wrench } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export const metadata = {
-  title: "Our Projects | JYT HK",
-  description: "Explore our portfolio of successful solar energy projects across the globe.",
+  title: "Project Inquiry | JYT HK",
+  description: "Get a custom quote for your solar project - Solar Farms, BESS, Rooftop Installations, or Custom Solutions.",
 };
 
 export default function ProjectsPage() {
-  const projects = [
+  const projectTypes = [
+    {
+      title: "Solar Farm",
+      icon: Sun,
+      description: "Large-scale ground-mounted solar installations for utility and commercial applications. From 1MW to 100MW+ capacity.",
+      gradient: "from-yellow-600 to-orange-600",
+      features: ["Ground-mounted systems", "Utility-scale projects", "High-capacity generation", "Long-term ROI"],
+      link: "/projects/solar-farm"
+    },
+    {
+      title: "BESS",
+      icon: Battery,
+      description: "Battery Energy Storage Systems for grid stabilization, peak shaving, and renewable energy integration.",
+      gradient: "from-blue-600 to-cyan-600",
+      features: ["Energy storage solutions", "Grid stabilization", "Peak demand management", "Renewable integration"],
+      link: "/projects/bess"
+    },
+    {
+      title: "Rooftop Installation",
+      icon: Building2,
+      description: "Commercial and industrial rooftop solar systems. Maximize unused roof space for clean energy generation.",
+      gradient: "from-green-600 to-emerald-600",
+      features: ["Commercial rooftops", "Industrial facilities", "Space optimization", "Immediate savings"],
+      link: "/projects/rooftop"
+    },
+    {
+      title: "Custom Projects",
+      icon: Wrench,
+      description: "Tailored solar solutions for unique requirements. Floating solar, agrivoltaics, hybrid systems, and more.",
+      gradient: "from-purple-600 to-pink-600",
+      features: ["Floating solar", "Agrivoltaic systems", "Hybrid solutions", "Innovative designs"],
+      link: "/projects/custom"
+    }
+  ];
+
+  const oldProjects = [
     {
       title: "Leshan Meiyi Photovoltaic Power Station",
       location: "Leshan, China",
