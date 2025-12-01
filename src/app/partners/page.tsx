@@ -2,6 +2,7 @@ import { Building2, Handshake, Globe2, Award } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import PartnerForm from "@/components/PartnerForm";
 
 export const metadata = {
   title: "Our Partners | JYT HK",
@@ -135,7 +136,7 @@ export default function PartnersPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-4 gap-6 mb-12">
             {certifications.map((cert, index) => (
               <div
                 key={index}
@@ -145,33 +146,49 @@ export default function PartnersPage() {
               </div>
             ))}
           </div>
+
+          {/* Certificates Image Display */}
+          <div className="bg-gradient-to-br from-gray-900/40 to-blue-900/20 rounded-xl p-8 border border-gray-800">
+            <h3 className="text-2xl font-bold mb-6 text-center text-white">Our Certifications & Awards</h3>
+            <Image
+              src="/certificates/certificates-awards.png"
+              alt="JYT HK Certificates and Awards Collection"
+              width={1400}
+              height={800}
+              className="w-full h-auto rounded-lg"
+              priority
+            />
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Partnership Form Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-black to-blue-900/20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Become a Partner
-          </h2>
-          <p className="text-xl text-gray-400 mb-8">
-            Join our network of trusted partners and grow your business with JYT HK.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg"
-            >
-              <Link href="/contact">Contact Us</Link>
-            </Button>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Become a Partner
+            </h2>
+            <p className="text-xl text-gray-400">
+              Fill out the form below and we'll get back to you within 24 hours
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-br from-gray-900/80 to-blue-900/20 rounded-2xl p-8 md:p-12 border border-gray-800">
+            <PartnerForm />
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-gray-400 mb-6">
+              Join our network of trusted partners and grow your business with Jingyuntong Hong Kong
+            </p>
             <Button
               asChild
               size="lg"
               variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-black px-8 py-6 text-lg"
+              className="border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4"
             >
-              <Link href="/about">Learn More</Link>
+              <Link href="/about">Learn More About Us</Link>
             </Button>
           </div>
         </div>
