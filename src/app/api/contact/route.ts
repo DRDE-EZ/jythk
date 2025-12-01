@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient, OAuthStrategy } from '@wix/sdk';
+import { createClient, ApiKeyStrategy } from '@wix/sdk';
 import { contacts } from '@wix/crm';
 import { env } from '@/env';
 
@@ -28,12 +28,9 @@ export async function POST(request: NextRequest) {
     // Create Wix client with API key for server-side operations
     const wixClient = createClient({
       modules: { contacts },
-      auth: OAuthStrategy({
-        clientId: env.NEXT_PUBLIC_WIX_CLIENT_ID,
-        tokens: {
-          accessToken: { value: process.env.WIX_API_KEY || '', expiresAt: 0 },
-          refreshToken: { value: '' }
-        }
+      auth: ApiKeyStrategy({
+        siteId: env.NEXT_PUBLIC_WIX_SITE_ID,
+        apiKey: process.env.WIX_API_KEY || ''
       })
     });
 
