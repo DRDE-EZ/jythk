@@ -24,7 +24,7 @@ export default function ProductMedia({ media, showThumbnails = true, isGallery =
   const selectedVideo = selectedMedia?.video?.files?.[0];
 
   // Gallery view - show all images in a grid
-  if (isGallery) {
+  if (isGallery && media && media.length > 0) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {media.map((item) => {
@@ -32,7 +32,7 @@ export default function ProductMedia({ media, showThumbnails = true, isGallery =
           const video = item.video?.files?.[0];
           
           return (
-            <div key={item._id} className="w-full">
+            <div key={item._id} className="w-full bg-white rounded-lg overflow-hidden">
               {image?.url ? (
                 <Zoom>
                   <WixImage
@@ -40,7 +40,7 @@ export default function ProductMedia({ media, showThumbnails = true, isGallery =
                     alt={image.altText}
                     width={800}
                     height={800}
-                    className="w-full h-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+                    className="w-full h-auto object-contain rounded-lg shadow-lg hover:shadow-xl transition-shadow"
                   />
                 </Zoom>
               ) : video?.url ? (
@@ -63,7 +63,7 @@ export default function ProductMedia({ media, showThumbnails = true, isGallery =
   // Standard product view with main image
   return (
     <div className="flex flex-col items-center lg:items-start w-full">
-      <div className="w-full aspect-square bg-secondary/10 rounded-lg overflow-hidden flex items-center justify-center">
+      <div className="w-full bg-white rounded-lg overflow-hidden flex items-center justify-center p-4">
         {selectedImage?.url ? (
           <Zoom>
             <WixImage
@@ -71,7 +71,7 @@ export default function ProductMedia({ media, showThumbnails = true, isGallery =
               alt={selectedImage.altText}
               width={800}
               height={800}
-              className="w-full h-full object-contain"
+              className="w-full h-auto object-contain max-h-[600px]"
             />
           </Zoom>
         ) : selectedVideo?.url ? (
