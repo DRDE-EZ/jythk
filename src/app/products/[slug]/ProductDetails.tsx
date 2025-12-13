@@ -280,7 +280,7 @@ export default function ProductDetails({
       )}
       
       {/* Full Image Gallery Section - Always Shows Below Specifications */}
-      {media && media.length > 0 && (
+      {product.media?.items && product.media.items.length > 0 && (
         <div className="w-full pt-12 border-t border-border mt-12">
           <div className="space-y-4 mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-primary-900">Image Gallery</h2>
