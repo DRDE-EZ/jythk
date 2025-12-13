@@ -57,18 +57,9 @@ export default function ProductDetails({
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-        {/* Image Section */}
-        <ProductMedia
-          media={
-            !!selectedOptionsMedia?.length
-              ? selectedOptionsMedia
-              : product.media?.items
-          }
-        />
-
-        {/* Product Info Section */}
-        <div className="flex mt-3 lg:mt-0 flex-col justify-start space-y-6">
+      <div className="space-y-8">
+        {/* Product Info Section - Now First */}
+        <div className="flex flex-col justify-start space-y-6">
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-900 leading-tight">
               {product.name}
@@ -232,6 +223,17 @@ export default function ProductDetails({
               </li>
             </ul>
           </div>
+        </div>
+
+        {/* Image Section - Now After Dropdowns */}
+        <div className="w-full">
+          <ProductMedia
+            media={
+              !!selectedOptionsMedia?.length
+                ? selectedOptionsMedia
+                : product.media?.items
+            }
+          />
         </div>
       </div>
       {!!product.description && (
