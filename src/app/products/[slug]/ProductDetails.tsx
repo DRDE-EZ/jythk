@@ -57,9 +57,21 @@ export default function ProductDetails({
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="space-y-8">
-        {/* Product Info Section - Now First */}
-        <div className="flex flex-col justify-start space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        {/* Image Section - Back to Side by Side */}
+        <div className="w-full">
+          <ProductMedia
+            media={
+              !!selectedOptionsMedia?.length
+                ? selectedOptionsMedia
+                : product.media?.items
+            }
+            showThumbnails={true}
+          />
+        </div>
+
+        {/* Product Info Section */}
+        <div className="flex mt-3 lg:mt-0 flex-col justify-start space-y-6">
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-900 leading-tight">
               {product.name}
@@ -265,11 +277,12 @@ export default function ProductDetails({
         </div>
       )}
       
-      {/* Product Images Section - After All Specifications */}
-      <div className="w-full pt-12">
-        <div className="space-y-4 mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-primary-900">Product Images</h2>
+      {/* Full Image Gallery Section - Below All Specifications */}
+      <div className="w-full pt-12 border-t border-border mt-12">
+        <div className="space-y-4 mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-primary-900">Image Gallery</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+          <p className="text-muted-foreground">View all product images in full detail</p>
         </div>
         <ProductMedia
           media={
@@ -277,6 +290,8 @@ export default function ProductDetails({
               ? selectedOptionsMedia
               : product.media?.items
           }
+          showThumbnails={false}
+          isGallery={true}
         />
       </div>
     </div>
