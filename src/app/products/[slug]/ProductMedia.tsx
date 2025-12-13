@@ -74,7 +74,6 @@ export default function ProductMedia({ media, showThumbnails = true, isGallery =
               className="w-full h-full object-contain"
             />
           </Zoom>
-          </Zoom>
         ) : selectedVideo?.url ? (
           <div className="flex w-full h-full items-center justify-center bg-black">
             <video controls className="max-w-full max-h-full">
@@ -87,7 +86,7 @@ export default function ProductMedia({ media, showThumbnails = true, isGallery =
         ) : null}
       </div>
 
-      {showThumbnails && media.length > 1 && (
+      {showThumbnails && media && media.length > 1 && (
         <div className="mt-5 flex flex-wrap justify-center lg:justify-start gap-4">
           {media.map((item) => (
             <MediaPreview
