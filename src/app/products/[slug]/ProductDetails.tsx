@@ -280,24 +280,22 @@ export default function ProductDetails({
       )}
       
       {/* Full Image Gallery Section - Always Shows Below Specifications */}
-      {product.media?.items && product.media.items.length > 0 && (
-        <div className="w-full pt-12 border-t border-border mt-12">
-          <div className="space-y-4 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary-900">Image Gallery</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
-            <p className="text-muted-foreground">View all product images in full detail</p>
-          </div>
-          <ProductMedia
-            media={
-              !!selectedOptionsMedia?.length
-                ? selectedOptionsMedia
-                : product.media?.items
-            }
-            showThumbnails={false}
-            isGallery={true}
-          />
+      <div className="w-full pt-12 border-t border-border mt-12">
+        <div className="space-y-4 mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-primary-900">Image Gallery</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+          <p className="text-muted-foreground">View all product images in full detail</p>
         </div>
-      )}
+        <ProductMedia
+          media={
+            !!selectedOptionsMedia?.length
+              ? selectedOptionsMedia
+              : product.media?.items
+          }
+          showThumbnails={false}
+          isGallery={true}
+        />
+      </div>
     </div>
   );
 }
