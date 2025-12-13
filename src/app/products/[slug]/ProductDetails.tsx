@@ -224,17 +224,6 @@ export default function ProductDetails({
             </ul>
           </div>
         </div>
-
-        {/* Image Section - Now After Dropdowns */}
-        <div className="w-full">
-          <ProductMedia
-            media={
-              !!selectedOptionsMedia?.length
-                ? selectedOptionsMedia
-                : product.media?.items
-            }
-          />
-        </div>
       </div>
       {!!product.description && (
         <div className="space-y-1.5 text-lg text-muted-foreground pt-16">
@@ -275,6 +264,21 @@ export default function ProductDetails({
           </Accordion>
         </div>
       )}
+      
+      {/* Product Images Section - After All Specifications */}
+      <div className="w-full pt-12">
+        <div className="space-y-4 mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-primary-900">Product Images</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+        </div>
+        <ProductMedia
+          media={
+            !!selectedOptionsMedia?.length
+              ? selectedOptionsMedia
+              : product.media?.items
+          }
+        />
+      </div>
     </div>
   );
 }

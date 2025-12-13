@@ -23,20 +23,20 @@ export default function ProductMedia({ media }: ProductMediaProps) {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="w-full max-w-4xl">
+      <div className="w-full">
         {selectedImage?.url ? (
           <Zoom>
             <WixImage
               mediaIdentifier={selectedImage.url}
               alt={selectedImage.altText}
-              width={1200}
-              height={1200}
-              className="w-full h-auto object-contain rounded-lg shadow-lg"
+              width={2000}
+              height={2000}
+              className="w-full h-auto rounded-lg shadow-lg"
             />
           </Zoom>
         ) : selectedVideo?.url ? (
-          <div className="flex size-full items-center bg-black">
-            <video controls className="size-full">
+          <div className="flex w-full items-center bg-black rounded-lg overflow-hidden">
+            <video controls className="w-full h-auto">
               <source
                 src={selectedVideo.url}
                 type={`video/${selectedVideo.format}`}
@@ -47,7 +47,7 @@ export default function ProductMedia({ media }: ProductMediaProps) {
       </div>
 
       {media.length > 1 && (
-        <div className="mt-6 flex flex-wrap justify-center gap-4 max-w-4xl">
+        <div className="mt-6 flex flex-wrap justify-center gap-4 w-full">
           {media.map((item) => (
             <MediaPreview
               key={item._id}
