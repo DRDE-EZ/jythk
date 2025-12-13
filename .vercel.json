@@ -1,0 +1,6 @@
+# Vercel Configuration
+# This file tells Vercel to use --legacy-peer-deps during npm install
+# Required because @wix/media expects React 18 but we have React 19
+
+[build.environment]
+NPM_FLAGS="--legacy-peer-deps"
