@@ -237,6 +237,8 @@ export default function ProductDetails({
           </div>
         </div>
       </div>
+      
+      {/* Product Information Section */}
       {!!product.description && (
         <div className="space-y-1.5 text-lg text-muted-foreground pt-16">
           <span className="flex items-center gap-2">
@@ -277,7 +279,7 @@ export default function ProductDetails({
         </div>
       )}
       
-      {/* Full Image Gallery Section - Below All Specifications */}
+      {/* Full Image Gallery Section - Always Shows Below Specifications */}
       <div className="w-full pt-12 border-t border-border mt-12">
         <div className="space-y-4 mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-primary-900">Image Gallery</h2>
