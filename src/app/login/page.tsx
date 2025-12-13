@@ -4,19 +4,60 @@ import { Button } from "@/components/ui/button";
 import useAuth from "@/hooks/auth";
 import { LogIn, Mail } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { wixBrowserClient } from "@/lib/wix-client.browser";
 
 export default function LoginPage() {
   const { login, loginWithGoogle } = useAuth();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const isLoggedIn = await wixBrowserClient.auth.loggedIn();
+        if (isLoggedIn) {
+          router.replace('/customer-dashboard-protected');
+        } else {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setIsLoading(false);
+      }
+    }
+    checkAuth();
+  }, [router]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center px-4">
       <div className="max-w-md w-full space-y-8">
         {/* Logo and Header */}
         <div className="text-center">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center mb-6">
-            <LogIn className="w-8 h-8 text-white" />
+          <div className="mx-auto mb-6 flex justify-center">
+            <Image
+              src="/partners/jyt-logo.png"
+              alt="JYT HK Logo"
+              width={80}
+              height={80}
+              className=""
+            />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900">Welcome back</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Welcome to JYT HK</h2>
           <p className="mt-2 text-gray-600">Sign in to access your account</p>
         </div>
 

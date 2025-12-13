@@ -121,7 +121,12 @@ export async function GET(req: NextRequest) {
     wixClient.auth.setTokens(memberTokens);
     
     // Get member to extract email
-    let redirectPath = oAuthData.originalUri || "/customer-dashboard-protected";
+    let redirectPath = "/customer-dashboard-protected";
+    
+    // If coming from login page, redirect to dashboard
+    if (oAuthData.originalUri && !oAuthData.originalUri.includes('/login')) {
+      redirectPath = oAuthData.originalUri;
+    }
     
     try {
       const currentMember = await wixClient.members.getCurrentMember();
@@ -141,6 +146,7 @@ export async function GET(req: NextRequest) {
           if ((userRole === 'admin' || userRole === 'super_admin') && 
               (!oAuthData.originalUri || 
                oAuthData.originalUri === '/profile' || 
+               oAuthData.originalUri === '/login' ||
                oAuthData.originalUri.includes('/customer-dashboard'))) {
             redirectPath = '/admin-dashboard';
             console.log("✅ Admin user - redirecting to admin dashboard");
