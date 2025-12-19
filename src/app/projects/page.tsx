@@ -14,7 +14,7 @@ export default function ProjectsPage() {
       description: "Large-scale ground-mounted solar installations for utility and commercial applications. From 1MW to 100MW+ capacity.",
       gradient: "from-yellow-600 to-orange-600",
       features: ["Ground-mounted systems", "Utility-scale projects", "High-capacity generation", "Long-term ROI"],
-      link: "/projects/solar-farm"
+      link: "/quote?type=solar-farm"
     },
     {
       title: "BESS",
@@ -22,7 +22,7 @@ export default function ProjectsPage() {
       description: "Battery Energy Storage Systems for grid stabilization, peak shaving, and renewable energy integration.",
       gradient: "from-blue-600 to-cyan-600",
       features: ["Energy storage solutions", "Grid stabilization", "Peak demand management", "Renewable integration"],
-      link: "/projects/bess"
+      link: "/quote?type=bess"
     },
     {
       title: "Rooftop Installation",
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
       description: "Commercial and industrial rooftop solar systems. Maximize unused roof space for clean energy generation.",
       gradient: "from-green-600 to-emerald-600",
       features: ["Commercial rooftops", "Industrial facilities", "Space optimization", "Immediate savings"],
-      link: "/projects/rooftop"
+      link: "/quote?type=rooftop"
     },
     {
       title: "Custom Projects",
@@ -38,7 +38,7 @@ export default function ProjectsPage() {
       description: "Tailored solar solutions for unique requirements. Floating solar, agrivoltaics, hybrid systems, and more.",
       gradient: "from-purple-600 to-pink-600",
       features: ["Floating solar", "Agrivoltaic systems", "Hybrid solutions", "Innovative designs"],
-      link: "/projects/custom"
+      link: "/quote?type=custom"
     }
   ];
 
