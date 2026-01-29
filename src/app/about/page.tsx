@@ -302,17 +302,22 @@ export default function AboutPage() {
             <Button
               asChild
               size="lg"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg"
+              className="group relative overflow-hidden bg-transparent border-2 border-white text-white hover:text-black px-8 py-6 text-lg font-semibold transition-all duration-300 transform hover:scale-105 backdrop-blur-sm min-w-[160px]"
             >
-              <Link href="/contact">Contact Us</Link>
+              <Link href="/contact">
+                <span className="relative z-10">Contact Us</span>
+                <div className="absolute inset-0 bg-white translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
+              </Link>
             </Button>
             <Button
               asChild
               size="lg"
-              variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-black px-8 py-6 text-lg"
+              className="group relative overflow-hidden bg-transparent border-2 border-white text-white hover:text-black px-8 py-6 text-lg font-semibold transition-all duration-300 transform hover:scale-105 backdrop-blur-sm min-w-[160px]"
             >
-              <Link href="/projects">View Projects</Link>
+              <Link href="/projects">
+                <span className="relative z-10">View Projects</span>
+                <div className="absolute inset-0 bg-white translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
+              </Link>
             </Button>
           </div>
         </div>

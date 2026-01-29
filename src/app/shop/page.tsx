@@ -27,10 +27,10 @@ export async function generateMetadata({
   const { q } = await searchParams;
 
   return {
-    title: q ? `Results for "${q}"` : "Shop - MycroPc",
+    title: q ? `Results for "${q}"` : "Shop | JYT HK",
     description: q
-      ? `Search results for "${q}" - Find the perfect PC build`
-      : "Browse our complete collection of high-performance custom PCs and components",
+      ? `Search results for "${q}" - Find quality solar products`
+      : "Browse our complete collection of solar products, components, and accessories",
   };
 }
 

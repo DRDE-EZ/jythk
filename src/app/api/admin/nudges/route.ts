@@ -40,7 +40,7 @@ const DEFAULT_NUDGES: NudgeConfig[] = [
     enabled: true,
     frequency: 'immediate',
     emailSubject: 'Hurry! {{product_name}} is running low in stock',
-    emailBody: 'Hi {{customer_name}},\n\nWe noticed that {{product_name}} is one of your favorites. We currently have limited stock remaining.\n\nOrder now to avoid missing out!\n\nBest regards,\nFormex Construction & Wholesale',
+    emailBody: 'Hi {{customer_name}},\n\nWe noticed that {{product_name}} is one of your favorites. We currently have limited stock remaining.\n\nOrder now to avoid missing out!\n\nBest regards,\nJingyuntong Hong Kong',
     targetAudience: 'customers',
     totalSent: 0
   },
@@ -52,7 +52,7 @@ const DEFAULT_NUDGES: NudgeConfig[] = [
     enabled: true,
     frequency: 'daily',
     emailSubject: 'You left items in your cart',
-    emailBody: 'Hi {{customer_name}},\n\nYou have {{cart_count}} items waiting in your cart.\n\nComplete your order today and get free shipping on orders over $100!\n\nBest regards,\nFormex Construction & Wholesale',
+    emailBody: 'Hi {{customer_name}},\n\nYou have {{cart_count}} items waiting in your cart.\n\nComplete your order today and get free shipping on orders over $100!\n\nBest regards,\nJingyuntong Hong Kong',
     targetAudience: 'all',
     totalSent: 0
   },
@@ -64,7 +64,7 @@ const DEFAULT_NUDGES: NudgeConfig[] = [
     enabled: false,
     frequency: 'weekly',
     emailSubject: 'New products just arrived!',
-    emailBody: 'Hi {{customer_name}},\n\nWe just added new products that you might be interested in.\n\nCheck out our latest arrivals!\n\nBest regards,\nFormex Construction & Wholesale',
+    emailBody: 'Hi {{customer_name}},\n\nWe just added new products that you might be interested in.\n\nCheck out our latest arrivals!\n\nBest regards,\nJingyuntong Hong Kong',
     targetAudience: 'customers',
     totalSent: 0
   },
@@ -76,7 +76,7 @@ const DEFAULT_NUDGES: NudgeConfig[] = [
     enabled: true,
     frequency: 'monthly',
     emailSubject: 'Time to restock?',
-    emailBody: 'Hi {{customer_name}},\n\nBased on your previous orders, you might be running low on some supplies.\n\nReorder now and save 10% with code RESTOCK10\n\nBest regards,\nFormex Construction & Wholesale',
+    emailBody: 'Hi {{customer_name}},\n\nBased on your previous orders, you might be running low on some supplies.\n\nReorder now and save 10% with code RESTOCK10\n\nBest regards,\nJingyuntong Hong Kong',
     targetAudience: 'customers',
     totalSent: 0
   },
@@ -87,8 +87,8 @@ const DEFAULT_NUDGES: NudgeConfig[] = [
     description: 'Welcome new customers to your store',
     enabled: true,
     frequency: 'immediate',
-    emailSubject: 'Welcome to Formex Construction & Wholesale!',
-    emailBody: 'Hi {{customer_name}},\n\nThank you for joining Formex Construction & Wholesale!\n\nEnjoy 15% off your first order with code WELCOME15\n\nBest regards,\nThe Formex Team',
+    emailSubject: 'Welcome to Jingyuntong Hong Kong!',
+    emailBody: 'Hi {{customer_name}},\n\nThank you for joining Jingyuntong Hong Kong!\n\nEnjoy 15% off your first order with code WELCOME15\n\nBest regards,\nThe JYT HK Team',
     targetAudience: 'new_customers',
     totalSent: 0
   }

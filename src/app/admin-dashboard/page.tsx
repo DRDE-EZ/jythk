@@ -314,7 +314,7 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-bold text-slate-900 mb-2">
               Admin Portal
             </h1>
-            <p className="text-slate-600">Formex Construction & Wholesale</p>
+            <p className="text-slate-600">Jingyuntong Hong Kong</p>
           </div>
           
           <Button 
@@ -346,7 +346,7 @@ export default function AdminDashboard() {
             <Shield className="h-8 w-8 text-blue-600" />
             <div>
               <h1 className="text-xl font-bold text-slate-900">Admin Dashboard</h1>
-              <p className="text-sm text-slate-600">Formex Construction & Wholesale</p>
+              <p className="text-sm text-slate-600">Jingyuntong Hong Kong</p>
             </div>
           </div>
           

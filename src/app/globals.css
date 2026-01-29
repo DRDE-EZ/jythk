@@ -4,7 +4,7 @@
 
 :root {
   --radius: 0.625rem;
-  /* Brand variables for Formex Construction & Wholesale - Light Theme */
+  /* Brand variables for JYT HK - Light Theme */
   --radius: 1rem; /* larger rounded corners (approx 2xl) */
   --background: #000000; /* Black background */
   --foreground: #FFFFFF; /* White text */
@@ -129,5 +129,14 @@
   }
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background: #9ca3af;
+  }
+
+  /* Hide scrollbar for horizontal scroll carousels */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
   }
 }

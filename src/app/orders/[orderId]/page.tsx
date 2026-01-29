@@ -17,8 +17,8 @@ export async function generateMetadata({
 
   return {
     title: order?.number
-      ? `Order #${order.number} - MycroPc`
-      : "Order Details - MycroPc",
+      ? `Order #${order.number} | JYT HK`
+      : "Order Details | JYT HK",
     description:
       "View your order details, shipping information, and order status.",
   };

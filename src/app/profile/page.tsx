@@ -7,7 +7,7 @@ import MemberInfoForm from "./MemberInfoForm";
 import Orders from "./Orders";
 
 export const metadata: Metadata = {
-  title: "Dashboard - MycroPc",
+  title: "Dashboard | JYT HK",
   description: "Your personal dashboard to manage orders and account information",
 };
 

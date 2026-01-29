@@ -46,7 +46,7 @@ export default function Product({ product }: ProductProps) {
   return (
     <div className="block relative">
       <Link href={`/products/${product.slug}`} className="block">
-        <div className="group/card relative w-full h-[420px] flex flex-col overflow-hidden rounded-lg bg-white border border-gray-200 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
+        <div className="group/card relative w-full h-[420px] flex flex-col overflow-hidden rounded-xl bg-zinc-900 border border-zinc-800 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
         {/* Discount Badge */}
         {isDiscounted && (
           <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
@@ -59,9 +59,9 @@ export default function Product({ product }: ProductProps) {
           <button
             onClick={handleAddToCart}
             disabled={addToCartMutation.isPending}
-            className="bg-primary/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-primary transition-colors duration-200 disabled:opacity-50"
+            className="bg-emerald-500/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-emerald-500 transition-colors duration-200 disabled:opacity-50"
           >
-            <ShoppingCart className="w-4 h-4 text-white" />
+            <ShoppingCart className="w-4 h-4 text-black" />
           </button>
         </div>
 
@@ -96,14 +96,14 @@ export default function Product({ product }: ProductProps) {
             <button
               onClick={handleAddToCart}
               disabled={addToCartMutation.isPending}
-              className="opacity-0 group-hover/card:opacity-100 translate-y-4 group-hover/card:translate-y-0 transition-all duration-300 bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-full p-3 shadow-xl hover:bg-primary hover:text-white disabled:opacity-50"
+              className="opacity-0 group-hover/card:opacity-100 translate-y-4 group-hover/card:translate-y-0 transition-all duration-300 bg-emerald-500 backdrop-blur-sm rounded-full p-3 shadow-xl hover:bg-emerald-400 disabled:opacity-50"
             >
-              <ShoppingCart className="w-5 h-5" />
+              <ShoppingCart className="w-5 h-5 text-black" />
             </button>
-            
+
             {/* Arrow button - visible when not hovered */}
-            <div className="opacity-100 group-hover/card:opacity-0 translate-y-0 group-hover/card:translate-y-4 transition-all duration-300 bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-full p-3 shadow-xl group-hover/card:bg-primary group-hover/card:text-white absolute inset-0">
-              <ArrowUpRight className="w-5 h-5" />
+            <div className="opacity-100 group-hover/card:opacity-0 translate-y-0 group-hover/card:translate-y-4 transition-all duration-300 bg-zinc-800 backdrop-blur-sm rounded-full p-3 shadow-xl absolute inset-0">
+              <ArrowUpRight className="w-5 h-5 text-white" />
             </div>
           </div>
         </div>
@@ -112,12 +112,12 @@ export default function Product({ product }: ProductProps) {
         <div className="flex-1 flex flex-col justify-between p-4 min-h-[140px]">
           {/* Product Name - Fixed height area */}
           <div className="space-y-2 h-[60px] flex flex-col justify-start">
-            <h3 className="font-bold text-lg leading-tight line-clamp-2 text-gray-900 group-hover/card:text-primary transition-colors duration-300">
+            <h3 className="font-bold text-lg leading-tight line-clamp-2 text-white group-hover/card:text-emerald-400 transition-colors duration-300">
               {product.name}
             </h3>
 
             {/* Subtle underline animation */}
-            <div className="w-0 group-hover/card:w-12 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-500 ease-out" />
+            <div className="w-0 group-hover/card:w-12 h-0.5 bg-emerald-500 transition-all duration-500 ease-out" />
           </div>
 
           {/* Pricing - Fixed height area */}
@@ -139,10 +139,10 @@ export default function Product({ product }: ProductProps) {
                 </div>
               ) : (
                 <div className="space-y-1">
-                  <span className="text-xl font-bold text-gray-900">
+                  <span className="text-xl font-bold text-white">
                     {product.priceData?.formatted?.price}
                   </span>
-                  <div className="text-xs text-gray-600">
+                  <div className="text-xs text-zinc-500">
                     Premium Build
                   </div>
                 </div>
@@ -150,20 +150,20 @@ export default function Product({ product }: ProductProps) {
 
               {/* Performance Badge */}
               <div className="opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
-                <div className="bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border border-primary/30 px-2 py-1 rounded-md text-xs font-semibold">
+                <div className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-1 rounded-md text-xs font-semibold">
                   HIGH-PERF
                 </div>
               </div>
             </div>
 
             {/* Bottom gradient line */}
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent mt-3" />
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent mt-3" />
           </div>
         </div>
 
         {/* Card glow effect */}
-        <div className="absolute inset-0 rounded-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none -z-10">
-          <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/5 to-secondary/5 blur-xl" />
+        <div className="absolute inset-0 rounded-xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none -z-10">
+          <div className="absolute inset-0 rounded-xl bg-emerald-500/5 blur-xl" />
         </div>
       </div>
     </Link>

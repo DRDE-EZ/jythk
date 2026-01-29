@@ -412,7 +412,7 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
               Admin Portal
             </h1>
-            <p className="text-slate-600">Formex Construction & Wholesale</p>
+            <p className="text-slate-600">Jingyuntong Hong Kong</p>
             <p className="text-sm text-slate-500 mt-2">Secure Administrative Access</p>
           </div>
           
@@ -457,7 +457,7 @@ export default function AdminDashboard() {
                 Admin Dashboard
                 <span className="ml-3 px-2 py-1 bg-white/20 backdrop-blur-sm rounded-lg text-xs">LIVE</span>
               </h1>
-              <p className="text-sm text-purple-200">Formex Construction & Wholesale</p>
+              <p className="text-sm text-purple-200">Jingyuntong Hong Kong</p>
             </div>
           </div>
           

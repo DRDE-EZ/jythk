@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="bg-background py-10 sm:pt-16 lg:pt-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-x-12 gap-y-16 md:col-span-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-16 md:col-span-3 lg:grid-cols-7">
           <div className="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
             <div className="text-2xl font-bold">Jingyuntong Hong Kong</div>
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
@@ -98,44 +99,36 @@ export default function Footer() {
               <li>
                 <a
                   href="/about"
-                  title=""
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
-                  {" "}
-                  About{" "}
+                  About
                 </a>
               </li>
 
               <li>
                 <a
                   href="/shop"
-                  title=""
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
-                  {" "}
-                  Shop{" "}
+                  Shop
                 </a>
               </li>
 
               <li>
                 <a
-                  href="/socials"
-                  title=""
+                  href="/projects"
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
-                  {" "}
-                  Socials{" "}
+                  Projects
                 </a>
               </li>
 
               <li>
                 <a
-                  href="contact-us"
-                  title=""
+                  href="/contact"
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
-                  {" "}
-                  Contact Us{" "}
+                  Contact Us
                 </a>
               </li>
             </ul>
@@ -149,46 +142,62 @@ export default function Footer() {
             <ul className="mt-6 space-y-4">
               <li>
                 <a
-                  href="#"
-                  title=""
+                  href="/support"
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
-                  {" "}
-                  Customer Support{" "}
+                  Customer Support
                 </a>
               </li>
 
               <li>
                 <a
-                  href="#"
-                  title=""
+                  href="/shipping"
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
-                  {" "}
-                  Delivery Details{" "}
+                  Delivery Details
                 </a>
               </li>
 
               <li>
                 <a
                   href="/terms"
-                  title=""
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
-                  {" "}
-                  Terms & Conditions{" "}
+                  Terms & Conditions
                 </a>
               </li>
 
               <li>
                 <a
-                  href="#"
-                  title=""
+                  href="/privacy"
                   className="flex text-base transition-all duration-200 hover:text-primary focus:text-primary"
                 >
-                  {" "}
-                  Privacy Policy{" "}
+                  Privacy Policy
                 </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+              Contact
+            </p>
+
+            <ul className="mt-6 space-y-4">
+              <li>
+                <a
+                  href="mailto:info@jythk.com"
+                  className="flex items-center gap-2 text-base transition-all duration-200 hover:text-primary focus:text-primary"
+                >
+                  <Mail className="w-4 h-4 text-muted-foreground" />
+                  info@jythk.com
+                </a>
+              </li>
+              <li>
+                <div className="flex items-center gap-2 text-base text-muted-foreground">
+                  <MapPin className="w-4 h-4" />
+                  Hong Kong SAR
+                </div>
               </li>
             </ul>
           </div>
@@ -227,7 +236,7 @@ export default function Footer() {
 
         <p className="text-center text-sm text-muted-foreground">
           © Copyright {new Date().getFullYear()}, All Rights Reserved by
-          Formex Construction & Wholesale
+          Jingyuntong Hong Kong
         </p>
       </div>
     </footer>

@@ -191,10 +191,13 @@ export default function ProjectsPage() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-lg"
+            className="group relative overflow-hidden inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-white text-white hover:text-black font-semibold rounded-lg transition-all duration-300 text-lg transform hover:scale-105 backdrop-blur-sm"
           >
-            Contact Us
-            <ArrowRight className="w-5 h-5" />
+            <span className="relative z-10 flex items-center gap-2">
+              Contact Us
+              <ArrowRight className="w-5 h-5" />
+            </span>
+            <div className="absolute inset-0 bg-white translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out rounded-lg"></div>
           </Link>
         </div>
       </section>

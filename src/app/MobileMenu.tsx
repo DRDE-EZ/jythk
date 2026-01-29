@@ -90,7 +90,7 @@ export default function MobileMenu({
                 <h3 className="text-lg font-semibold mb-4 text-white">Welcome back!</h3>
                 <Link 
                   href="/customer-dashboard-protected"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
                 >
                   📊 My Dashboard
                 </Link>

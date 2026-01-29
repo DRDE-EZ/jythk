@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import ClearCart from "./ClearCart";
 
 export const metadata: Metadata = {
-  title: "Order Confirmed - MycroPc",
+  title: "Order Confirmed | JYT HK",
   description: "Your order has been successfully placed and confirmed.",
 };
 

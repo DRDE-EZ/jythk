@@ -26,12 +26,12 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Formex Construction & Wholesale",
-    default: "Formex Construction & Wholesale",
+    template: "%s | JYT HK",
+    default: "JYT HK | Solar Solutions",
   },
-  description: "Trusted imports. On-time supply for tomorrow's builds.",
-  keywords: ["construction", "wholesale", "building materials", "formex"],
-  authors: [{ name: "Formex Construction & Wholesale" }],
+  description: "Your trusted supplier for solar solutions and custom projects. Quality products, competitive pricing, reliable delivery worldwide.",
+  keywords: ["solar solutions", "solar panels", "solar cells", "wholesale", "JYT HK", "Jingyuntong"],
+  authors: [{ name: "Jingyuntong Hong Kong" }],
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001'),
 };
 

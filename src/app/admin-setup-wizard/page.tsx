@@ -281,7 +281,7 @@ export default function AdminSetupWizard() {
           {/* Footer */}
           <div className="mt-8 pt-6 border-t border-slate-200 text-center">
             <p className="text-slate-500 text-sm">
-              Formex Construction & Wholesale Admin System
+              Jingyuntong Hong Kong Admin System
             </p>
           </div>
         </div>
