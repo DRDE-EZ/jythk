@@ -1,46 +1,15 @@
-import { Building2, Handshake, Globe2, Award } from "lucide-react";
+import { Building2, Globe2, Award, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import PartnerForm from "@/components/PartnerForm";
 
 export const metadata = {
   title: "Our Partners | JYT HK",
-  description: "Trusted partnerships with leading solar and renewable energy companies worldwide.",
+  description:
+    "Trusted partnerships with leading solar and renewable energy companies worldwide.",
 };
 
 export default function PartnersPage() {
-  const partners = [
-    { name: "JA Solar", category: "Solar Panels" },
-    { name: "Trina Solar", category: "Solar Modules" },
-    { name: "Canadian Solar", category: "PV Solutions" },
-    { name: "Jinko Solar", category: "Solar Products" },
-    { name: "LONGi", category: "Solar Technology" },
-    { name: "Huawei", category: "Smart Energy" },
-    { name: "Sungrow", category: "Inverters" },
-    { name: "GCL", category: "Silicon Materials" },
-    { name: "Risen Energy", category: "Solar Modules" },
-    { name: "Astronergy", category: "PV Modules" },
-    { name: "Seraphim", category: "Solar Panels" },
-    { name: "Jolywood", category: "N-type Modules" },
-    { name: "DAS Solar", category: "Solar Products" },
-    { name: "Tbea", category: "Energy Equipment" },
-    { name: "Hoymiles", category: "Microinverters" },
-    { name: "Growatt", category: "Solar Inverters" },
-    { name: "Goodwe", category: "PV Inverters" },
-    { name: "Kehua", category: "Power Solutions" },
-    { name: "Sineng", category: "Inverter Technology" },
-    { name: "SAJ", category: "Solar Inverters" },
-    { name: "KSTAR", category: "Power Electronics" },
-    { name: "Chint", category: "Electrical Equipment" },
-    { name: "Talesun", category: "Solar Modules" },
-    { name: "Runergy", category: "PV Products" },
-    { name: "Boviet Solar", category: "Solar Panels" },
-    { name: "Suntech", category: "PV Solutions" },
-    { name: "Yingli", category: "Solar Energy" },
-    { name: "Hanwha Q CELLS", category: "Solar Cells" },
-  ];
-
   const certifications = [
     "ISO 9001 Quality Management",
     "ISO 14001 Environmental Management",
@@ -57,46 +26,72 @@ export default function PartnersPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-white">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-gradient-to-b from-blue-900/20 to-black">
-        <div className="max-w-7xl mx-auto text-center">
-          <Handshake className="w-20 h-20 text-blue-400 mx-auto mb-6" />
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+      <section className="relative py-20 sm:py-24 md:py-28 bg-gradient-to-b from-emerald-900/20 to-transparent">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+          <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
+            Trusted Network
+          </p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white">
             Our Partners
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
-            Collaborating with industry leaders to deliver world-class solar solutions
+          <div className="w-24 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 mx-auto rounded-full mb-6"></div>
+          <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto">
+            Collaborating with industry leaders to deliver world-class solar
+            solutions
           </p>
         </div>
       </section>
 
       {/* Partnership Benefits */}
-      <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center">Why Partner With Us</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-[#1a1a1a] p-8 rounded-xl border border-gray-800 hover:border-blue-600 transition-all">
-              <Globe2 className="w-12 h-12 text-blue-400 mb-4" />
-              <h3 className="text-2xl font-bold mb-4">Global Reach</h3>
-              <p className="text-gray-400">
-                Access to international markets with our extensive distribution network spanning 30+ countries.
+      <section className="bg-zinc-900/50 py-16 sm:py-20 border-y border-zinc-800/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
+              Benefits
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+              Why Partner With Us
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-zinc-900 p-6 sm:p-8 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-all group">
+              <div className="inline-flex p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-5">
+                <Globe2 className="w-8 h-8 text-emerald-400" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-white">
+                Global Reach
+              </h3>
+              <p className="text-zinc-400 leading-relaxed">
+                Access to international markets with our extensive distribution
+                network spanning 30+ countries.
               </p>
             </div>
 
-            <div className="bg-[#1a1a1a] p-8 rounded-xl border border-gray-800 hover:border-blue-600 transition-all">
-              <Award className="w-12 h-12 text-blue-400 mb-4" />
-              <h3 className="text-2xl font-bold mb-4">Quality Assurance</h3>
-              <p className="text-gray-400">
-                Rigorous quality control standards and international certifications ensure product excellence.
+            <div className="bg-zinc-900 p-6 sm:p-8 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-all group">
+              <div className="inline-flex p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-5">
+                <Award className="w-8 h-8 text-emerald-400" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-white">
+                Quality Assurance
+              </h3>
+              <p className="text-zinc-400 leading-relaxed">
+                Rigorous quality control standards and international
+                certifications ensure product excellence.
               </p>
             </div>
 
-            <div className="bg-[#1a1a1a] p-8 rounded-xl border border-gray-800 hover:border-blue-600 transition-all">
-              <Building2 className="w-12 h-12 text-blue-400 mb-4" />
-              <h3 className="text-2xl font-bold mb-4">Technical Support</h3>
-              <p className="text-gray-400">
-                Comprehensive technical assistance and training programs for all partner organizations.
+            <div className="bg-zinc-900 p-6 sm:p-8 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-all group">
+              <div className="inline-flex p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-5">
+                <Building2 className="w-8 h-8 text-emerald-400" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-white">
+                Technical Support
+              </h3>
+              <p className="text-zinc-400 leading-relaxed">
+                Comprehensive technical assistance and training programs for all
+                partner organizations.
               </p>
             </div>
           </div>
@@ -104,15 +99,23 @@ export default function PartnersPage() {
       </section>
 
       {/* Strategic Partners */}
-      <section className="py-16 px-4 bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-4 text-center">Strategic Partners</h2>
-          <p className="text-center text-gray-400 mb-12 max-w-3xl mx-auto">
-            We collaborate with the world's leading manufacturers and technology providers to ensure 
-            our clients receive the highest quality solar products and solutions.
-          </p>
-          
-          <div className="bg-white rounded-xl p-8 mb-8">
+      <section className="py-16 sm:py-20 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
+              Industry Leaders
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+              Strategic Partners
+            </h2>
+            <p className="text-zinc-400 max-w-3xl mx-auto">
+              We collaborate with the world's leading manufacturers and
+              technology providers to ensure our clients receive the highest
+              quality solar products and solutions.
+            </p>
+          </div>
+
+          <div className="bg-zinc-900 rounded-xl p-4 sm:p-8 border border-zinc-800">
             <Image
               src="/partners/partner-logos.png"
               alt="Our Strategic Partners - Leading Solar and Renewable Energy Companies"
@@ -126,30 +129,37 @@ export default function PartnersPage() {
       </section>
 
       {/* Certifications */}
-      <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="bg-zinc-900/50 py-16 sm:py-20 border-y border-zinc-800/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <Award className="w-16 h-16 text-blue-400 mx-auto mb-6" />
-            <h2 className="text-4xl font-bold mb-4">Certifications & Standards</h2>
-            <p className="text-gray-400 max-w-3xl mx-auto">
-              Our commitment to quality is backed by numerous international certifications and compliance standards.
+            <div className="inline-flex p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-5">
+              <Award className="w-8 h-8 text-emerald-400" />
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+              Certifications & Standards
+            </h2>
+            <p className="text-zinc-400 max-w-3xl mx-auto">
+              Our commitment to quality is backed by numerous international
+              certifications and compliance standards.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
             {certifications.map((cert, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-blue-900/20 to-gray-900/20 p-6 rounded-xl border border-blue-800 hover:border-blue-600 transition-all text-center"
+                className="bg-zinc-900 p-4 sm:p-5 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-all text-center"
               >
-                <div className="text-white font-semibold">{cert}</div>
+                <div className="text-sm text-zinc-300 font-medium">{cert}</div>
               </div>
             ))}
           </div>
 
           {/* Certificates Image Display */}
-          <div className="bg-gradient-to-br from-gray-900/40 to-blue-900/20 rounded-xl p-8 border border-gray-800">
-            <h3 className="text-2xl font-bold mb-6 text-center text-white">Our Certifications & Awards</h3>
+          <div className="bg-zinc-900 rounded-xl p-4 sm:p-8 border border-zinc-800">
+            <h3 className="text-xl font-bold mb-6 text-center text-white">
+              Our Certifications & Awards
+            </h3>
             <Image
               src="/certificates/certificates-awards.png"
               alt="JYT HK Certificates and Awards Collection"
@@ -163,33 +173,36 @@ export default function PartnersPage() {
       </section>
 
       {/* Partnership Form Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-black to-blue-900/20">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-16 sm:py-20 md:py-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
+              Join Our Network
+            </p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
               Become a Partner
             </h2>
-            <p className="text-xl text-gray-400">
+            <p className="text-lg text-zinc-400">
               Fill out the form below and we'll get back to you within 24 hours
             </p>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-900/80 to-blue-900/20 rounded-2xl p-8 md:p-12 border border-gray-800">
+          <div className="bg-zinc-900 rounded-xl p-6 sm:p-8 md:p-10 border border-zinc-800">
             <PartnerForm />
           </div>
 
-          <div className="text-center mt-12">
-            <p className="text-gray-400 mb-6">
-              Join our network of trusted partners and grow your business with Jingyuntong Hong Kong
+          <div className="text-center mt-10">
+            <p className="text-zinc-400 mb-6">
+              Join our network of trusted partners and grow your business with
+              Jingyuntong Hong Kong
             </p>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4"
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-zinc-700 hover:border-emerald-500 text-white hover:text-emerald-400 font-medium rounded-lg transition-all duration-300"
             >
-              <Link href="/about">Learn More About Us</Link>
-            </Button>
+              Learn More About Us
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>

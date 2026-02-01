@@ -60,9 +60,19 @@ export function SearchField({ className, onSubmitSuccess }: SearchFieldProps) {
       action="/shop"
       className={cn("grow", className)}
     >
-      <div className="relative m-5">
-        <Input type="text" name="q" placeholder="Search products..." className="pe-10 bg-white border-2 border-gray-300 text-black placeholder:text-gray-500 focus:border-[#1a4ba8] focus:ring-[#1a4ba8]" />
-        <SearchIcon className="absolute right-3 top-1/2 size-5 -translate-y-1/2 text-gray-400" />
+      <div className="relative">
+        <Input
+          type="text"
+          name="q"
+          placeholder="Search products..."
+          className="pe-12 py-6 text-base bg-zinc-900 border border-zinc-700 text-white placeholder:text-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20 rounded-xl"
+        />
+        <button
+          type="submit"
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 transition-colors"
+        >
+          <SearchIcon className="size-5 text-black" />
+        </button>
       </div>
     </form>
   );

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { toast } from "sonner";
+import { Send } from "lucide-react";
 
 export default function PartnerForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,87 +43,98 @@ export default function PartnerForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
-        <Label htmlFor="name" className="text-white text-lg">
-          Name <span className="text-red-500">*</span>
-        </Label>
-        <Input
-          id="name"
-          name="name"
-          type="text"
-          required
-          className="bg-gray-900/50 border-gray-700 text-white focus:border-blue-500"
-          placeholder="Your full name"
-        />
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="space-y-2">
+          <Label htmlFor="name" className="text-zinc-300 text-sm font-medium">
+            Name <span className="text-emerald-400">*</span>
+          </Label>
+          <Input
+            id="name"
+            name="name"
+            type="text"
+            required
+            className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20 rounded-lg"
+            placeholder="Your full name"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-zinc-300 text-sm font-medium">
+            Email <span className="text-emerald-400">*</span>
+          </Label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            required
+            className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20 rounded-lg"
+            placeholder="your@email.com"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="space-y-2">
+          <Label htmlFor="location" className="text-zinc-300 text-sm font-medium">
+            Location <span className="text-emerald-400">*</span>
+          </Label>
+          <Input
+            id="location"
+            name="location"
+            type="text"
+            required
+            className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20 rounded-lg"
+            placeholder="City, Country"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="interest" className="text-zinc-300 text-sm font-medium">
+            Interest <span className="text-emerald-400">*</span>
+          </Label>
+          <select
+            id="interest"
+            name="interest"
+            required
+            className="w-full h-10 px-3 bg-zinc-800 border border-zinc-700 text-white rounded-lg focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/20 transition-colors"
+          >
+            <option value="" className="bg-zinc-800">Select your interest...</option>
+            <option value="rooftop-installation" className="bg-zinc-800">Rooftop Installation</option>
+            <option value="wholesale" className="bg-zinc-800">Wholesale</option>
+            <option value="land-partnership" className="bg-zinc-800">Land Partnership</option>
+            <option value="other" className="bg-zinc-800">Other</option>
+          </select>
+        </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email" className="text-white text-lg">
-          Email <span className="text-red-500">*</span>
-        </Label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          required
-          className="bg-gray-900/50 border-gray-700 text-white focus:border-blue-500"
-          placeholder="your@email.com"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="location" className="text-white text-lg">
-          Location <span className="text-red-500">*</span>
-        </Label>
-        <Input
-          id="location"
-          name="location"
-          type="text"
-          required
-          className="bg-gray-900/50 border-gray-700 text-white focus:border-blue-500"
-          placeholder="City, Country"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="interest" className="text-white text-lg">
-          Interest <span className="text-red-500">*</span>
-        </Label>
-        <select
-          id="interest"
-          name="interest"
-          required
-          className="w-full px-4 py-3 bg-gray-900/50 border-2 border-gray-700 text-white rounded-md focus:border-blue-500 focus:outline-none"
-        >
-          <option value="">Select your interest...</option>
-          <option value="rooftop-installation">Rooftop Installation</option>
-          <option value="wholesale">Wholesale</option>
-          <option value="land-partnership">Land Partnership</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="additionalInfo" className="text-white text-lg">
+        <Label htmlFor="additionalInfo" className="text-zinc-300 text-sm font-medium">
           Additional Information
         </Label>
         <textarea
           id="additionalInfo"
           name="additionalInfo"
           rows={4}
-          className="w-full px-4 py-3 bg-gray-900/50 border-2 border-gray-700 text-white rounded-md focus:border-blue-500 focus:outline-none resize-none"
+          className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 text-white rounded-lg placeholder:text-zinc-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/20 resize-none transition-colors"
           placeholder="Tell us more about your project or partnership goals..."
         />
       </div>
 
-      <Button
+      <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg font-semibold"
+        className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-black font-semibold rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isSubmitting ? "Submitting..." : "Submit Partnership Inquiry"}
-      </Button>
+        {isSubmitting ? (
+          "Submitting..."
+        ) : (
+          <>
+            Submit Partnership Inquiry
+            <Send className="w-4 h-4" />
+          </>
+        )}
+      </button>
     </form>
   );
 }

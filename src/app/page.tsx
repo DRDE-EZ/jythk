@@ -323,7 +323,7 @@ export default async function Home() {
       {/* Call to Action Section */}
       <AnimatedSection delay={0.8}>
         <div className="bg-background">
-          <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-6xl mx-auto px-6 mb-10">
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 sm:p-12 md:p-16 relative overflow-hidden">
               {/* Subtle accent line */}
               <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>

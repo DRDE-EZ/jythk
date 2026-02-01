@@ -46,58 +46,58 @@ export default function MobileMenu({
           <SheetHeader>
             <SheetTitle className="text-white">JYT HK</SheetTitle>
           </SheetHeader>
-          <div className="flex flex-col items-center space-y-6 py-8">
-            <Link 
+          <div className="flex flex-col items-center space-y-6 py-8 w-full">
+            <Link
               href="/shop"
-              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
+              className="text-lg font-semibold text-white hover:text-emerald-400 transition-colors"
             >
               Products
             </Link>
-            <Link 
+            <Link
               href="/projects"
-              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
+              className="text-lg font-semibold text-white hover:text-emerald-400 transition-colors"
             >
               Projects
             </Link>
-            <Link 
+            <Link
               href="/partners"
-              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
+              className="text-lg font-semibold text-white hover:text-emerald-400 transition-colors"
             >
               Partners
             </Link>
-            <Link 
+            <Link
               href="/contact"
-              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
+              className="text-lg font-semibold text-white hover:text-emerald-400 transition-colors"
             >
               Contact
             </Link>
-            <Link 
+            <Link
               href="/about"
-              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
+              className="text-lg font-semibold text-white hover:text-emerald-400 transition-colors"
             >
               About
             </Link>
-            <Link 
+            <Link
               href="/portal"
-              className="text-lg font-semibold text-white hover:text-blue-400 transition-colors"
+              className="text-lg font-semibold text-white hover:text-emerald-400 transition-colors"
             >
               Portal
             </Link>
-            
+
             {loggedInMember ? (
               // Show dashboard option for logged-in users
-              <div className="text-center mt-6 pt-6 border-t border-gray-800 w-full">
+              <div className="text-center mt-6 pt-6 border-t border-white/20 w-full">
                 <h3 className="text-lg font-semibold mb-4 text-white">Welcome back!</h3>
-                <Link 
+                <Link
                   href="/customer-dashboard-protected"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-transparent border-2 border-emerald-500 text-emerald-400 rounded-lg font-semibold hover:bg-emerald-500 hover:text-white transition-all duration-300"
                 >
                   📊 My Dashboard
                 </Link>
               </div>
             ) : (
               // Show login option for non-logged-in users
-              <div className="text-center mt-6 pt-6 border-t border-gray-800 w-full">
+              <div className="text-center mt-6 pt-6 border-t border-white/20 w-full">
                 <h3 className="text-lg font-semibold mb-4 text-white">Get Started</h3>
                 <UserButton loggedInMember={loggedInMember} />
               </div>

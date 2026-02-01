@@ -21,7 +21,7 @@ export default async function NavBar() {
   ]);
 
   return (
-    <header className="flex items-center justify-between sticky h-20 px-8 shadow-md top-0 z-[60] w-full" style={{ backgroundColor: '#1f1f1f' }}>
+    <header className="flex items-center justify-between sticky h-20 px-8 top-0 z-[60] w-full bg-zinc-900 border-b border-zinc-800/50">
       <Suspense>
         <MobileMenu collections={collections} loggedInMember={loggedInMember} />
       </Suspense>

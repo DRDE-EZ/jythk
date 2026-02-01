@@ -15,7 +15,7 @@ export default function LogoImage() {
             height={50}
             className="group-hover:scale-110 transition-transform"
           />
-          <div className="text-3xl font-bold text-white tracking-wider group-hover:text-blue-400 transition-colors">
+          <div className="text-3xl font-bold text-white tracking-wider group-hover:text-emerald-400 transition-colors">
             JYT HK
           </div>
         </div>

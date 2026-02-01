@@ -60,13 +60,16 @@ export default function SearchFilterLayout({
   return (
     <div className="min-h-screen bg-background">
       {/* Enhanced Header */}
-      <div className="bg-gradient-to-br from-muted/30 via-muted/20 to-background py-12 sm:py-16 md:py-20 border-b border-border">
+      <div className="bg-zinc-900/45 py-16 sm:py-20 md:py-24 border-b border-zinc-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
+            Browse Collection
+          </p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white">
             Shop
           </h1>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
-          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+          <div className="w-24 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 mx-auto rounded-full mb-6"></div>
+          <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">
             Discover our complete collection of high-performance systems
           </p>
         </div>
@@ -80,14 +83,14 @@ export default function SearchFilterLayout({
             className="lg:w-72 lg:sticky lg:top-8 lg:self-start lg:flex-shrink-0"
             data-pending={isPending ? "" : undefined}
           >
-            <div className="bg-card border border-border rounded-2xl p-4 lg:p-6 space-y-6 lg:space-y-8 shadow-lg">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 lg:p-6 space-y-6 lg:space-y-8">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg lg:text-xl font-bold text-card-foreground">
+                <h2 className="text-lg lg:text-xl font-bold text-white">
                   Filters
                 </h2>
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
                   <svg
-                    className="w-4 h-4 text-primary"
+                    className="w-4 h-4 text-emerald-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -110,7 +113,7 @@ export default function SearchFilterLayout({
                 }
               />
 
-              <div className="border-t border-border pt-4 lg:pt-6">
+              <div className="border-t border-zinc-800 pt-4 lg:pt-6">
                 <PriceFilter
                   minDefaultInput={optimisticFilters.price_min}
                   maxDefaultInput={optimisticFilters.price_max}
@@ -128,8 +131,8 @@ export default function SearchFilterLayout({
           {/* Products Section - Wider */}
           <div className="flex-1 min-w-0 space-y-6">
             {/* Sort Controls */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-card border border-border rounded-xl">
-              <div className="text-sm text-muted-foreground">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
+              <div className="text-sm text-zinc-400">
                 Browse our premium collection
               </div>
               <SortFilter
@@ -161,8 +164,8 @@ function CollectionsFilter({
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-primary"></div>
-        <h3 className="font-semibold text-card-foreground">Collections</h3>
+        <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+        <h3 className="font-semibold text-white">Collections</h3>
       </div>
       <ul className="space-y-3">
         {collections.map((collection) => {
@@ -170,9 +173,9 @@ function CollectionsFilter({
           if (!collectionId) return null;
           return (
             <li key={collectionId}>
-              <label className="flex cursor-pointer items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors group">
+              <label className="flex cursor-pointer items-center gap-3 p-2 rounded-lg hover:bg-zinc-800/50 transition-colors group">
                 <Checkbox
-                  className="rounded-md border-2"
+                  className="rounded-md border-2 border-zinc-600 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
                   id={collectionId}
                   checked={selectedCollectionIds.includes(collectionId)}
                   onCheckedChange={(checked) => {
@@ -180,12 +183,12 @@ function CollectionsFilter({
                       checked
                         ? [...selectedCollectionIds, collectionId]
                         : selectedCollectionIds.filter(
-                            (id) => id !== collectionId
-                          )
+                            (id) => id !== collectionId,
+                          ),
                     );
                   }}
                 />
-                <span className="text-sm font-medium text-card-foreground group-hover:text-primary transition-colors line-clamp-1">
+                <span className="text-sm font-medium text-zinc-300 group-hover:text-emerald-400 transition-colors line-clamp-1">
                   {collection.name}
                 </span>
               </label>
@@ -196,7 +199,7 @@ function CollectionsFilter({
       {selectedCollectionIds.length > 0 && (
         <button
           onClick={() => updateCollectionIds([])}
-          className="text-primary text-sm hover:underline font-medium px-2 py-1 rounded hover:bg-primary/10 transition-colors"
+          className="text-emerald-400 text-sm hover:underline font-medium px-2 py-1 rounded hover:bg-emerald-500/10 transition-colors"
         >
           Clear all
         </button>
@@ -232,13 +235,13 @@ function PriceFilter({
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-secondary"></div>
-        <h3 className="font-semibold text-card-foreground">Price Range</h3>
+        <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+        <h3 className="font-semibold text-white">Price Range</h3>
       </div>
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-2">
-            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <label className="text-xs font-medium text-zinc-500 uppercase tracking-wide">
               Min
             </label>
             <Input
@@ -247,11 +250,11 @@ function PriceFilter({
               placeholder="0"
               value={minInput}
               onChange={(e) => setMinInput(e.target.value)}
-              className="rounded-lg border-2 focus:border-primary"
+              className="rounded-lg border border-zinc-700 bg-zinc-800 text-white placeholder:text-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <label className="text-xs font-medium text-zinc-500 uppercase tracking-wide">
               Max
             </label>
             <Input
@@ -260,14 +263,14 @@ function PriceFilter({
               placeholder="∞"
               value={maxInput}
               onChange={(e) => setMaxInput(e.target.value)}
-              className="rounded-lg border-2 focus:border-primary"
+              className="rounded-lg border border-zinc-700 bg-zinc-800 text-white placeholder:text-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20"
             />
           </div>
         </div>
 
         <Button
           type="submit"
-          className="w-full rounded-lg font-semibold"
+          className="w-full rounded-lg font-semibold bg-emerald-500 hover:bg-emerald-600 text-black"
           size="sm"
         >
           Apply Filter
@@ -276,7 +279,7 @@ function PriceFilter({
       {(!!minDefaultInput || !!maxDefaultInput) && (
         <button
           onClick={() => updatePriceRange(undefined, undefined)}
-          className="text-primary text-sm hover:underline font-medium px-2 py-1 rounded hover:bg-primary/10 transition-colors"
+          className="text-emerald-400 text-sm hover:underline font-medium px-2 py-1 rounded hover:bg-emerald-500/10 transition-colors"
         >
           Clear price filter
         </button>
