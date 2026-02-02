@@ -12,9 +12,12 @@ export const env = createEnv({
     NEXT_PUBLIC_WIX_REDIRECT_URL: z.string().url().optional(),
   },
   experimental__runtimeEnv: {
-    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'https://jythk.vercel.app',
+    NEXT_PUBLIC_BASE_URL:
+      process.env.NEXT_PUBLIC_BASE_URL || "https://jythk.com",
     NEXT_PUBLIC_WIX_CLIENT_ID: process.env.NEXT_PUBLIC_WIX_CLIENT_ID,
     NEXT_PUBLIC_WIX_SITE_ID: process.env.NEXT_PUBLIC_WIX_SITE_ID,
-    NEXT_PUBLIC_WIX_REDIRECT_URL: process.env.NEXT_PUBLIC_WIX_REDIRECT_URL || 'https://jythk.vercel.app/api/auth/callback/wix',
+    NEXT_PUBLIC_WIX_REDIRECT_URL:
+      process.env.NEXT_PUBLIC_WIX_REDIRECT_URL ||
+      "https://jythk.com/api/auth/callback/wix",
   },
 });

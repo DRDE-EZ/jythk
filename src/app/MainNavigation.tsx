@@ -88,10 +88,10 @@ export default function MainNavigation({
                     <Link
                       key={c._id}
                       href={`/collections/${c.slug}`}
-                      className="group flex items-start p-4 border border-gray-600 rounded-lg hover:bg-[#2a2a2a] hover:border-gray-500 transition-all duration-200"
+                      className="flex items-start p-4 border border-white/40 rounded-lg hover:bg-[#2a2a2a] hover:border-emerald-500 transition-[background-color,border-color] duration-200 [&:hover_.item-title]:text-emerald-400 [&:hover_svg]:text-emerald-400"
                     >
                       <div className="flex-1">
-                        <span className="text-base font-semibold text-white group-hover:text-emerald-400 transition-colors block mb-1">
+                        <span className="item-title text-base font-semibold text-white block mb-1 transition-colors duration-200">
                           {c.name}
                         </span>
                         <span className="text-xs text-gray-400 line-clamp-2 leading-relaxed">
@@ -99,7 +99,7 @@ export default function MainNavigation({
                         </span>
                       </div>
                       <svg
-                        className="w-5 h-5 text-gray-500 group-hover:text-emerald-400 transition-colors ml-2 mt-0.5 flex-shrink-0"
+                        className="w-5 h-5 text-white ml-2 mt-0.5 flex-shrink-0 transition-colors duration-200"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -118,7 +118,7 @@ export default function MainNavigation({
               <div className="mt-4 pt-3 border-t border-gray-600">
                 <Link
                   href="/shop"
-                  className="block w-full text-center py-3 px-4 text-white font-normal rounded-lg transition-all duration-300 bg-transparent border border-gray-600 hover:border-emerald-500 hover:text-emerald-400"
+                  className="block w-full text-center py-3 px-4 text-white font-normal rounded-lg transition-all duration-300 bg-transparent border border-white/40 hover:border-emerald-500 hover:text-emerald-400"
                 >
                   View All Products
                 </Link>

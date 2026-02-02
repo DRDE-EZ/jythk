@@ -137,7 +137,7 @@ export default function AdminSetupWizard() {
         <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-block p-4 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full mb-4">
+            <div className="inline-block p-4 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-full mb-4">
               <Shield className="h-12 w-12 text-white" />
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">
@@ -173,7 +173,7 @@ export default function AdminSetupWizard() {
               <Button
                 onClick={handleGoogleLogin}
                 disabled={isLoading}
-                className="w-full h-14 text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                className="w-full h-14 text-lg bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-purple-700 hover:to-pink-700"
               >
                 {isLoading ? (
                   <>
@@ -208,7 +208,7 @@ export default function AdminSetupWizard() {
               <div className="bg-green-50 border border-green-200 rounded-lg p-6">
                 <h3 className="font-semibold text-green-900 mb-3">Signed in as:</h3>
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
                     {currentUser.name?.charAt(0)?.toUpperCase() || 'A'}
                   </div>
                   <div>
@@ -243,7 +243,7 @@ export default function AdminSetupWizard() {
               <Button
                 onClick={handleInitializeAdmin}
                 disabled={isLoading}
-                className="w-full h-14 text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                className="w-full h-14 text-lg bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-purple-700 hover:to-pink-700"
               >
                 {isLoading ? (
                   <>
@@ -273,7 +273,7 @@ export default function AdminSetupWizard() {
                 </p>
               </div>
               <div className="flex items-center justify-center">
-                <Loader2 className="h-6 w-6 animate-spin text-purple-600" />
+                <Loader2 className="h-6 w-6 animate-spin text-indigo-600" />
               </div>
             </div>
           )}

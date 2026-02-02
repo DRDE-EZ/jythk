@@ -52,7 +52,7 @@ export class EnhancedAuth {
 
   // Generate OAuth data for authentication
   async generateOAuthData(redirectPath = '/profile') {
-    const baseUrl = 'https://jythk.vercel.app';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
     const callbackUrl = `${baseUrl}/api/auth/callback/wix`;
     const originalUri = `${baseUrl}${redirectPath}`;
 
@@ -151,7 +151,7 @@ export class EnhancedAuth {
       }
       
       // Full logout with redirect
-      const baseUrl = 'https://jythk.vercel.app';
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
       const { logoutUrl } = await this.wixClient.auth.logout(baseUrl);
       window.location.href = logoutUrl;
     } catch (error) {
