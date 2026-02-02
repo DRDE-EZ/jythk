@@ -56,19 +56,34 @@ export async function getProductReviews(
   wixClient: UnifiedWixClient,
   { productId, contactId, limit, cursor }: GetProductReviewsFilters
 ) {
-  let query = wixClient.reviews.queryReviews().eq("entityId", productId);
+  try {
+    let query = wixClient.reviews.queryReviews().eq("entityId", productId);
 
-  if (contactId) {
-    query = query.eq("author.contactId", contactId);
+    if (contactId) {
+      query = query.eq("author.contactId", contactId);
+    }
+
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    // Only use skipTo if cursor is a valid non-empty string
+    if (cursor && typeof cursor === 'string' && cursor.length > 0) {
+      query = query.skipTo(cursor);
+    }
+
+    return await query.find();
+  } catch (error: any) {
+    // If the Reviews app is not installed or there's a GUID error, return empty results
+    if (
+      error?.details?.applicationError?.code === "APP_NOT_INSTALLED" ||
+      error?.message?.includes("not a valid GUID")
+    ) {
+      return {
+        items: [],
+        cursors: { next: undefined, prev: undefined },
+      };
+    }
+    throw error;
   }
-
-  if (limit) {
-    query = query.limit(limit);
-  }
-
-  if (cursor) {
-    query = query.skipTo(cursor);
-  }
-
-  return query.find();
 }

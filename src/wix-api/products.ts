@@ -128,7 +128,7 @@ export async function getRelatedProducts(
   const productsResult = await wixClient.products
     .queryProducts()
     .in("_id", productIds)
-    .limit(4)
+    .limit(10)
     .find();
 
   return productsResult.items;

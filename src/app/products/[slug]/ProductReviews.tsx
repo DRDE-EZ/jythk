@@ -8,9 +8,7 @@ import { getProductReviews } from "@/wix-api/reviews";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { reviews } from "@wix/reviews";
 import { products } from "@wix/stores";
-import { CornerDownRight, StarIcon } from "lucide-react";
-import logo from "@/assets/mycro-logo-mini.png";
-import Image from "next/image";
+import { CornerDownRight, StarIcon, MessageSquare, ChevronDown } from "lucide-react";
 import Zoom from "react-medium-image-zoom";
 import WixImage from "@/components/WixImage";
 import { media as wixMedia } from "@wix/sdk";
@@ -57,10 +55,10 @@ export default function ProductReviews({ product }: ProductReviewsProps) {
       {status === "pending" && <ProductReviewsLoadingSkeleton />}
 
       {status === "error" && (
-        <div className="text-center py-8 space-y-4">
-          <div className="w-16 h-16 mx-auto bg-red-100 dark:bg-red-950/20 rounded-full flex items-center justify-center">
+        <div className="text-center py-12 space-y-4">
+          <div className="w-16 h-16 mx-auto bg-red-500/10 rounded-full flex items-center justify-center">
             <svg
-              className="w-8 h-8 text-red-600 dark:text-red-400"
+              className="w-8 h-8 text-red-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -74,10 +72,8 @@ export default function ProductReviews({ product }: ProductReviewsProps) {
             </svg>
           </div>
           <div>
-            <h4 className="font-medium text-foreground">
-              Error loading reviews
-            </h4>
-            <p className="text-sm text-muted-foreground">
+            <h4 className="font-medium text-white">Error loading reviews</h4>
+            <p className="text-sm text-zinc-400">
               Unable to load product reviews. Please try again later.
             </p>
           </div>
@@ -85,27 +81,13 @@ export default function ProductReviews({ product }: ProductReviewsProps) {
       )}
 
       {status === "success" && !reviewItems.length && !hasNextPage && (
-        <div className="text-center py-12 space-y-4">
-          <div className="w-20 h-20 mx-auto bg-muted/30 rounded-full flex items-center justify-center">
-            <svg
-              className="w-10 h-10 text-muted-foreground"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            </svg>
+        <div className="text-center py-16 space-y-4">
+          <div className="w-20 h-20 mx-auto bg-zinc-800 rounded-full flex items-center justify-center">
+            <MessageSquare className="w-10 h-10 text-zinc-600" />
           </div>
           <div className="space-y-2">
-            <h4 className="text-lg font-medium text-foreground">
-              No reviews yet
-            </h4>
-            <p className="text-muted-foreground max-w-sm mx-auto">
+            <h4 className="text-lg font-medium text-white">No reviews yet</h4>
+            <p className="text-zinc-400 max-w-sm mx-auto">
               Be the first to share your experience with this product.
             </p>
           </div>
@@ -114,16 +96,9 @@ export default function ProductReviews({ product }: ProductReviewsProps) {
 
       {/* Reviews List */}
       {reviewItems.length > 0 && (
-        <div className="space-y-6">
-          {reviewItems.map((item, index) => (
-            <div
-              key={item._id}
-              style={{
-                animationDelay: `${index * 100}ms`,
-              }}
-            >
-              <Review review={item} />
-            </div>
+        <div className="space-y-4">
+          {reviewItems.map((item) => (
+            <Review key={item._id} review={item} />
           ))}
         </div>
       )}
@@ -134,50 +109,13 @@ export default function ProductReviews({ product }: ProductReviewsProps) {
           <LoadingButton
             loading={isFetchingNextPage}
             onClick={() => fetchNextPage()}
-            className="rounded-lg font-medium bg-muted hover:bg-muted/80 text-muted-foreground border border-border"
+            className="px-6 py-3 rounded-lg font-medium bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700"
             disabled={isFetchingNextPage}
           >
-            {isFetchingNextPage ? (
-              <span className="flex items-center gap-2">
-                <svg
-                  className="w-4 h-4 animate-spin"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                Loading reviews...
-              </span>
-            ) : (
-              <span className="flex items-center gap-2">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-                Load More Reviews
-              </span>
-            )}
+            <span className="flex items-center gap-2">
+              <ChevronDown className="w-4 h-4" />
+              {isFetchingNextPage ? "Loading..." : "Load More Reviews"}
+            </span>
           </LoadingButton>
         </div>
       )}
@@ -193,12 +131,12 @@ function Review({
   review: { author, reviewDate, content, reply },
 }: ReviewProps) {
   return (
-    <div className="bg-card border border-border rounded-lg p-6 space-y-4 hover:shadow-md transition-shadow duration-300">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4 hover:border-zinc-700 transition-colors duration-200">
       {/* Review Header */}
       <div className="space-y-3">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {/* Star Rating */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5">
             {Array.from({ length: 5 }).map((_, i) => (
               <StarIcon
                 key={i}
@@ -206,7 +144,7 @@ function Review({
                   "w-5 h-5",
                   i < (content?.rating || 0)
                     ? "fill-yellow-400 text-yellow-400"
-                    : "text-muted-foreground"
+                    : "text-zinc-700"
                 )}
               />
             ))}
@@ -214,17 +152,17 @@ function Review({
 
           {/* Review Title */}
           {content?.title && (
-            <h4 className="font-semibold text-foreground text-lg">
+            <h4 className="font-semibold text-white text-lg">
               {content.title}
             </h4>
           )}
         </div>
 
         {/* Author & Date */}
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+        <div className="flex items-center gap-3 text-sm">
+          <div className="w-8 h-8 bg-emerald-500/10 rounded-full flex items-center justify-center">
             <svg
-              className="w-4 h-4 text-primary"
+              className="w-4 h-4 text-emerald-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -237,13 +175,19 @@ function Review({
               />
             </svg>
           </div>
-          <span className="font-medium">
+          <span className="font-medium text-white">
             {author?.authorName || "Anonymous"}
           </span>
           {reviewDate && (
             <>
-              <span>•</span>
-              <span>{new Date(reviewDate).toLocaleDateString()}</span>
+              <span className="text-zinc-600">•</span>
+              <span className="text-zinc-500">
+                {new Date(reviewDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
             </>
           )}
         </div>
@@ -251,14 +195,14 @@ function Review({
 
       {/* Review Content */}
       {content?.body && (
-        <div className="text-foreground leading-relaxed whitespace-pre-line">
+        <div className="text-zinc-300 leading-relaxed whitespace-pre-line">
           {content.body}
         </div>
       )}
 
       {/* Media Attachments */}
       {!!content?.media?.length && (
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 pt-2">
           {content.media.map((media) => (
             <MediaAttachment key={media.image || media.video} media={media} />
           ))}
@@ -267,21 +211,14 @@ function Review({
 
       {/* Company Reply */}
       {reply?.message && (
-        <div className="mt-4 ml-4 pl-4 border-l-2 border-primary/20 bg-muted/30 rounded-r-lg p-4">
+        <div className="mt-4 ml-4 pl-4 border-l-2 border-emerald-500/30 bg-zinc-800/50 rounded-r-lg p-4">
           <div className="flex items-center gap-2 mb-3">
-            <CornerDownRight className="w-4 h-4 text-muted-foreground" />
-            <Image
-              src={logo}
-              alt="MycroPC logo"
-              width={20}
-              height={20}
-              className="rounded"
-            />
-            <span className="font-semibold text-sm text-primary">
-              MycroPC Team
+            <CornerDownRight className="w-4 h-4 text-zinc-500" />
+            <span className="font-semibold text-sm text-emerald-400">
+              JYT HK Team
             </span>
           </div>
-          <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+          <div className="text-sm text-zinc-400 leading-relaxed whitespace-pre-line">
             {reply.message}
           </div>
         </div>
@@ -292,26 +229,26 @@ function Review({
 
 export function ProductReviewsLoadingSkeleton() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {Array.from({ length: 3 }).map((_, i) => (
         <div
           key={i}
-          className="bg-card border border-border rounded-lg p-6 space-y-4"
+          className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4"
         >
           <div className="flex items-center gap-3">
-            <div className="flex gap-1">
+            <div className="flex gap-0.5">
               {Array.from({ length: 5 }).map((_, starIndex) => (
-                <Skeleton key={starIndex} className="w-5 h-5" />
+                <Skeleton key={starIndex} className="w-5 h-5 bg-zinc-800" />
               ))}
             </div>
-            <Skeleton className="h-6 w-32" />
+            <Skeleton className="h-6 w-32 bg-zinc-800" />
           </div>
-          <div className="flex items-center gap-2">
-            <Skeleton className="w-8 h-8 rounded-full" />
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-4 w-20" />
+          <div className="flex items-center gap-3">
+            <Skeleton className="w-8 h-8 rounded-full bg-zinc-800" />
+            <Skeleton className="h-4 w-24 bg-zinc-800" />
+            <Skeleton className="h-4 w-20 bg-zinc-800" />
           </div>
-          <Skeleton className="h-16 w-full" />
+          <Skeleton className="h-16 w-full bg-zinc-800" />
         </div>
       ))}
     </div>
@@ -330,7 +267,7 @@ function MediaAttachment({ media }: MediaAttachmentProps) {
           scaleToFill={false}
           mediaIdentifier={media.image}
           alt="Review media"
-          className="max-h-32 max-w-32 object-cover rounded-lg border border-border hover:shadow-md transition-shadow duration-300 cursor-pointer"
+          className="max-h-24 max-w-24 object-cover rounded-lg border border-zinc-700 hover:border-emerald-500/50 transition-colors cursor-pointer"
         />
       </Zoom>
     );
@@ -340,7 +277,7 @@ function MediaAttachment({ media }: MediaAttachmentProps) {
     return (
       <video
         controls
-        className="max-h-32 max-w-32 rounded-lg border border-border"
+        className="max-h-24 max-w-24 rounded-lg border border-zinc-700"
       >
         <source src={wixMedia.getVideoUrl(media.video).url} type="video/mp4" />
       </video>
@@ -348,9 +285,9 @@ function MediaAttachment({ media }: MediaAttachmentProps) {
   }
 
   return (
-    <div className="max-h-32 max-w-32 bg-muted rounded-lg border border-border flex items-center justify-center p-4">
-      <span className="text-xs text-muted-foreground text-center">
-        Unsupported media type
+    <div className="max-h-24 max-w-24 bg-zinc-800 rounded-lg border border-zinc-700 flex items-center justify-center p-4">
+      <span className="text-xs text-zinc-500 text-center">
+        Unsupported media
       </span>
     </div>
   );

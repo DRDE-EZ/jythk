@@ -11,7 +11,7 @@ interface LayoutProps {
 
 export default function Layout({ children, params }: LayoutProps) {
   return (
-    <Suspense fallback={LoadingSkeleton()}>
+    <Suspense fallback={<LoadingSkeleton />}>
       <CollectionsLayout params={params}>{children}</CollectionsLayout>
     </Suspense>
   );
@@ -27,24 +27,33 @@ async function CollectionsLayout({ children, params }: LayoutProps) {
 
   if (!collection) notFound();
 
-  return (
-    <main className="mx-auto max-w-[90%] space-y-10 px-5 py-10">
-      {children}
-    </main>
-  );
+  return <main className="min-h-screen bg-zinc-950">{children}</main>;
 }
 
 function LoadingSkeleton() {
   return (
-    <main className="mx-auto max-w-[90%] space-y-10 px-5 py-10">
-      <Skeleton className="mx-auto h-12 w-48 sm:block sm:aspect-[1280/400] sm:h-full sm:w-full rounded-xs" />
-      <div className="space-y-5">
-        <h2 className="text-2xl font-bold">Products</h2>
+    <main className="min-h-screen bg-zinc-950">
+      {/* Hero skeleton */}
+      <div className="relative w-full h-[50vh] md:h-[60vh] bg-zinc-900">
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-transparent" />
+        <div className="absolute bottom-0 right-0 w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-end">
+          <Skeleton className="h-12 w-64 bg-zinc-800 mb-4" />
+          <Skeleton className="h-6 w-96 bg-zinc-800 mb-2" />
+          <Skeleton className="h-6 w-80 bg-zinc-800" />
+        </div>
       </div>
-      <div className="flex flex-col sm:grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <Skeleton key={i} className="h-[26rem] w-full" />
-        ))}
+
+      {/* Products skeleton */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="space-y-4">
+              <Skeleton className="h-[300px] w-full rounded-xl bg-zinc-800" />
+              <Skeleton className="h-6 w-3/4 bg-zinc-800" />
+              <Skeleton className="h-4 w-1/2 bg-zinc-800" />
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   );

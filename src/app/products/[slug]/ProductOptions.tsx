@@ -20,46 +20,37 @@ export default function ProductOptions({
   setSelectedOptions,
 }: ProductOptionsProps) {
   return (
-    <div className="space-y-2.5">
+    <div className="space-y-4">
       {product.productOptions?.map((option) => (
-        <Select
-          key={option.name}
-          value={selectedOptions[option.name || ""]}
-          onValueChange={(value) =>
-            setSelectedOptions({
-              ...selectedOptions,
-              [option.name || ""]: value || "",
-            })
-          }
-        >
-          <Label asChild>
-            <span>{option.name}</span>
+        <div key={option.name} className="space-y-2">
+          <Label className="text-sm font-medium text-zinc-300">
+            {option.name}
           </Label>
-          <SelectTrigger className="w-full rounded-none mb-4">
-            <SelectValue placeholder="Select a build" />
-          </SelectTrigger>
-          <SelectContent>
-            {option.choices?.map((choice) => {
-              // const isInStock = checkInStock(product, {
-              //   ...selectedOptions,
-              //   [option.name || ""]: choice.value || "",
-              // });
-              return (
+          <Select
+            value={selectedOptions[option.name || ""]}
+            onValueChange={(value) =>
+              setSelectedOptions({
+                ...selectedOptions,
+                [option.name || ""]: value || "",
+              })
+            }
+          >
+            <SelectTrigger className="w-full h-12 bg-zinc-900 border-zinc-700 text-white rounded-lg hover:border-zinc-600 focus:border-emerald-500 focus:ring-emerald-500/20">
+              <SelectValue placeholder={`Select ${option.name?.toLowerCase()}`} />
+            </SelectTrigger>
+            <SelectContent className="bg-zinc-900 border-zinc-700">
+              {option.choices?.map((choice) => (
                 <SelectItem
                   key={choice.value}
                   value={choice.value || ""}
-                  // className={cn(
-                  //   "",
-                  //   !isInStock && "line-through text-muted-foreground"
-                  // )}
-                  // disabled={!isInStock}
+                  className="text-zinc-200 focus:bg-zinc-800 focus:text-white"
                 >
                   {choice.value}
                 </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       ))}
     </div>
   );

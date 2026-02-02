@@ -8,6 +8,7 @@ import { queryProducts } from "@/wix-api/products";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { ChevronDown, Cpu, Zap, Award } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -51,92 +52,107 @@ export default async function Page({ params, searchParams }: PageProps) {
   const banner = collection.media?.mainMedia?.image;
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Banner Section - ONLY ONE */}
-      <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
-        {/* Background Image/Gradient */}
+    <div className="min-h-screen bg-zinc-950">
+      {/* Full-Width Hero Section */}
+      <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
+        {/* Background Image */}
         {banner?.url ? (
-          <>
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${banner.url})` }}
-            />
-            {/* Dark Overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80" />
-          </>
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
+            style={{ backgroundImage: `url(${banner.url})` }}
+          />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black" />
+          <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-950" />
         )}
 
-        {/* Animated Geometric Shapes */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-32 md:w-48 h-32 md:h-48 bg-primary/10 rounded-full blur-2xl animate-pulse"></div>
-          <div className="absolute bottom-1/3 right-1/3 w-24 md:w-36 h-24 md:h-36 bg-secondary/15 rotate-45 blur-xl animate-bounce"></div>
-          <div className="absolute top-2/3 left-1/2 w-20 md:w-28 h-20 md:h-28 bg-accent/20 rounded-lg blur-lg animate-pulse delay-1000"></div>
-        </div>
+        {/* Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
 
-        {/* Content */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
-          <AnimatedSection>
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight">
-                {collection.name}
-              </h1>
-              <div className="w-32 md:w-40 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
-              {collection.description && (
-                <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl mx-auto">
-                  {collection.description}
-                </p>
-              )}
-            </div>
-          </AnimatedSection>
+        {/* Decorative Elements */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-48 h-48 bg-emerald-600/10 rounded-full blur-2xl" />
 
-          {/* Scroll Indicator */}
-          <AnimatedSection delay={0.8}>
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block">
-              <div className="w-6 h-10 border-2 border-white/40 rounded-full flex justify-center animate-pulse">
-                <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-bounce"></div>
+        {/* Content - Right Aligned */}
+        <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-full flex flex-col justify-end pb-12 md:pb-16 lg:pb-20">
+            <AnimatedSection>
+              <div className="max-w-2xl">
+                {/* Collection Label */}
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full mb-6">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                  <span className="text-xs font-medium text-emerald-400 uppercase tracking-wider">
+                    Collection
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]">
+                  {collection.name}
+                </h1>
+
+                {/* Accent Line */}
+                <div className="w-24 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full mb-6" />
+
+                {/* Description */}
+                {collection.description && (
+                  <p className="text-lg md:text-xl text-zinc-300 leading-relaxed max-w-xl">
+                    {collection.description}
+                  </p>
+                )}
+
+                {/* Quick Stats */}
+                <div className="flex items-center gap-6 mt-8">
+                  <Suspense fallback={<Skeleton className="h-10 w-24 bg-zinc-800" />}>
+                    <ProductCountBadge collectionId={collection._id!} />
+                  </Suspense>
+                </div>
               </div>
-            </div>
-          </AnimatedSection>
+            </AnimatedSection>
+          </div>
         </div>
+
+        {/* Scroll Indicator */}
+        <AnimatedSection delay={0.6}>
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2">
+            <span className="text-xs text-zinc-500 uppercase tracking-widest">Explore</span>
+            <ChevronDown className="w-5 h-5 text-zinc-500 animate-bounce" />
+          </div>
+        </AnimatedSection>
       </div>
 
       {/* Products Section */}
-      <div className="relative z-20 bg-background">
-        {/* Stats/Info Bar */}
+      <div className="relative z-20">
+        {/* Section Header */}
         <AnimatedSection delay={0.2}>
-          <div className="bg-muted/30 py-8 sm:py-12 border-b border-border">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="text-center sm:text-left">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
-                    Products
-                  </h2>
-                  <p className="text-lg sm:text-xl text-muted-foreground">
-                    Premium systems crafted for excellence
+          <div className="border-b border-zinc-800">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="w-1 h-8 bg-gradient-to-b from-emerald-400 to-emerald-600 rounded-full" />
+                    <h2 className="text-2xl md:text-3xl font-bold text-white">
+                      Browse Collection
+                    </h2>
+                  </div>
+                  <p className="text-zinc-400 md:ml-5">
+                    Handpicked systems designed to deliver exceptional performance
                   </p>
                 </div>
 
-                {/* Collection Stats */}
-                <div className="flex gap-6 sm:gap-8 text-center">
-                  <div className="group cursor-pointer">
-                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary group-hover:scale-110 transition-transform duration-300">
-                      <Suspense fallback="...">
-                        <ProductCount collectionId={collection._id!} />
-                      </Suspense>
-                    </div>
-                    <div className="text-sm sm:text-base text-muted-foreground font-medium">
-                      Products
-                    </div>
+                {/* Feature Pills */}
+                <div className="flex flex-wrap gap-3">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800/50 border border-zinc-700 rounded-full">
+                    <Cpu className="w-4 h-4 text-emerald-400" />
+                    <span className="text-sm text-zinc-300">Premium Components</span>
                   </div>
-                  <div className="group cursor-pointer">
-                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-500 group-hover:scale-110 transition-transform duration-300">
-                      ★★★★★
-                    </div>
-                    <div className="text-sm sm:text-base text-muted-foreground font-medium">
-                      Rating
-                    </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800/50 border border-zinc-700 rounded-full">
+                    <Zap className="w-4 h-4 text-emerald-400" />
+                    <span className="text-sm text-zinc-300">High Performance</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800/50 border border-zinc-700 rounded-full">
+                    <Award className="w-4 h-4 text-emerald-400" />
+                    <span className="text-sm text-zinc-300">Quality Assured</span>
                   </div>
                 </div>
               </div>
@@ -145,12 +161,10 @@ export default async function Page({ params, searchParams }: PageProps) {
         </AnimatedSection>
 
         {/* Products Grid */}
-        <div className="py-12 sm:py-16 md:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <Suspense fallback={<LoadingSkeleton />} key={page}>
-              <Products collectionId={collection._id!} page={parseInt(page)} />
-            </Suspense>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          <Suspense fallback={<LoadingSkeleton />} key={page}>
+            <Products collectionId={collection._id!} page={parseInt(page)} />
+          </Suspense>
         </div>
       </div>
     </div>
@@ -173,72 +187,70 @@ async function Products({ collectionId, page }: ProductsProps) {
   if (!collectionProducts.length) notFound();
   if (page > (collectionProducts.totalPages || 1)) notFound();
 
+  const totalPages = collectionProducts.totalPages || 1;
+
   return (
-    <AnimatedSection delay={0.6}>
+    <AnimatedSection delay={0.4}>
       <div className="space-y-12">
-        {/* Products Grid with Enhanced Animations */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {collectionProducts.items.map((product: any, index: number) => (
             <AnimatedSection
               key={product._id}
-              delay={0.1 * (index % 4)} // Stagger animation by row
+              delay={0.05 * (index % 4)}
             >
-              <div className="group transform hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10">
-                <ProductClient product={product} />
-              </div>
+              <ProductClient product={product} />
             </AnimatedSection>
           ))}
         </div>
 
-        {/* Enhanced Pagination */}
-        <AnimatedSection delay={0.8}>
+        {/* Pagination - Only show if more than 1 page */}
+        {totalPages > 1 && (
           <div className="flex justify-center pt-8">
-            <div className="bg-card border border-border rounded-2xl p-4 shadow-lg">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
               <PaginationBar
                 currentPage={page}
-                totalPages={collectionProducts.totalPages || 1}
+                totalPages={totalPages}
               />
             </div>
           </div>
-        </AnimatedSection>
+        )}
       </div>
     </AnimatedSection>
   );
 }
 
-// Component to show product count
-async function ProductCount({ collectionId }: { collectionId: string }) {
+// Badge component showing product count
+async function ProductCountBadge({ collectionId }: { collectionId: string }) {
   const products = await queryProducts(await getWixServerClient(), {
     collectionIds: collectionId,
-    itemLimit: 1, // Just get count
+    itemLimit: 1,
   });
 
-  return <span>{products.totalCount || 0}</span>;
+  const count = products.totalCount || 0;
+
+  return (
+    <div className="flex items-center gap-3 px-4 py-2 bg-zinc-800/50 border border-zinc-700 rounded-lg">
+      <span className="text-2xl font-bold text-emerald-400">{count}</span>
+      <span className="text-sm text-zinc-400">
+        {count === 1 ? "Product" : "Products"} Available
+      </span>
+    </div>
+  );
 }
 
 function LoadingSkeleton() {
   return (
     <div className="space-y-12">
-      {/* Loading header */}
-      <div className="text-center space-y-4">
-        <Skeleton className="h-8 w-48 mx-auto" />
-        <Skeleton className="h-4 w-96 mx-auto" />
-      </div>
-
       {/* Loading grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {Array.from({ length: 8 }).map((_, i) => (
           <div key={i} className="space-y-4">
-            <Skeleton className="h-[300px] w-full rounded-xl" />
-            <Skeleton className="h-6 w-3/4" />
-            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-[300px] w-full rounded-xl bg-zinc-800" />
+            <Skeleton className="h-6 w-3/4 bg-zinc-800" />
+            <Skeleton className="h-4 w-1/2 bg-zinc-800" />
           </div>
         ))}
-      </div>
-
-      {/* Loading pagination */}
-      <div className="flex justify-center">
-        <Skeleton className="h-12 w-64 rounded-2xl" />
       </div>
     </div>
   );
