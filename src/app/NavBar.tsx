@@ -34,11 +34,11 @@ export default async function NavBar() {
         collections={collections}
       />
 
-      {/* Right: Cart */}
-      <div className="flex items-center justify-center gap-3">
+      {/* Right: Actions */}
+      <div className="flex items-center gap-1.5">
         <UserButton
           loggedInMember={loggedInMember}
-          className="pt-[4px] hover:cursor-pointer hidden lg:flex"
+          className="hover:cursor-pointer hidden lg:flex"
         />
         <ShoppingCartButton initialData={cart} />
       </div>

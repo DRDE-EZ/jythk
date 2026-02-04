@@ -68,7 +68,7 @@ export default function UserButton({
           <UserIcon className="size-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-48 max-w-64 rounded-lg">
+      <DropdownMenuContent className="min-w-48 max-w-64 rounded-xl bg-zinc-900 border border-zinc-800 shadow-xl shadow-black/30">
         {loggedInMember ? (
           <>
             <DropdownMenuLabel className="font-medium">

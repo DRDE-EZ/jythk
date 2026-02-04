@@ -102,9 +102,14 @@ export default function InfiniteCarousel({ items }: InfiniteCarouselProps) {
       <p className="text-zinc-400 text-sm mb-4 leading-relaxed">
         {category.description}
       </p>
-      <span className="text-emerald-400 text-sm font-medium">
-        {category.count} products
-      </span>
+      <div className="flex items-center justify-between">
+        <span className="text-emerald-400 text-sm font-medium">
+          {category.count} products
+        </span>
+        {!showLearnMore && (
+          <ChevronRight className="w-5 h-5 text-emerald-400" />
+        )}
+      </div>
       {showLearnMore && (
         <span className="absolute bottom-6 right-6 flex items-center gap-1 text-emerald-400 text-sm font-medium opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
           Learn more
