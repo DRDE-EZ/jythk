@@ -698,3 +698,54 @@ export const translations = {
 } as const;
 
 export type TranslationKeys = typeof translations;
+
+// ═══════ DYNAMIC COLLECTION TRANSLATIONS ═══════
+// Maps Wix collection slugs or lowercase names to Chinese translations.
+// English name is pulled directly from Wix data; only zh needs a map.
+export const collectionTranslations: Record<string, { name: string; description: string }> = {
+  "solar-cells": { name: "太阳能电池片", description: "用于组件制造的高效单晶和多晶电池片" },
+  "solar-wafers": { name: "太阳能硅片", description: "用于电池片生产的各种规格优质硅片" },
+  "off-grid-solar-kits": { name: "离网太阳能套件", description: "适用于偏远地区和备用电源的完整独立系统" },
+  "bess": { name: "储能系统", description: "适用于住宅和商业应用的电池储能系统" },
+  "solar-accessories": { name: "太阳能配件", description: "安装支架、电缆、连接器和监控设备" },
+  "scr-catalyst": { name: "SCR催化剂", description: "用于排放控制的选择性催化还原系统" },
+  "all-products": { name: "全部产品", description: "浏览我们完整的建筑材料和设备系列" },
+  "concrete": { name: "混凝土", description: "各类建筑项目的高品质混凝土混合料和密封剂" },
+  "construction-tools": { name: "建筑工具", description: "适用于各类工程的专业建筑工具和设备" },
+  "forklifts": { name: "叉车", description: "工业叉车及物料搬运替换零件" },
+  "industrial-equipment": { name: "工业设备", description: "重型工业机械和组件" },
+  "sustainable-materials": { name: "可持续材料", description: "环保建筑材料和可持续建设解决方案" },
+  "wall-panels": { name: "墙板", description: "适用于室内外应用的耐用墙板" },
+};
+
+/**
+ * Get translated collection name based on locale.
+ * Falls back to the original Wix name for English or unknown collections.
+ */
+export function getCollectionTranslation(
+  slug: string | undefined | null,
+  name: string | undefined | null,
+  locale: Locale,
+): { name: string; description: string | null } {
+  const originalName = name || "Collection";
+
+  if (locale === "en") {
+    return { name: originalName, description: null };
+  }
+
+  // Try exact slug match first
+  if (slug && collectionTranslations[slug]) {
+    return collectionTranslations[slug];
+  }
+
+  // Try fuzzy match on slug keywords
+  const slugLower = (slug || "").toLowerCase();
+  for (const [key, val] of Object.entries(collectionTranslations)) {
+    if (slugLower.includes(key) || key.includes(slugLower)) {
+      return val;
+    }
+  }
+
+  // Fallback: return original name with a generic Chinese description
+  return { name: originalName, description: `探索我们的${originalName}系列优质产品` };
+}

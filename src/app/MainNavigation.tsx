@@ -10,14 +10,15 @@ import {
 import { collections } from "@wix/stores";
 import Link from "next/link";
 import { useLanguage } from "@/i18n/context";
+import { getCollectionTranslation } from "@/i18n/translations";
 
 interface MainNavigationProps {
   collections: collections.Collection[];
   className?: string;
 }
 
-// Fallback descriptions for collections that don't have descriptions
-function getCollectionDescription(collection: collections.Collection): string {
+// Fallback descriptions for collections that don't have descriptions (English)
+function getCollectionDescriptionEn(collection: collections.Collection): string {
   if (collection.description) {
     return collection.description;
   }
@@ -54,7 +55,7 @@ export default function MainNavigation({
   collections,
   className,
 }: MainNavigationProps) {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
 
   return (
     <NavigationMenu className={className} viewport={false}>
@@ -85,7 +86,12 @@ export default function MainNavigation({
                     </Link>
                   </div>
                 ) : (
-                  collections.map((c) => (
+                  collections.map((c) => {
+                    const translated = getCollectionTranslation(c.slug, c.name, locale);
+                    const description = locale === "en"
+                      ? getCollectionDescriptionEn(c)
+                      : translated.description;
+                    return (
                     <Link
                       key={c._id}
                       href={`/collections/${c.slug}`}
@@ -93,10 +99,10 @@ export default function MainNavigation({
                     >
                       <div className="flex-1">
                         <span className="item-title text-base font-semibold text-white block mb-1 transition-colors duration-200">
-                          {c.name}
+                          {translated.name}
                         </span>
                         <span className="text-xs text-gray-400 line-clamp-2 leading-relaxed">
-                          {getCollectionDescription(c)}
+                          {description}
                         </span>
                       </div>
                       <svg
@@ -113,7 +119,8 @@ export default function MainNavigation({
                         />
                       </svg>
                     </Link>
-                  ))
+                    );
+                  })
                 )}
               </div>
               <div className="mt-4 pt-3 border-t border-gray-600">
