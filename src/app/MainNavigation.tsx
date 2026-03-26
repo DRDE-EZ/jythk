@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { collections } from "@wix/stores";
 import Link from "next/link";
+import { useLanguage } from "@/i18n/context";
 
 interface MainNavigationProps {
   collections: collections.Collection[];
@@ -21,7 +22,6 @@ function getCollectionDescription(collection: collections.Collection): string {
     return collection.description;
   }
 
-  // Provide fallback descriptions based on collection name/slug
   const name =
     collection.name?.toLowerCase() || collection.slug?.toLowerCase() || "";
 
@@ -47,7 +47,6 @@ function getCollectionDescription(collection: collections.Collection): string {
     return "Browse our complete range of construction materials and equipment";
   }
 
-  // Generic fallback
   return `Explore our ${collection.name} collection with quality products`;
 }
 
@@ -55,32 +54,34 @@ export default function MainNavigation({
   collections,
   className,
 }: MainNavigationProps) {
+  const { t } = useLanguage();
+
   return (
     <NavigationMenu className={className} viewport={false}>
       <NavigationMenuList className="gap-3">
         <NavigationMenuItem className="group relative">
           <NavigationMenuTrigger className="flex items-center gap-1 px-4 py-2 text-lg font-medium rounded-md text-white hover:bg-[#2a2a2a]">
-            <span>Products</span>
+            <span>{t("nav", "products")}</span>
           </NavigationMenuTrigger>
           <NavigationMenuContent className="!rounded-lg !p-0 !bg-[#1f1f1f] shadow-2xl border border-gray-600 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2">
             <div className="w-[800px] max-w-[90vw] p-6">
               <div className="mb-4 pb-3 border-b border-gray-600">
                 <h3 className="text-lg font-bold text-white">
-                  Browse Products
+                  {t("nav", "browseProducts")}
                 </h3>
                 <p className="text-sm text-gray-400 mt-1">
-                  Explore our product categories
+                  {t("nav", "exploreCategories")}
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
                 {collections.length === 0 ? (
                   <div className="col-span-2 text-center py-8 text-gray-400">
-                    <p>Loading categories...</p>
+                    <p>{t("nav", "loadingCategories")}</p>
                     <Link
                       href="/shop"
                       className="text-emerald-400 hover:underline mt-2 inline-block"
                     >
-                      Browse all products
+                      {t("nav", "browseAllProducts")}
                     </Link>
                   </div>
                 ) : (
@@ -120,7 +121,7 @@ export default function MainNavigation({
                   href="/shop"
                   className="block w-full text-center py-3 px-4 text-white font-normal rounded-lg transition-all duration-300 bg-transparent border border-white/40 hover:border-emerald-500 hover:text-emerald-400"
                 >
-                  View All Products
+                  {t("nav", "viewAllProducts")}
                 </Link>
               </div>
             </div>
@@ -133,7 +134,7 @@ export default function MainNavigation({
             legacyBehavior={undefined}
             passHref={undefined}
           >
-            Projects
+            {t("nav", "projects")}
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -143,7 +144,7 @@ export default function MainNavigation({
             legacyBehavior={undefined}
             passHref={undefined}
           >
-            Partners
+            {t("nav", "partners")}
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -153,7 +154,7 @@ export default function MainNavigation({
             legacyBehavior={undefined}
             passHref={undefined}
           >
-            Contact
+            {t("nav", "contact")}
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -163,7 +164,7 @@ export default function MainNavigation({
             legacyBehavior={undefined}
             passHref={undefined}
           >
-            About
+            {t("nav", "about")}
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -173,7 +174,7 @@ export default function MainNavigation({
             legacyBehavior={undefined}
             passHref={undefined}
           >
-            Portal
+            {t("nav", "portal")}
           </Link>
         </NavigationMenuItem>
       </NavigationMenuList>

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Building2,
   Sun,
@@ -11,82 +13,75 @@ import {
 import Link from "next/link";
 import SolarPanel3D from "@/components/SolarPanel3DWrapper";
 import AnimatedSection from "@/components/AnimatedSection";
-
-export const metadata = {
-  title: "Project Inquiry | JYT HK",
-  description:
-    "Get a custom quote for your solar project - Solar Farms, BESS, Rooftop Installations, or Custom Solutions.",
-};
+import { useLanguage } from "@/i18n/context";
 
 export default function ProjectsPage() {
+  const { t } = useLanguage();
+
   const projectTypes = [
     {
-      title: "Solar Farm",
+      title: t("projects", "solarFarm"),
       icon: Sun,
-      description:
-        "Large-scale ground-mounted solar installations for utility and commercial applications. From 1MW to 100MW+ capacity.",
+      description: t("projects", "solarFarmDesc"),
       gradient: "from-yellow-500 to-orange-500",
       iconBg: "bg-gradient-to-br from-yellow-500 to-orange-500",
       features: [
-        "Ground-mounted systems",
-        "Utility-scale projects",
-        "High-capacity generation",
-        "Long-term ROI",
+        t("projects", "groundMounted"),
+        t("projects", "utilityScale"),
+        t("projects", "highCapacity"),
+        t("projects", "longTermROI"),
       ],
       link: "/quote?type=solar-farm",
     },
     {
-      title: "BESS",
+      title: t("projects", "bess"),
       icon: Battery,
-      description:
-        "Battery Energy Storage Systems for grid stabilization, peak shaving, and renewable energy integration.",
+      description: t("projects", "bessDesc"),
       gradient: "from-blue-500 to-cyan-500",
       iconBg: "bg-gradient-to-br from-blue-500 to-cyan-500",
       features: [
-        "Energy storage solutions",
-        "Grid stabilization",
-        "Peak demand management",
-        "Renewable integration",
+        t("projects", "energyStorage"),
+        t("projects", "gridStabilization"),
+        t("projects", "peakDemand"),
+        t("projects", "renewableIntegration"),
       ],
       link: "/quote?type=bess",
     },
     {
-      title: "Rooftop Installation",
+      title: t("projects", "rooftopInstallation"),
       icon: Building2,
-      description:
-        "Commercial and industrial rooftop solar systems. Maximize unused roof space for clean energy generation.",
+      description: t("projects", "rooftopDesc"),
       gradient: "from-emerald-500 to-green-500",
       iconBg: "bg-gradient-to-br from-emerald-500 to-green-500",
       features: [
-        "Commercial rooftops",
-        "Industrial facilities",
-        "Space optimization",
-        "Immediate savings",
+        t("projects", "commercialRooftops"),
+        t("projects", "industrialFacilities"),
+        t("projects", "spaceOptimization"),
+        t("projects", "immediateSavings"),
       ],
       link: "/quote?type=rooftop",
     },
     {
-      title: "Custom Projects",
+      title: t("projects", "customProjects"),
       icon: Wrench,
-      description:
-        "Tailored solar solutions for unique requirements. Floating solar, agrivoltaics, hybrid systems, and more.",
+      description: t("projects", "customProjectsDesc"),
       gradient: "from-indigo-500 to-violet-500",
       iconBg: "bg-gradient-to-br from-indigo-500 to-violet-500",
       features: [
-        "Floating solar",
-        "Agrivoltaic systems",
-        "Hybrid solutions",
-        "Innovative designs",
+        t("projects", "floatingSolar"),
+        t("projects", "agrivoltaic"),
+        t("projects", "hybridSolutions"),
+        t("projects", "innovativeDesigns"),
       ],
       link: "/quote?type=custom",
     },
   ];
 
   const stats = [
-    { number: "500+", label: "Projects Completed", icon: Building2 },
-    { number: "2.5 GW", label: "Total Capacity Installed", icon: Zap },
-    { number: "30+", label: "Countries Worldwide", icon: MapPin },
-    { number: "3M+", label: "Tons CO2 Reduced", icon: CheckCircle2 },
+    { number: "500+", label: t("projects", "projectsCompleted"), icon: Building2 },
+    { number: "2.5 GW", label: t("projects", "totalCapacity"), icon: Zap },
+    { number: "30+", label: t("projects", "countriesWorldwide"), icon: MapPin },
+    { number: "3M+", label: t("projects", "co2Reduced"), icon: CheckCircle2 },
   ];
 
   return (
@@ -99,15 +94,14 @@ export default function ProjectsPage() {
               {/* Left: Text Content */}
               <div className="text-center lg:text-left order-1">
                 <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
-                  Project Solutions
+                  {t("projects", "heroLabel")}
                 </p>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white">
-                  Start Your Project
+                  {t("projects", "heroTitle")}
                 </h1>
                 <div className="w-24 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full mb-6 mx-auto lg:mx-0"></div>
                 <p className="text-lg sm:text-xl text-zinc-400 max-w-xl mx-auto lg:mx-0">
-                  Tell us about your project and get a customized quote within 24
-                  hours
+                  {t("projects", "heroSubtitle")}
                 </p>
               </div>
 
@@ -137,7 +131,7 @@ export default function ProjectsPage() {
                         d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
                       />
                     </svg>
-                    <span>Drag to rotate</span>
+                    <span>{t("projects", "dragToRotate")}</span>
                   </div>
                 </div>
               </div>
@@ -176,14 +170,13 @@ export default function ProjectsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-12 md:mb-16">
               <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
-                Get Started
+                {t("projects", "getStarted")}
               </p>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
-                Choose Your Project Type
+                {t("projects", "chooseProjectType")}
               </h2>
               <p className="text-lg text-zinc-400 max-w-3xl mx-auto">
-                Select the type of project you&apos;re interested in to get started
-                with a customized inquiry form
+                {t("projects", "chooseProjectTypeDesc")}
               </p>
             </div>
 
@@ -202,24 +195,20 @@ export default function ProjectsPage() {
                     ></div>
 
                     <div className="relative z-10">
-                      {/* Icon with colored gradient */}
                       <div
                         className={`inline-flex p-3 rounded-xl ${project.iconBg} mb-5 shadow-lg`}
                       >
                         <Icon className="w-8 h-8 text-white" />
                       </div>
 
-                      {/* Title */}
                       <h3 className="text-2xl sm:text-3xl font-bold mb-3 text-white group-hover:text-emerald-400 transition-colors">
                         {project.title}
                       </h3>
 
-                      {/* Description */}
                       <p className="text-zinc-400 mb-5 leading-relaxed">
                         {project.description}
                       </p>
 
-                      {/* Features */}
                       <div className="space-y-2 mb-6">
                         {project.features.map((feature, idx) => (
                           <div key={idx} className="flex items-center gap-2">
@@ -231,9 +220,8 @@ export default function ProjectsPage() {
                         ))}
                       </div>
 
-                      {/* CTA */}
                       <div className="flex items-center gap-2 text-emerald-400 font-semibold group-hover:gap-3 transition-all">
-                        <span>Get Quote</span>
+                        <span>{t("projects", "getQuote")}</span>
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                       </div>
                     </div>
@@ -251,34 +239,31 @@ export default function ProjectsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-12">
               <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
-                Our Expertise
+                {t("projects", "ourExpertise")}
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
-                Why Choose Jingyuntong Hong Kong?
+                {t("projects", "whyChooseJYT")}
               </h2>
               <p className="text-lg text-zinc-400">
-                Your trusted partner for solar solutions worldwide
+                {t("projects", "trustedPartner")}
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
               {[
                 {
-                  title: "Expert Engineering",
-                  description:
-                    "Over 10 years of experience designing and implementing solar projects globally",
+                  title: t("projects", "expertEngineering"),
+                  description: t("projects", "expertEngineeringDesc"),
                   icon: Wrench,
                 },
                 {
-                  title: "Quality Components",
-                  description:
-                    "We source only the highest quality solar panels, inverters, and storage systems",
+                  title: t("projects", "qualityComponents"),
+                  description: t("projects", "qualityComponentsDesc"),
                   icon: CheckCircle2,
                 },
                 {
-                  title: "Full Support",
-                  description:
-                    "From initial consultation to post-installation support, we're with you every step",
+                  title: t("projects", "fullSupport"),
+                  description: t("projects", "fullSupportDesc"),
                   icon: Building2,
                 },
               ].map((item, index) => {
@@ -310,17 +295,16 @@ export default function ProjectsPage() {
         <section className="py-16 sm:py-20 md:py-24">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
-              Ready to Get Started?
+              {t("projects", "readyToGetStarted")}
             </h2>
             <p className="text-lg text-zinc-400 mb-8">
-              Choose your project type above to fill out a customized inquiry
-              form, or contact us directly
+              {t("projects", "ctaDesc")}
             </p>
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border border-zinc-700 hover:border-emerald-500 text-white hover:text-emerald-400 font-semibold rounded-lg transition-all duration-300"
             >
-              Contact Us
+              {t("common", "contactUs")}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>

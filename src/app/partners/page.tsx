@@ -1,29 +1,28 @@
+"use client";
+
 import { Building2, Globe2, Award, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import PartnerForm from "@/components/PartnerForm";
 import AnimatedSection from "@/components/AnimatedSection";
-
-export const metadata = {
-  title: "Our Partners | JYT HK",
-  description:
-    "Trusted partnerships with leading solar and renewable energy companies worldwide.",
-};
+import { useLanguage } from "@/i18n/context";
 
 export default function PartnersPage() {
+  const { t } = useLanguage();
+
   const certifications = [
-    "ISO 9001 Quality Management",
-    "ISO 14001 Environmental Management",
-    "ISO 45001 Occupational Health & Safety",
-    "TUV Certification",
-    "CE Certification",
-    "UL Certification",
-    "IEC Standards Compliance",
-    "OHSAS 18001",
-    "Carbon Footprint Verification",
-    "Green Building Certification",
-    "Energy Star Certification",
-    "PV Cycle Membership",
+    t("partners", "iso9001"),
+    t("partners", "iso14001"),
+    t("partners", "iso45001"),
+    t("partners", "tuv"),
+    t("partners", "ce"),
+    t("partners", "ul"),
+    t("partners", "iec"),
+    t("partners", "ohsas"),
+    t("partners", "carbonFootprint"),
+    t("partners", "greenBuilding"),
+    t("partners", "energyStar"),
+    t("partners", "pvCycle"),
   ];
 
   return (
@@ -33,15 +32,14 @@ export default function PartnersPage() {
         <section className="relative py-20 sm:py-24 md:py-28 bg-gradient-to-b from-emerald-900/20 to-transparent">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
-              Trusted Network
+              {t("partners", "heroLabel")}
             </p>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white">
-              Our Partners
+              {t("partners", "heroTitle")}
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 mx-auto rounded-full mb-6"></div>
             <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto">
-              Collaborating with industry leaders to deliver world-class solar
-              solutions
+              {t("partners", "heroSubtitle")}
             </p>
           </div>
         </section>
@@ -53,10 +51,10 @@ export default function PartnersPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-12">
               <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
-                Benefits
+                {t("partners", "benefitsLabel")}
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
-                Why Partner With Us
+                {t("partners", "whyPartner")}
               </h2>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
@@ -65,11 +63,10 @@ export default function PartnersPage() {
                   <Globe2 className="w-8 h-8 text-emerald-400" />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-white">
-                  Global Reach
+                  {t("partners", "globalReach")}
                 </h3>
                 <p className="text-zinc-400 leading-relaxed">
-                  Access to international markets with our extensive distribution
-                  network spanning 30+ countries.
+                  {t("partners", "globalReachDesc")}
                 </p>
               </div>
 
@@ -78,11 +75,10 @@ export default function PartnersPage() {
                   <Award className="w-8 h-8 text-emerald-400" />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-white">
-                  Quality Assurance
+                  {t("partners", "qualityAssurance")}
                 </h3>
                 <p className="text-zinc-400 leading-relaxed">
-                  Rigorous quality control standards and international
-                  certifications ensure product excellence.
+                  {t("partners", "qualityAssuranceDesc")}
                 </p>
               </div>
 
@@ -91,11 +87,10 @@ export default function PartnersPage() {
                   <Building2 className="w-8 h-8 text-emerald-400" />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-white">
-                  Technical Support
+                  {t("partners", "technicalSupport")}
                 </h3>
                 <p className="text-zinc-400 leading-relaxed">
-                  Comprehensive technical assistance and training programs for all
-                  partner organizations.
+                  {t("partners", "technicalSupportDesc")}
                 </p>
               </div>
             </div>
@@ -109,15 +104,13 @@ export default function PartnersPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-12">
               <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
-                Industry Leaders
+                {t("partners", "industryLeaders")}
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
-                Strategic Partners
+                {t("partners", "strategicPartners")}
               </h2>
               <p className="text-zinc-400 max-w-3xl mx-auto">
-                We collaborate with the world&apos;s leading manufacturers and
-                technology providers to ensure our clients receive the highest
-                quality solar products and solutions.
+                {t("partners", "strategicPartnersDesc")}
               </p>
             </div>
 
@@ -144,11 +137,10 @@ export default function PartnersPage() {
                 <Award className="w-8 h-8 text-emerald-400" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
-                Certifications & Standards
+                {t("partners", "certificationsTitle")}
               </h2>
               <p className="text-zinc-400 max-w-3xl mx-auto">
-                Our commitment to quality is backed by numerous international
-                certifications and compliance standards.
+                {t("partners", "certificationsDesc")}
               </p>
             </div>
 
@@ -166,7 +158,7 @@ export default function PartnersPage() {
             {/* Certificates Image Display */}
             <div className="bg-zinc-900 rounded-xl p-4 sm:p-8 border border-zinc-800">
               <h3 className="text-xl font-bold mb-6 text-center text-white">
-                Our Certifications & Awards
+                {t("partners", "ourCertifications")}
               </h3>
               <Image
                 src="/certificates/certificates-awards.png"
@@ -187,13 +179,13 @@ export default function PartnersPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-12">
               <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
-                Join Our Network
+                {t("partners", "joinNetwork")}
               </p>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
-                Become a Partner
+                {t("partners", "becomePartner")}
               </h2>
               <p className="text-lg text-zinc-400">
-                Fill out the form below and we&apos;ll get back to you within 24 hours
+                {t("partners", "becomePartnerDesc")}
               </p>
             </div>
 
@@ -203,14 +195,13 @@ export default function PartnersPage() {
 
             <div className="text-center mt-10">
               <p className="text-zinc-400 mb-6">
-                Join our network of trusted partners and grow your business with
-                Jingyuntong Hong Kong
+                {t("partners", "joinNetworkDesc")}
               </p>
               <Link
                 href="/about"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-zinc-700 hover:border-emerald-500 text-white hover:text-emerald-400 font-medium rounded-lg transition-all duration-300"
               >
-                Learn More About Us
+                {t("partners", "learnMoreAboutUs")}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

@@ -4,8 +4,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { User, Shield, ArrowRight } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
+import { useLanguage } from "@/i18n/context";
 
 export default function PortalPage() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-background text-white">
       {/* Hero Section */}
@@ -13,14 +16,14 @@ export default function PortalPage() {
         <section className="relative py-20 sm:py-24 md:py-28 bg-gradient-to-b from-emerald-900/20 to-transparent">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase mb-4">
-              Client Access
+              {t("portal", "heroLabel")}
             </p>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white">
-              Portal
+              {t("portal", "heroTitle")}
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 mx-auto rounded-full mb-6"></div>
             <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">
-              Access your dashboard to manage orders and track project progress
+              {t("portal", "heroSubtitle")}
             </p>
           </div>
         </section>
@@ -37,9 +40,9 @@ export default function PortalPage() {
                   <User className="w-7 h-7 text-emerald-400" />
                 </div>
 
-                <h3 className="text-2xl font-bold text-white mb-2">Customer Portal</h3>
+                <h3 className="text-2xl font-bold text-white mb-2">{t("portal", "customerPortal")}</h3>
                 <p className="text-zinc-400 mb-6">
-                  Track orders, view purchase history, and manage your account
+                  {t("portal", "customerPortalDesc")}
                 </p>
 
                 <div className="space-y-3">
@@ -50,7 +53,7 @@ export default function PortalPage() {
                     className="w-full border-zinc-700 bg-transparent hover:bg-zinc-800 hover:border-zinc-600 text-white"
                   >
                     <Link href="/customer-dashboard-demo">
-                      Try Demo
+                      {t("portal", "tryDemo")}
                     </Link>
                   </Button>
 
@@ -60,15 +63,15 @@ export default function PortalPage() {
                     className="w-full bg-emerald-500 hover:bg-emerald-600 text-black font-semibold"
                   >
                     <Link href="/customer-dashboard-protected" className="flex items-center justify-center gap-2">
-                      Sign In
+                      {t("common", "signIn")}
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   </Button>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-zinc-800 text-xs text-zinc-500 space-y-1">
-                  <p>• Google OAuth authentication</p>
-                  <p>• Automatic redirect for admin users</p>
+                  <p>• {t("portal", "googleOAuth")}</p>
+                  <p>• {t("portal", "autoRedirect")}</p>
                 </div>
               </div>
 
@@ -78,9 +81,9 @@ export default function PortalPage() {
                   <Shield className="w-7 h-7 text-black" />
                 </div>
 
-                <h3 className="text-2xl font-bold text-white mb-2">Admin Portal</h3>
+                <h3 className="text-2xl font-bold text-white mb-2">{t("portal", "adminPortal")}</h3>
                 <p className="text-zinc-400 mb-6">
-                  Manage inventory, oversee orders, and access admin functions
+                  {t("portal", "adminPortalDesc")}
                 </p>
 
                 <div className="space-y-3">
@@ -91,7 +94,7 @@ export default function PortalPage() {
                     className="w-full border-zinc-600 bg-transparent hover:bg-zinc-700 hover:border-zinc-500 text-white"
                   >
                     <Link href="/admin-dashboard-demo">
-                      Admin Demo
+                      {t("portal", "adminDemo")}
                     </Link>
                   </Button>
 
@@ -101,15 +104,15 @@ export default function PortalPage() {
                     className="w-full bg-white hover:bg-zinc-100 text-black font-semibold"
                   >
                     <Link href="/admin-dashboard" className="flex items-center justify-center gap-2">
-                      Admin Access
+                      {t("portal", "adminAccess")}
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   </Button>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-zinc-700 text-xs text-zinc-500 space-y-1">
-                  <p>• Restricted to authorized emails</p>
-                  <p>• Full system management access</p>
+                  <p>• {t("portal", "restrictedEmails")}</p>
+                  <p>• {t("portal", "fullSystemAccess")}</p>
                 </div>
               </div>
             </div>
@@ -117,7 +120,7 @@ export default function PortalPage() {
             {/* Footer note */}
             <div className="mt-8 text-center">
               <p className="text-sm text-zinc-500">
-                Demo accounts include sample data for testing
+                {t("portal", "demoNote")}
               </p>
             </div>
           </div>
@@ -130,7 +133,7 @@ export default function PortalPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 sm:p-10">
               <p className="text-lg text-zinc-400 mb-6">
-                New to our platform? Learn more about our services
+                {t("portal", "newToPlatform")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
@@ -139,14 +142,14 @@ export default function PortalPage() {
                   variant="outline"
                   className="border-zinc-700 bg-transparent hover:bg-zinc-800 hover:border-zinc-600 text-white"
                 >
-                  <Link href="/about">About Us</Link>
+                  <Link href="/about">{t("common", "aboutUs")}</Link>
                 </Button>
                 <Button
                   asChild
                   size="lg"
                   className="bg-emerald-500 hover:bg-emerald-600 text-black font-semibold"
                 >
-                  <Link href="/products">Browse Products</Link>
+                  <Link href="/products">{t("common", "browseProducts")}</Link>
                 </Button>
               </div>
             </div>

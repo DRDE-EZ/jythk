@@ -13,6 +13,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import Link from "next/link";
 import WixImage from "./WixImage";
 import CheckoutButton from "./CheckoutButton";
+import { useLanguage } from "@/i18n/context";
 
 interface ShoppingCartButtonProps {
   initialData: currentCart.Cart | null;
@@ -21,6 +22,7 @@ interface ShoppingCartButtonProps {
 export default function ShoppingCartButton({
   initialData,
 }: ShoppingCartButtonProps) {
+  const { t } = useLanguage();
   const [showSheet, setShowSheet] = useState(false);
   const cartQuery = useCart(initialData);
   const totalQuantity =
@@ -54,9 +56,9 @@ export default function ShoppingCartButton({
                 <ShoppingCartIcon className="w-4 h-4 text-emerald-400" />
               </div>
               <span className="flex-1">
-                Your Cart
+                {t("cart", "yourCart")}
                 <span className="text-sm font-medium text-zinc-500 ml-2">
-                  ({totalQuantity} {totalQuantity === 1 ? "item" : "items"})
+                  ({totalQuantity} {totalQuantity === 1 ? t("cart", "item") : t("cart", "items")})
                 </span>
               </span>
               <button
@@ -90,17 +92,17 @@ export default function ShoppingCartButton({
                   <ShoppingCartIcon className="w-7 h-7 text-zinc-500" />
                 </div>
                 <p className="text-lg font-semibold text-white mb-1">
-                  Your cart is empty
+                  {t("cart", "cartEmpty")}
                 </p>
                 <p className="text-sm text-zinc-500 mb-6">
-                  Add some products to get started
+                  {t("cart", "addProducts")}
                 </p>
                 <Link
                   href="/shop"
                   onClick={() => setShowSheet(false)}
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 rounded-lg text-sm font-medium hover:bg-emerald-500/20 transition-colors"
                 >
-                  Browse Products
+                  {t("common", "browseProducts")}
                 </Link>
               </div>
             )}
@@ -122,7 +124,7 @@ export default function ShoppingCartButton({
           <div className="border-t border-zinc-800">
             <div className="px-6 py-5 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-zinc-400">Subtotal</span>
+                <span className="text-sm text-zinc-400">{t("cart", "subtotal")}</span>
                 <span className="text-lg font-bold text-white">
                   {cartQuery.data?.subtotal?.formattedConvertedAmount ||
                     cartQuery.data?.subtotal?.formattedAmount ||
@@ -130,7 +132,7 @@ export default function ShoppingCartButton({
                 </span>
               </div>
               <p className="text-xs text-zinc-600">
-                Shipping and taxes calculated at checkout
+                {t("cart", "shippingTaxes")}
               </p>
               <CheckoutButton
                 disabled={!totalQuantity || cartQuery.isFetching}

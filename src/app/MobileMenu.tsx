@@ -31,6 +31,8 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useLanguage } from "@/i18n/context";
+import LanguageToggle from "@/components/LanguageToggle";
 
 interface MobileMenuProps {
   collections: collections.Collection[];
@@ -45,6 +47,7 @@ export default function MobileMenu({
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [collectionsExpanded, setCollectionsExpanded] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     setIsOpen(false);
@@ -76,32 +79,32 @@ export default function MobileMenu({
   const pages = [
     {
       href: "/projects",
-      label: "Projects",
-      desc: "Our latest work",
+      label: t("nav", "projects"),
+      desc: t("mobileMenu", "projectsDesc"),
       icon: Briefcase,
     },
     {
       href: "/partners",
-      label: "Partners",
-      desc: "Who we work with",
+      label: t("nav", "partners"),
+      desc: t("mobileMenu", "partnersDesc"),
       icon: Handshake,
     },
     {
       href: "/contact",
-      label: "Contact",
-      desc: "Get in touch",
+      label: t("nav", "contact"),
+      desc: t("mobileMenu", "contactDesc"),
       icon: Phone,
     },
     {
       href: "/about",
-      label: "About",
-      desc: "Our story",
+      label: t("nav", "about"),
+      desc: t("mobileMenu", "aboutDesc"),
       icon: Info,
     },
     {
       href: "/portal",
-      label: "Portal",
-      desc: "Client access",
+      label: t("nav", "portal"),
+      desc: t("mobileMenu", "portalDesc"),
       icon: Globe,
     },
   ];
@@ -124,7 +127,7 @@ export default function MobileMenu({
           className="w-full !max-w-full bg-zinc-950 border-none p-0 overflow-y-auto"
         >
           <SheetHeader className="sr-only">
-            <SheetTitle>Navigation Menu</SheetTitle>
+            <SheetTitle>{t("mobileMenu", "navigationMenu")}</SheetTitle>
           </SheetHeader>
 
           {/* ── Header with logo + close ──────── */}
@@ -142,16 +145,19 @@ export default function MobileMenu({
                 className="group-hover:scale-110 transition-transform"
               />
               <span className="text-2xl font-bold text-white tracking-wider group-hover:text-emerald-400 transition-colors">
-                JYT HK
+                {t("common", "jytHk")}
               </span>
             </Link>
 
-            <button
-              onClick={() => setIsOpen(false)}
-              className="w-9 h-9 rounded-lg bg-zinc-800/80 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-200"
-            >
-              <X className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-2">
+              <LanguageToggle />
+              <button
+                onClick={() => setIsOpen(false)}
+                className="w-9 h-9 rounded-lg bg-zinc-800/80 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-200"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           {/* Accent divider */}
@@ -160,7 +166,7 @@ export default function MobileMenu({
           {/* ── Shop ──────────────────────────── */}
           <div className="px-5 pt-6 pb-2">
             <p className="px-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500 mb-3">
-              Shop
+              {t("mobileMenu", "shop")}
             </p>
 
             <Link
@@ -186,10 +192,10 @@ export default function MobileMenu({
                     isActive("/shop") ? "text-emerald-400" : "text-white"
                   }`}
                 >
-                  All Products
+                  {t("mobileMenu", "allProducts")}
                 </span>
                 <span className="text-xs text-zinc-500">
-                  Browse our full catalogue
+                  {t("mobileMenu", "browseFullCatalogue")}
                 </span>
               </div>
               <ArrowUpRight className="w-4 h-4 text-zinc-600 group-hover:text-emerald-400 transition-colors" />
@@ -207,10 +213,10 @@ export default function MobileMenu({
               </div>
               <div className="flex-1 text-left">
                 <span className="text-[15px] font-semibold text-white block">
-                  Collections
+                  {t("mobileMenu", "collections")}
                 </span>
                 <span className="text-xs text-zinc-500">
-                  {collectionsList.length} categories
+                  {collectionsList.length} {t("mobileMenu", "categories")}
                 </span>
               </div>
               <ChevronRight
@@ -255,7 +261,7 @@ export default function MobileMenu({
                       </span>
                       <div className="flex items-center justify-between mt-2">
                         <span className="text-[10px] text-zinc-500 uppercase tracking-wider">
-                          View
+                          {t("mobileMenu", "view")}
                         </span>
                         <ChevronRight
                           className={`w-3.5 h-3.5 transition-colors ${
@@ -278,7 +284,7 @@ export default function MobileMenu({
           {/* ── Info ─────────────────────────── */}
           <div className="px-5 py-5">
             <p className="px-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500 mb-3">
-              Info
+              {t("mobileMenu", "info")}
             </p>
 
             <div className="space-y-1">
@@ -326,7 +332,7 @@ export default function MobileMenu({
           {/* ── Account ───────────────────────── */}
           <div className="px-5 py-5">
             <p className="px-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500 mb-3">
-              Account
+              {t("mobileMenu", "account")}
             </p>
 
             {loggedInMember ? (
@@ -340,12 +346,12 @@ export default function MobileMenu({
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[15px] font-semibold text-white truncate">
-                      {loggedInMember.contact?.firstName || "Customer"}
+                      {loggedInMember.contact?.firstName || t("user", "customer")}
                     </p>
                     <p className="text-xs text-zinc-500 truncate">
                       {loggedInMember.loginEmail ||
                         loggedInMember.contact?.emails?.[0] ||
-                        "Signed in"}
+                        t("user", "signedIn")}
                     </p>
                   </div>
                 </div>
@@ -360,10 +366,10 @@ export default function MobileMenu({
                   </div>
                   <div className="flex-1">
                     <span className="text-[15px] font-medium text-white block">
-                      My Dashboard
+                      {t("mobileMenu", "myDashboard")}
                     </span>
                     <span className="text-xs text-zinc-500">
-                      Orders & settings
+                      {t("mobileMenu", "ordersSettings")}
                     </span>
                   </div>
                 </Link>
@@ -378,10 +384,10 @@ export default function MobileMenu({
                   </div>
                   <div className="flex-1 text-left">
                     <span className="text-[15px] font-medium text-zinc-400 group-hover:text-red-400 transition-colors block">
-                      Sign out
+                      {t("common", "signOut")}
                     </span>
                     <span className="text-xs text-zinc-600">
-                      End your session
+                      {t("mobileMenu", "endSession")}
                     </span>
                   </div>
                 </button>
@@ -396,10 +402,10 @@ export default function MobileMenu({
                 </div>
                 <div className="flex-1 text-left">
                   <span className="text-[15px] font-semibold text-white block">
-                    Sign In
+                    {t("common", "signIn")}
                   </span>
                   <span className="text-xs text-zinc-500">
-                    Continue with Google
+                    {t("common", "continueWithGoogle")}
                   </span>
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-zinc-600 group-hover:text-emerald-400 transition-colors" />
@@ -411,7 +417,7 @@ export default function MobileMenu({
           <div className="mt-auto px-6 pb-8 pt-4">
             <div className="h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent mb-4" />
             <p className="text-[11px] text-zinc-600 text-center tracking-wide">
-              Jingyuntong Hong Kong
+              {t("common", "companyName")}
             </p>
           </div>
         </SheetContent>

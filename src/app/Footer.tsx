@@ -4,13 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Mail, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useLanguage } from "@/i18n/context";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const { t } = useLanguage();
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle subscription logic here
     console.log("Subscribe:", email);
     setEmail("");
   };
@@ -26,13 +27,12 @@ export default function Footer() {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-xl font-bold text-white">
-                    Jingyuntong Hong Kong
+                    {t("common", "companyName")}
                   </h2>
                   <div className="mt-2 w-12 h-0.5 bg-emerald-500"></div>
                 </div>
                 <p className="text-sm leading-relaxed text-zinc-400 max-w-sm">
-                  Your trusted overseas supplier for solar solutions and custom
-                  projects. Quality products delivered on time.
+                  {t("footer", "brandDescription")}
                 </p>
 
                 {/* Social Links */}
@@ -77,16 +77,16 @@ export default function Footer() {
                 {/* Company */}
                 <div>
                   <h3 className="text-sm font-semibold text-white mb-4">
-                    Company
+                    {t("footer", "company")}
                   </h3>
                   <ul className="space-y-3">
                     {[
-                      { name: "About", href: "/about" },
-                      { name: "Shop", href: "/shop" },
-                      { name: "Projects", href: "/projects" },
-                      { name: "Contact", href: "/contact" },
+                      { name: t("footer", "about"), href: "/about" },
+                      { name: t("footer", "shop"), href: "/shop" },
+                      { name: t("footer", "projects"), href: "/projects" },
+                      { name: t("nav", "contact"), href: "/contact" },
                     ].map((link) => (
-                      <li key={link.name}>
+                      <li key={link.href}>
                         <Link
                           href={link.href}
                           className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors duration-200"
@@ -101,16 +101,16 @@ export default function Footer() {
                 {/* Support */}
                 <div>
                   <h3 className="text-sm font-semibold text-white mb-4">
-                    Support
+                    {t("footer", "support")}
                   </h3>
                   <ul className="space-y-3">
                     {[
-                      { name: "Help Center", href: "/support" },
-                      { name: "Shipping", href: "/shipping" },
-                      { name: "Terms", href: "/terms" },
-                      { name: "Privacy", href: "/privacy" },
+                      { name: t("footer", "helpCenter"), href: "/support" },
+                      { name: t("footer", "shipping"), href: "/shipping" },
+                      { name: t("footer", "terms"), href: "/terms" },
+                      { name: t("footer", "privacy"), href: "/privacy" },
                     ].map((link) => (
-                      <li key={link.name}>
+                      <li key={link.href}>
                         <Link
                           href={link.href}
                           className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors duration-200"
@@ -125,7 +125,7 @@ export default function Footer() {
                 {/* Contact */}
                 <div>
                   <h3 className="text-sm font-semibold text-white mb-4">
-                    Contact
+                    {t("footer", "contact")}
                   </h3>
                   <ul className="space-y-3">
                     <li>
@@ -140,7 +140,7 @@ export default function Footer() {
                     <li>
                       <div className="flex items-center gap-2 text-sm text-zinc-400">
                         <MapPin className="w-4 h-4" />
-                        Hong Kong SAR
+                        {t("footer", "hongKongSAR")}
                       </div>
                     </li>
                   </ul>
@@ -151,24 +151,24 @@ export default function Footer() {
             {/* Newsletter Section */}
             <div className="lg:col-span-3">
               <h3 className="text-sm font-semibold text-white mb-4">
-                Newsletter
+                {t("footer", "newsletter")}
               </h3>
               <p className="text-sm text-zinc-400 mb-4">
-                Subscribe for product updates and industry news.
+                {t("footer", "newsletterDesc")}
               </p>
               <form onSubmit={handleSubscribe} className="space-y-3">
                 <Input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
+                  placeholder={t("footer", "enterEmail")}
                   className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder:text-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20 rounded-lg h-10"
                 />
                 <button
                   type="submit"
                   className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-transparent border border-zinc-700 hover:border-emerald-500 text-white hover:text-emerald-400 rounded-lg text-sm font-medium transition-all duration-300"
                 >
-                  Subscribe
+                  {t("common", "subscribe")}
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
@@ -180,27 +180,26 @@ export default function Footer() {
         <div className="border-t border-zinc-800 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-zinc-500">
-              © {new Date().getFullYear()} Jingyuntong Hong Kong. All rights
-              reserved.
+              &copy; {new Date().getFullYear()} {t("footer", "copyright")}
             </p>
             <div className="flex items-center gap-6">
               <Link
                 href="/terms"
                 className="text-xs text-zinc-500 hover:text-emerald-400 transition-colors"
               >
-                Terms
+                {t("footer", "terms")}
               </Link>
               <Link
                 href="/privacy"
                 className="text-xs text-zinc-500 hover:text-emerald-400 transition-colors"
               >
-                Privacy
+                {t("footer", "privacy")}
               </Link>
               <Link
                 href="/cookies"
                 className="text-xs text-zinc-500 hover:text-emerald-400 transition-colors"
               >
-                Cookies
+                {t("footer", "cookies")}
               </Link>
             </div>
           </div>

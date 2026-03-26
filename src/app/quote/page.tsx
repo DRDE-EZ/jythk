@@ -9,10 +9,12 @@ import { toast } from "sonner";
 import { ArrowLeft, Send, Building2, Sun, Battery, Wrench } from "lucide-react";
 import Link from "next/link";
 import AnimatedSection from "@/components/AnimatedSection";
+import { useLanguage } from "@/i18n/context";
 
 export default function QuotePage() {
   const searchParams = useSearchParams();
   const projectType = searchParams.get("type") || "custom";
+  const { t } = useLanguage();
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,32 +32,32 @@ export default function QuotePage() {
 
   const projectTypeInfo = {
     "solar-farm": {
-      title: "Solar Farm",
+      title: t("quote", "solarFarm"),
       icon: Sun,
       color: "from-yellow-500 to-orange-500",
       bgColor: "bg-gradient-to-br from-yellow-500 to-orange-500",
-      description: "Large-scale ground-mounted solar installations",
+      description: t("quote", "solarFarmDesc"),
     },
     bess: {
-      title: "BESS",
+      title: t("quote", "bess"),
       icon: Battery,
       color: "from-blue-500 to-cyan-500",
       bgColor: "bg-gradient-to-br from-blue-500 to-cyan-500",
-      description: "Battery Energy Storage Systems",
+      description: t("quote", "bessDesc"),
     },
     rooftop: {
-      title: "Rooftop Installation",
+      title: t("quote", "rooftopInstallation"),
       icon: Building2,
       color: "from-emerald-500 to-green-500",
       bgColor: "bg-gradient-to-br from-emerald-500 to-green-500",
-      description: "Commercial and industrial rooftop solar",
+      description: t("quote", "rooftopDesc"),
     },
     custom: {
-      title: "Custom Project",
+      title: t("quote", "customProject"),
       icon: Wrench,
       color: "from-indigo-500 to-violet-500",
       bgColor: "bg-gradient-to-br from-indigo-500 to-violet-500",
-      description: "Tailored solar solutions for unique requirements",
+      description: t("quote", "customProjectDesc"),
     },
   };
 
@@ -78,7 +80,7 @@ export default function QuotePage() {
       if (!response.ok) throw new Error("Failed to submit quote request");
 
       toast.success(
-        "Quote request sent! We'll get back to you within 24 hours."
+        t("quote", "successMessage")
       );
 
       // Reset form
@@ -96,7 +98,7 @@ export default function QuotePage() {
       });
     } catch (error) {
       console.error("Quote submission error:", error);
-      toast.error("Failed to send quote request. Please try again.");
+      toast.error(t("quote", "errorMessage"));
     } finally {
       setLoading(false);
     }
@@ -123,7 +125,7 @@ export default function QuotePage() {
               className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 mb-8 font-medium transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to Projects
+              {t("common", "backToProjects")}
             </Link>
 
             {/* Header */}
@@ -134,7 +136,7 @@ export default function QuotePage() {
                 <Icon className="w-10 h-10 text-white" />
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-white">
-                {currentProject.title} Quote
+                {currentProject.title} {t("quote", "quote")}
               </h1>
               <p className="text-lg text-zinc-400">{currentProject.description}</p>
             </div>
@@ -154,7 +156,7 @@ export default function QuotePage() {
                     <span className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-sm">
                       1
                     </span>
-                    Contact Information
+                    {t("quote", "contactInformation")}
                   </h2>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
@@ -162,7 +164,7 @@ export default function QuotePage() {
                         htmlFor="companyName"
                         className="text-zinc-300 text-sm font-medium"
                       >
-                        Company Name <span className="text-emerald-400">*</span>
+                        {t("quote", "companyName")} <span className="text-emerald-400">*</span>
                       </Label>
                       <Input
                         id="companyName"
@@ -180,7 +182,7 @@ export default function QuotePage() {
                         htmlFor="contactName"
                         className="text-zinc-300 text-sm font-medium"
                       >
-                        Contact Name <span className="text-emerald-400">*</span>
+                        {t("quote", "contactName")} <span className="text-emerald-400">*</span>
                       </Label>
                       <Input
                         id="contactName"
@@ -198,7 +200,7 @@ export default function QuotePage() {
                         htmlFor="email"
                         className="text-zinc-300 text-sm font-medium"
                       >
-                        Email Address <span className="text-emerald-400">*</span>
+                        {t("quote", "emailAddress")} <span className="text-emerald-400">*</span>
                       </Label>
                       <Input
                         id="email"
@@ -217,7 +219,7 @@ export default function QuotePage() {
                         htmlFor="phone"
                         className="text-zinc-300 text-sm font-medium"
                       >
-                        Phone Number <span className="text-emerald-400">*</span>
+                        {t("quote", "phoneNumber")} <span className="text-emerald-400">*</span>
                       </Label>
                       <Input
                         id="phone"
@@ -242,7 +244,7 @@ export default function QuotePage() {
                     <span className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-sm">
                       2
                     </span>
-                    Project Details
+                    {t("quote", "projectDetails")}
                   </h2>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
@@ -251,8 +253,8 @@ export default function QuotePage() {
                         className="text-zinc-300 text-sm font-medium"
                       >
                         {projectType === "bess"
-                          ? "Storage Capacity (MWh)"
-                          : "Project Capacity (MW)"}
+                          ? t("quote", "storageCapacity")
+                          : t("quote", "projectCapacity")}
                       </Label>
                       <Input
                         id="projectCapacity"
@@ -271,7 +273,7 @@ export default function QuotePage() {
                         htmlFor="location"
                         className="text-zinc-300 text-sm font-medium"
                       >
-                        Project Location
+                        {t("quote", "projectLocation")}
                       </Label>
                       <Input
                         id="location"
@@ -288,7 +290,7 @@ export default function QuotePage() {
                         htmlFor="timeline"
                         className="text-zinc-300 text-sm font-medium"
                       >
-                        Expected Timeline
+                        {t("quote", "expectedTimeline")}
                       </Label>
                       <Input
                         id="timeline"
@@ -305,7 +307,7 @@ export default function QuotePage() {
                         htmlFor="budget"
                         className="text-zinc-300 text-sm font-medium"
                       >
-                        Estimated Budget
+                        {t("quote", "estimatedBudget")}
                       </Label>
                       <Input
                         id="budget"
@@ -328,14 +330,14 @@ export default function QuotePage() {
                     <span className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-sm">
                       3
                     </span>
-                    Additional Information
+                    {t("quote", "additionalInfo")}
                   </h2>
                   <div className="space-y-2">
                     <Label
                       htmlFor="additionalDetails"
                       className="text-zinc-300 text-sm font-medium"
                     >
-                      Project Details & Questions
+                      {t("quote", "projectDetailsQuestions")}
                     </Label>
                     <Textarea
                       id="additionalDetails"
@@ -344,7 +346,7 @@ export default function QuotePage() {
                       onChange={handleChange}
                       rows={5}
                       className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20 resize-none rounded-lg"
-                      placeholder="Tell us more about your project requirements, site conditions, grid connection details, or any specific questions..."
+                      placeholder={t("quote", "additionalDetailsPlaceholder")}
                     />
                   </div>
                 </div>
@@ -378,18 +380,18 @@ export default function QuotePage() {
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                           ></path>
                         </svg>
-                        Sending Request...
+                        {t("quote", "sendingRequest")}
                       </span>
                     ) : (
                       <>
-                        Request Quote
+                        {t("quote", "requestQuote")}
                         <Send className="w-5 h-5" />
                       </>
                     )}
                   </button>
 
                   <p className="text-sm text-zinc-500 text-center mt-4">
-                    We typically respond within 24 hours during business days.
+                    {t("quote", "responseTime")}
                   </p>
                 </div>
               </form>

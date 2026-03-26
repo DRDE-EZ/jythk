@@ -8,6 +8,7 @@ import MainNavigation from "./MainNavigation";
 import { getCollections } from "@/wix-api/collections";
 
 import MobileMenu from "./MobileMenu";
+import LanguageToggle from "@/components/LanguageToggle";
 import { Suspense } from "react";
 
 export default async function NavBar() {
@@ -36,6 +37,7 @@ export default async function NavBar() {
 
       {/* Right: Actions */}
       <div className="flex items-center gap-1.5">
+        <LanguageToggle />
         <UserButton
           loggedInMember={loggedInMember}
           className="hover:cursor-pointer hidden lg:flex"

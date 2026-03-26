@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import InfiniteCarousel from "@/components/InfiniteCarousel";
@@ -12,8 +14,11 @@ import {
   Zap,
   Sun,
 } from "lucide-react";
+import { useLanguage } from "@/i18n/context";
 
-export default async function Home() {
+export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="max-w-full mx-auto space-y-0 pb-0">
       {/* ═══════ HERO ═══════ */}
@@ -39,28 +44,27 @@ export default async function Home() {
               <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-zinc-800/60 backdrop-blur-sm border border-zinc-700/50 rounded-full mb-8">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                 <span className="text-zinc-300 text-sm font-medium">
-                  ISO 9001 Certified &middot; 10+ Years in Business
+                  {t("home", "heroBadge")}
                 </span>
               </div>
             </AnimatedSection>
 
             <AnimatedSection delay={0.15}>
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-[0.95] mb-8 tracking-tight">
-                <span className="text-white">Jingyuntong</span>
+                <span className="text-white">{t("home", "heroTitle1")}</span>
                 <br />
                 <span className="bg-gradient-to-r from-emerald-400 via-emerald-500 to-green-500 bg-clip-text text-transparent">
-                  Hong Kong
+                  {t("home", "heroTitle2")}
                 </span>
               </h1>
             </AnimatedSection>
 
             <AnimatedSection delay={0.3}>
               <p className="text-xl sm:text-2xl text-zinc-300 mb-4 max-w-xl leading-relaxed font-light">
-                Your trusted supplier for solar solutions & custom projects.
+                {t("home", "heroSubtitle")}
               </p>
               <p className="text-base text-zinc-500 mb-10 max-w-lg">
-                Quality products, competitive pricing, reliable delivery to 30+
-                countries worldwide.
+                {t("home", "heroDescription")}
               </p>
             </AnimatedSection>
 
@@ -73,7 +77,7 @@ export default async function Home() {
                 >
                   <Link href="/shop">
                     <span className="flex items-center gap-2.5">
-                      Shop Now
+                      {t("common", "shopNow")}
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                   </Link>
@@ -83,7 +87,7 @@ export default async function Home() {
                   size="lg"
                   className="group bg-white/5 backdrop-blur-sm border border-zinc-600 hover:border-zinc-500 hover:bg-white/10 text-white px-8 h-14 text-base font-semibold transition-all duration-300 rounded-xl"
                 >
-                  <Link href="/about">Learn More</Link>
+                  <Link href="/about">{t("common", "learnMore")}</Link>
                 </Button>
               </div>
             </AnimatedSection>
@@ -100,10 +104,10 @@ export default async function Home() {
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
               {[
-                { number: "500+", label: "Projects Delivered" },
-                { number: "30+", label: "Countries Served" },
-                { number: "99%", label: "Client Satisfaction" },
-                { number: "10+", label: "Years Experience" },
+                { number: "500+", label: t("home", "statsProjectsDelivered") },
+                { number: "30+", label: t("home", "statsCountriesServed") },
+                { number: "99%", label: t("home", "statsClientSatisfaction") },
+                { number: "10+", label: t("home", "statsYearsExperience") },
               ].map((stat) => (
                 <div key={stat.label} className="group relative">
                   <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
@@ -129,11 +133,11 @@ export default async function Home() {
                 <div className="flex items-center gap-3 mb-4">
                   <Sun className="w-5 h-5 text-emerald-400" />
                   <span className="text-emerald-400 text-sm font-semibold tracking-wide uppercase">
-                    Our Work
+                    {t("home", "ourWork")}
                   </span>
                 </div>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-                  Featured Projects
+                  {t("home", "featuredProjects")}
                 </h2>
               </div>
               <Button
@@ -142,7 +146,7 @@ export default async function Home() {
               >
                 <Link href="/projects">
                   <span className="flex items-center gap-2">
-                    View All
+                    {t("common", "viewAll")}
                     <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                   </span>
                 </Link>
@@ -153,30 +157,27 @@ export default async function Home() {
               {[
                 {
                   capacity: "50MW",
-                  title: "Leshan Solar Farm",
-                  description:
-                    "Large-scale photovoltaic power station serving 15,000+ households across the region.",
-                  location: "Leshan, China",
+                  title: t("home", "projectLeshanTitle"),
+                  description: t("home", "projectLeshanDesc"),
+                  location: t("home", "projectLeshanLocation"),
                   year: "2023",
-                  tag: "Utility Scale",
+                  tag: t("home", "projectUtilityScale"),
                 },
                 {
                   capacity: "12MW",
-                  title: "Industrial Rooftop",
-                  description:
-                    "Commercial rooftop installation with smart monitoring across 25,000 m\u00B2 of panels.",
-                  location: "Suzhou, Jiangsu",
+                  title: t("home", "projectRooftopTitle"),
+                  description: t("home", "projectRooftopDesc"),
+                  location: t("home", "projectRooftopLocation"),
                   year: "2022",
-                  tag: "Commercial",
+                  tag: t("home", "projectCommercial"),
                 },
                 {
                   capacity: "40MW",
-                  title: "Floating Solar Plant",
-                  description:
-                    "Innovative floating PV installation on water reservoir, maximising unused surface area.",
-                  location: "Anhui Province",
+                  title: t("home", "projectFloatingTitle"),
+                  description: t("home", "projectFloatingDesc"),
+                  location: t("home", "projectFloatingLocation"),
                   year: "2021",
-                  tag: "Innovation",
+                  tag: t("home", "projectInnovation"),
                 },
               ].map((project) => (
                 <div
@@ -214,7 +215,7 @@ export default async function Home() {
                       {project.location}
                     </span>
                     <span className="flex items-center gap-1 text-emerald-400 text-sm font-medium opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                      Details
+                      {t("common", "details")}
                       <ChevronRight className="w-4 h-4" />
                     </span>
                   </div>
@@ -239,15 +240,14 @@ export default async function Home() {
                 <div className="flex items-center gap-3 mb-4">
                   <Zap className="w-5 h-5 text-emerald-400" />
                   <span className="text-emerald-400 text-sm font-semibold tracking-wide uppercase">
-                    Product Range
+                    {t("home", "productRange")}
                   </span>
                 </div>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-                  Browse Our Categories
+                  {t("home", "browseCategories")}
                 </h2>
                 <p className="text-zinc-400 text-lg mt-3 max-w-lg">
-                  High-quality solar products and components for projects of
-                  every scale.
+                  {t("home", "categoriesDesc")}
                 </p>
               </div>
               <Button
@@ -256,7 +256,7 @@ export default async function Home() {
               >
                 <Link href="/shop">
                   <span className="flex items-center gap-2">
-                    All Products
+                    {t("common", "allProducts")}
                     <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                   </span>
                 </Link>
@@ -266,45 +266,39 @@ export default async function Home() {
             <InfiniteCarousel
               items={[
                 {
-                  name: "Solar Cells",
+                  name: t("home", "categorySolarCells"),
                   slug: "solar-cells",
-                  description:
-                    "High-efficiency monocrystalline and polycrystalline cells for panel manufacturing.",
+                  description: t("home", "categorySolarCellsDesc"),
                   count: "15+",
                 },
                 {
-                  name: "Solar Wafers",
+                  name: t("home", "categorySolarWafers"),
                   slug: "solar-wafers",
-                  description:
-                    "Premium silicon wafers in various sizes for cell production.",
+                  description: t("home", "categorySolarWafersDesc"),
                   count: "8+",
                 },
                 {
-                  name: "Off-Grid Solar Kits",
+                  name: t("home", "categoryOffGrid"),
                   slug: "off-grid-solar-kits",
-                  description:
-                    "Complete standalone systems for remote locations and backup power.",
+                  description: t("home", "categoryOffGridDesc"),
                   count: "12+",
                 },
                 {
-                  name: "BESS",
+                  name: t("home", "categoryBess"),
                   slug: "bess",
-                  description:
-                    "Battery Energy Storage Systems for residential and commercial applications.",
+                  description: t("home", "categoryBessDesc"),
                   count: "6+",
                 },
                 {
-                  name: "Solar Accessories",
+                  name: t("home", "categoryAccessories"),
                   slug: "solar-accessories",
-                  description:
-                    "Mounting hardware, cables, connectors, and monitoring equipment.",
+                  description: t("home", "categoryAccessoriesDesc"),
                   count: "25+",
                 },
                 {
-                  name: "SCR Catalyst",
+                  name: t("home", "categorySCR"),
                   slug: "scr-catalyst",
-                  description:
-                    "Selective Catalytic Reduction systems for emission control.",
+                  description: t("home", "categorySCRDesc"),
                   count: "4+",
                 },
               ]}
@@ -319,13 +313,13 @@ export default async function Home() {
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="text-center mb-14 md:mb-16">
               <span className="text-emerald-400 text-sm font-semibold tracking-wide uppercase">
-                Our Promise
+                {t("home", "ourPromise")}
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-4 text-white">
-                Why Choose Us
+                {t("home", "whyChooseUs")}
               </h2>
               <p className="text-lg text-zinc-400 max-w-xl mx-auto">
-                Trusted by installers and developers worldwide
+                {t("home", "whyChooseUsDesc")}
               </p>
             </div>
 
@@ -333,26 +327,23 @@ export default async function Home() {
               {[
                 {
                   icon: Shield,
-                  title: "Quality Assured",
-                  description:
-                    "International standards with full certification on every product.",
+                  title: t("home", "qualityAssured"),
+                  description: t("home", "qualityAssuredDesc"),
                 },
                 {
                   icon: Globe,
-                  title: "Global Delivery",
-                  description:
-                    "Shipping to 30+ countries with real-time tracking.",
+                  title: t("home", "globalDelivery"),
+                  description: t("home", "globalDeliveryDesc"),
                 },
                 {
                   icon: Clock,
-                  title: "On-Time Delivery",
-                  description:
-                    "99% on-time rate. Your timelines matter to us.",
+                  title: t("home", "onTimeDelivery"),
+                  description: t("home", "onTimeDeliveryDesc"),
                 },
                 {
                   icon: Award,
-                  title: "10+ Years",
-                  description: "Trusted worldwide since 2014.",
+                  title: t("home", "tenYears"),
+                  description: t("home", "tenYearsDesc"),
                 },
               ].map((feature) => {
                 const Icon = feature.icon;
@@ -393,19 +384,17 @@ export default async function Home() {
                 {/* Left: Content */}
                 <div className="flex-1 max-w-xl">
                   <span className="text-emerald-400 text-sm font-semibold tracking-wide uppercase">
-                    Partner With Us
+                    {t("home", "partnerWithUs")}
                   </span>
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-4 mb-5 leading-tight">
-                    Looking for a{" "}
+                    {t("home", "lookingForA")}{" "}
                     <span className="bg-gradient-to-r from-emerald-400 to-green-500 bg-clip-text text-transparent">
-                      Trusted Supplier
+                      {t("home", "trustedSupplier")}
                     </span>
                     ?
                   </h2>
                   <p className="text-zinc-400 text-lg leading-relaxed">
-                    Quality products, competitive prices, and reliable delivery.
-                    Your overseas partner for solar solutions and custom
-                    projects.
+                    {t("home", "ctaDescription")}
                   </p>
                 </div>
 
@@ -418,7 +407,7 @@ export default async function Home() {
                   >
                     <Link href="/contact">
                       <span className="flex items-center justify-center gap-2">
-                        Get a Quote
+                        {t("common", "getQuote")}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </span>
                     </Link>
@@ -428,7 +417,7 @@ export default async function Home() {
                     size="lg"
                     className="group bg-transparent border border-zinc-700 hover:border-emerald-500/50 text-white hover:text-emerald-400 px-8 h-14 text-base font-semibold transition-all duration-300 rounded-xl min-w-[180px]"
                   >
-                    <Link href="/shop">Browse Products</Link>
+                    <Link href="/shop">{t("common", "browseProducts")}</Link>
                   </Button>
                 </div>
               </div>

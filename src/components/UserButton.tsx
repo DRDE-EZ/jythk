@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { useLanguage } from "@/i18n/context";
 
 interface UserButtonProps {
   loggedInMember: members.Member | null;
@@ -31,6 +32,8 @@ export default function UserButton({
   loggedInMember,
   className,
 }: UserButtonProps) {
+
+  const { t } = useLanguage();
 
   const handleGoogleLogin = async () => {
     try {
@@ -72,10 +75,10 @@ export default function UserButton({
         {loggedInMember ? (
           <>
             <DropdownMenuLabel className="font-medium">
-              {loggedInMember.contact?.firstName || "Customer"}
+              {loggedInMember.contact?.firstName || t("user", "customer")}
               {userIsAdmin && (
                 <span className="ml-2 text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">
-                  Admin
+                  {t("common", "admin")}
                 </span>
               )}
             </DropdownMenuLabel>
@@ -85,7 +88,7 @@ export default function UserButton({
                 <Link href="/admin-dashboard">
                   <DropdownMenuItem className="cursor-pointer">
                     <Shield className="mr-2 size-4" />
-                    🔐 Admin Dashboard
+                    🔐 {t("user", "adminDashboard")}
                   </DropdownMenuItem>
                 </Link>
                 <DropdownMenuSeparator />
@@ -94,13 +97,13 @@ export default function UserButton({
             <Link href="/customer-dashboard-protected">
               <DropdownMenuItem className="cursor-pointer">
                 <Package className="mr-2 size-4" />
-                📊 My Dashboard
+                📊 {t("user", "myDashboard")}
               </DropdownMenuItem>
             </Link>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
               <LogOutIcon className="mr-2 size-4" />
-              Logout
+              {t("common", "logout")}
             </DropdownMenuItem>
           </>
         ) : (
@@ -111,7 +114,7 @@ export default function UserButton({
               <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
               <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
-            Sign in with Google
+            {t("common", "signInWithGoogle")}
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>
